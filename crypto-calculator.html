@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 🚀 Advanced SEO Meta Tags -->
+    <title>Crypto Futures & SIP ROI Calculator | Velqur Tools</title>
+    <meta name="description" content="Free advanced financial calculator for Binance crypto futures, ZebPay trading, and Groww/Angel One SIP margin returns. Calculate profit, loss, and ROE instantly.">
+    <meta name="keywords" content="Binance futures profit calculator, ZebPay crypto tracker, Groww SIP calculator, Angel One margin checker, Stock trading ROI, Crypto leverage calculator">
+    <meta name="robots" content="index, follow">
+
+    <!-- 💰 Google AdSense Code -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6277909939753506" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-[#0B141A] text-gray-200 font-sans antialiased">
+
+    <!-- Navbar -->
+    <nav class="border-b border-gray-800 bg-[#111B21] p-4 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="tools.html" class="text-xl font-bold text-green-500 hover:text-green-400 transition"><i class="fas fa-arrow-left mr-2"></i> Back to Tools</a>
+            <span class="text-gray-400 text-sm font-semibold tracking-wider">FINANCE HUB</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto p-6 py-10">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Finance & <span class="text-green-500">Crypto ROI</span></h1>
+            <p class="text-gray-400 max-w-2xl mx-auto">Optimize your trades. Calculate perpetual futures margins, liquidation risks, and long-term equity compounding instantly.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- 1. Crypto Futures Calculator (Binance / ZebPay style) -->
+            <div class="bg-[#111B21] border border-gray-800 p-8 rounded-2xl shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-yellow-500/10 text-yellow-500 text-xs px-3 py-1 rounded-bl-lg font-bold">CRYPTO FUTURES</div>
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center"><i class="fab fa-bitcoin text-yellow-500 mr-3"></i> Trade Calculator</h2>
+                
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-400 text-sm mb-1">Position</label>
+                            <select id="crypto-position" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-green-500 transition">
+                                <option value="long">Long (Buy)</option>
+                                <option value="short">Short (Sell)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 text-sm mb-1">Leverage (x)</label>
+                            <input type="number" id="crypto-leverage" value="10" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-green-500 transition">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Entry Price ($)</label>
+                        <input type="number" id="crypto-entry" placeholder="e.g. 65000" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-green-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Exit Price ($)</label>
+                        <input type="number" id="crypto-exit" placeholder="e.g. 67000" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-green-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Quantity (Coin/Token)</label>
+                        <input type="number" id="crypto-qty" placeholder="e.g. 0.5" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-green-500 transition">
+                    </div>
+
+                    <button onclick="calculateCrypto()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg transition mt-4">Calculate PNL</button>
+                </div>
+
+                <!-- Crypto Results -->
+                <div id="crypto-result" class="mt-6 p-4 bg-[#0B141A] rounded-lg border border-gray-800 hidden">
+                    <div class="flex justify-between mb-2"><span class="text-gray-400">Initial Margin:</span> <span id="res-margin" class="font-bold text-white"></span></div>
+                    <div class="flex justify-between mb-2"><span class="text-gray-400">Profit / Loss (PNL):</span> <span id="res-pnl" class="font-bold text-xl"></span></div>
+                    <div class="flex justify-between"><span class="text-gray-400">ROE %:</span> <span id="res-roe" class="font-bold"></span></div>
+                </div>
+            </div>
+
+            <!-- 2. SIP & Equity Calculator (Groww / Angel One style) -->
+            <div class="bg-[#111B21] border border-gray-800 p-8 rounded-2xl shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-blue-500/10 text-blue-500 text-xs px-3 py-1 rounded-bl-lg font-bold">EQUITY & SIP</div>
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center"><i class="fas fa-chart-pie text-blue-500 mr-3"></i> Investment ROI</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Monthly Investment (₹)</label>
+                        <input type="number" id="sip-amount" placeholder="e.g. 5000" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Expected Annual Return (%)</label>
+                        <input type="number" id="sip-rate" value="12" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Time Period (Years)</label>
+                        <input type="number" id="sip-years" placeholder="e.g. 10" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500 transition">
+                    </div>
+
+                    <button onclick="calculateSIP()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition mt-8">Calculate Returns</button>
+                </div>
+
+                <!-- SIP Results -->
+                <div id="sip-result" class="mt-6 p-4 bg-[#0B141A] rounded-lg border border-gray-800 hidden">
+                    <div class="flex justify-between mb-2"><span class="text-gray-400">Total Invested:</span> <span id="res-invested" class="font-bold text-white"></span></div>
+                    <div class="flex justify-between mb-2"><span class="text-gray-400">Est. Returns:</span> <span id="res-est" class="font-bold text-green-500"></span></div>
+                    <div class="flex justify-between mt-3 pt-3 border-t border-gray-800"><span class="text-gray-300 font-bold">Total Value:</span> <span id="res-total" class="font-bold text-2xl text-blue-400"></span></div>
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- AdSense Display Space (This tells Google where to put banner ads) -->
+        <div class="mt-12 text-center p-4 border border-dashed border-gray-700 rounded-lg text-gray-500">
+            <span class="text-sm">Advertisement</span>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6277909939753506"
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </main>
+
+    <!-- JavaScript For Calculators -->
+    <script>
+        // Crypto Logic
+        function calculateCrypto() {
+            let position = document.getElementById('crypto-position').value;
+            let leverage = parseFloat(document.getElementById('crypto-leverage').value);
+            let entry = parseFloat(document.getElementById('crypto-entry').value);
+            let exit = parseFloat(document.getElementById('crypto-exit').value);
+            let qty = parseFloat(document.getElementById('crypto-qty').value);
+
+            if(!entry || !exit || !qty) return alert("Please fill all crypto fields.");
+
+            let initialMargin = (entry * qty) / leverage;
+            let pnl = 0;
+
+            if(position === 'long') {
+                pnl = (exit - entry) * qty;
+            } else {
+                pnl = (entry - exit) * qty;
+            }
+
+            let roe = (pnl / initialMargin) * 100;
+
+            // Update UI
+            document.getElementById('crypto-result').classList.remove('hidden');
+            document.getElementById('res-margin').innerText = "$" + initialMargin.toFixed(2);
+            
+            let pnlEl = document.getElementById('res-pnl');
+            let roeEl = document.getElementById('res-roe');
+            
+            pnlEl.innerText = "$" + pnl.toFixed(2);
+            roeEl.innerText = roe.toFixed(2) + "%";
+
+            // Color coding based on profit/loss
+            if(pnl >= 0) {
+                pnlEl.className = "font-bold text-xl text-green-500";
+                roeEl.className = "font-bold text-green-500";
+            } else {
+                pnlEl.className = "font-bold text-xl text-red-500";
+                roeEl.className = "font-bold text-red-500";
+            }
+        }
+
+        // SIP Logic
+        function calculateSIP() {
+            let P = parseFloat(document.getElementById('sip-amount').value);
+            let annualRate = parseFloat(document.getElementById('sip-rate').value);
+            let years = parseFloat(document.getElementById('sip-years').value);
+
+            if(!P || !annualRate || !years) return alert("Please fill all SIP fields.");
+
+            let i = (annualRate / 12) / 100;
+            let n = years * 12;
+
+            // SIP Formula: M = P × ({[1 + i]^n - 1} / i) × (1 + i)
+            let M = P * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+            let invested = P * n;
+            let estReturns = M - invested;
+
+            // Format as Indian Currency (₹)
+            let formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+
+            // Update UI
+            document.getElementById('sip-result').classList.remove('hidden');
+            document.getElementById('res-invested').innerText = formatter.format(invested);
+            document.getElementById('res-est').innerText = formatter.format(estReturns);
+            document.getElementById('res-total').innerText = formatter.format(M);
+        }
+    </script>
+</body>
+</html>
