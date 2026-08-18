@@ -1,205 +1,1518 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- 🚀 Advanced SEO Meta Tags -->
-    <title>Speedcubing Algorithms | 3D Layer-by-Layer Formulas | Velqur</title>
-    <meta name="description" content="Master advanced speedcubing algorithms. Learn layer-by-layer optimization formulas and execution strategies to drastically reduce your Rubik's cube solve time.">
-    <meta name="keywords" content="Speedcubing advanced algorithms, Layer-by-layer optimization formulas, Rubik's cube execution strategies, Solve time reduction techniques, CFOP OLL PLL algorithms">
-    <meta name="robots" content="index, follow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
-    <!-- 💰 Google AdSense Code -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6277909939753506" crossorigin="anonymous"></script>
+<title>3D Rubik's Cube Solver Online | Kociemba Cube Solver | Velqur</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- 🎨 Custom 3D Glossy & Glassmorphism CSS -->
-    <style>
-        body { background-color: #0B141A; overflow-x: hidden; }
-        
-        /* The Glossy Glass Card */
-        .glossy-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.1s ease-out; /* Smooth 3D snap */
-            transform-style: preserve-3d;
-        }
+<meta name="description" content="Solve a 3x3 Rubik's Cube online with Velqur's interactive glossy 3D cube solver. Paint stickers, validate your cube, generate a Kociemba solution and watch every move animate step by step.">
+<meta name="keywords" content="Rubik's Cube Solver, 3x3 Rubik's Cube Solver, online Rubik cube solver, 3D Rubik cube solver, Kociemba solver, cube solver online, Rubik cube algorithm, CFOP, F2L, OLL, PLL, speedcubing">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#030914">
 
-        /* The Moving Shine/Glare Effect */
-        .glossy-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            animation: shine 5s infinite;
-            pointer-events: none;
-            z-index: 10;
-        }
+<link rel="canonical" href="./rubiks-cube-solver.html">
 
-        @keyframes shine {
-            0% { left: -100%; }
-            20% { left: 200%; }
-            100% { left: 200%; }
-        }
+<meta property="og:title" content="Velqur 3D Rubik's Cube Solver">
+<meta property="og:description" content="Paint your cube, get a Kociemba solution and watch the solution animate on a premium 3D Rubik's Cube.">
+<meta property="og:type" content="website">
 
-        /* Algorithm Text Pop out (3D Layering) */
-        .algo-text {
-            transform: translateZ(30px);
-            text-shadow: 0px 4px 10px rgba(0,0,0,0.8);
-        }
+<!-- Google AdSense — SAME CODE -->
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6277909939753506"
+crossorigin="anonymous"></script>
 
-        /* Mini CSS Cube Faces */
-        .cube-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; transform: translateZ(20px); }
-        .c-cell { width: 14px; height: 14px; border-radius: 2px; }
-        .c-yellow { background-color: #FACC15; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
-        .c-gray { background-color: #374151; box-shadow: inset 0 0 4px rgba(0,0,0,0.5); }
-        .c-red { background-color: #EF4444; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
-        .c-blue { background-color: #3B82F6; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
-        .c-green { background-color: #10B981; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
-    </style>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+rel="stylesheet">
+
+<!-- Cube.js -->
+<script src="https://cdn.jsdelivr.net/npm/cubejs@1.3.2/lib/cube.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cubejs@1.3.2/lib/solve.js"></script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+  }
+}
+</script>
+
+<style>
+
+:root{
+  --bg:#020812;
+  --bg2:#06111d;
+  --panel:rgba(7,22,34,.72);
+  --panel2:rgba(10,28,42,.62);
+
+  --glass-border:
+    rgba(174,242,255,.22);
+
+  --glass-border-bright:
+    rgba(109,240,255,.48);
+
+  --green:#39f2a6;
+  --cyan:#53dcff;
+  --yellow:#ffd83d;
+  --purple:#c778ff;
+  --red:#ff5265;
+  --orange:#ff963f;
+  --blue:#3d8cff;
+
+  --text:#f1f8fb;
+  --muted:#8499a7;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:var(--text);
+
+  font-family:
+  Inter,
+  ui-sans-serif,
+  system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(45,214,255,.14),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 5% 35%,
+      rgba(33,242,166,.07),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 95% 60%,
+      rgba(140,70,255,.07),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #020812,
+      #06121c 48%,
+      #020711
+    );
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+
+  background-image:
+    radial-gradient(
+      rgba(255,255,255,.13) 1px,
+      transparent 1px
+    );
+
+  background-size:42px 42px;
+  opacity:.08;
+}
+
+/* =========================
+   GLASS SYSTEM
+========================= */
+
+.glass{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.018)
+    );
+
+  border:1px solid var(--glass-border);
+
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.07);
+
+  backdrop-filter:
+    blur(24px)
+    saturate(135%);
+
+  -webkit-backdrop-filter:
+    blur(24px)
+    saturate(135%);
+}
+
+.glass-border{
+  border:1px solid rgba(150,239,255,.27);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.09),
+    0 0 0 1px rgba(0,0,0,.15),
+    0 25px 80px rgba(0,0,0,.35);
+}
+
+.glass-border::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  border-radius:inherit;
+
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.12),
+      transparent 30%,
+      transparent 70%,
+      rgba(83,220,255,.06)
+    );
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  height:72px;
+
+  background:
+    rgba(2,9,16,.78);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.09);
+
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+
+.nav-inner{
+  height:100%;
+  max-width:1250px;
+  margin:auto;
+
+  padding:0 20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:11px;
+
+  color:white;
+  text-decoration:none;
+}
+
+.logo-cube{
+  width:38px;
+  height:38px;
+
+  border-radius:12px;
+
+  display:grid;
+  place-items:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #35f0aa,
+      #2abfff
+    );
+
+  box-shadow:
+    0 0 25px rgba(50,235,190,.25),
+    inset 0 1px 0 white;
+}
+
+.logo-text{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-.04em;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.nav-links a{
+  color:#b7c6ce;
+  text-decoration:none;
+  font-size:14px;
+  transition:.2s;
+}
+
+.nav-links a:hover{
+  color:white;
+}
+
+.nav-links a.active{
+  color:#48f0ac;
+}
+
+.nav-button{
+  border:1px solid rgba(93,231,255,.28);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.06),
+      rgba(255,255,255,.015)
+    );
+
+  color:white;
+
+  padding:10px 17px;
+
+  border-radius:14px;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.nav-button:hover{
+  border-color:rgba(93,231,255,.55);
+  transform:translateY(-1px);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.page{
+  max-width:1250px;
+  margin:auto;
+  padding:35px 20px 70px;
+}
+
+.hero{
+  margin-bottom:25px;
+}
+
+.hero h1{
+  margin:0;
+
+  font-size:
+    clamp(38px,6vw,67px);
+
+  line-height:.95;
+
+  font-weight:950;
+
+  letter-spacing:-.065em;
+
+  background:
+    linear-gradient(
+      90deg,
+      #40f3ad,
+      #62e0ff 48%,
+      #c76cff
+    );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+
+  color:transparent;
+}
+
+.hero p{
+  max-width:760px;
+
+  margin-top:14px;
+
+  color:#8da1ae;
+
+  font-size:16px;
+
+  line-height:1.65;
+}
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+
+  margin-top:19px;
+}
+
+.badge{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  padding:9px 13px;
+
+  border-radius:13px;
+
+  background:
+    rgba(255,255,255,.035);
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  color:#c7d6dd;
+
+  font-size:12px;
+  font-weight:750;
+}
+
+.badge i{
+  color:#45f0b0;
+}
+
+/* =========================
+   MAIN GRID
+========================= */
+
+.main-grid{
+  display:grid;
+
+  grid-template-columns:
+    minmax(0,1.45fr)
+    minmax(340px,.75fr);
+
+  gap:18px;
+
+  align-items:start;
+}
+
+/* =========================
+   CUBE VIEWER
+========================= */
+
+.cube-panel{
+  position:relative;
+
+  height:680px;
+
+  overflow:hidden;
+
+  border-radius:30px;
+
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(34,190,230,.13),
+      transparent 37%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(40,244,180,.07),
+      transparent 32%
+    ),
+    rgba(4,18,29,.65);
+
+  border:
+    1px solid rgba(154,239,255,.30);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 30px 100px rgba(0,0,0,.45);
+
+  backdrop-filter:blur(18px);
+}
+
+.cube-panel::before{
+  content:"";
+
+  position:absolute;
+  inset:12px;
+
+  border-radius:24px;
+
+  border:
+    1px solid rgba(126,238,255,.13);
+
+  pointer-events:none;
+
+  z-index:5;
+}
+
+.cube-header{
+  position:absolute;
+
+  top:25px;
+  left:28px;
+  right:28px;
+
+  z-index:10;
+
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:15px;
+
+  pointer-events:none;
+}
+
+.cube-title{
+  color:#7ff5c0;
+
+  font-size:13px;
+
+  font-weight:900;
+
+  letter-spacing:.14em;
+}
+
+.cube-subtitle{
+  margin-top:7px;
+
+  color:#718692;
+
+  font-size:13px;
+}
+
+.cube-live{
+  display:flex;
+  align-items:center;
+  gap:7px;
+
+  padding:7px 11px;
+
+  border-radius:999px;
+
+  border:
+    1px solid rgba(255,255,255,.09);
+
+  background:
+    rgba(0,0,0,.22);
+
+  color:#9eb1bb;
+
+  font-size:11px;
+}
+
+.live-dot{
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:#36f2a8;
+
+  box-shadow:
+    0 0 14px #36f2a8;
+}
+
+#cubeCanvas{
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  display:block;
+
+  touch-action:none;
+
+  user-select:none;
+  -webkit-user-select:none;
+
+  -webkit-tap-highlight-color:transparent;
+}
+
+.cube-tip{
+  position:absolute;
+
+  left:32px;
+  right:32px;
+  bottom:28px;
+
+  z-index:10;
+
+  padding:13px 16px;
+
+  border-radius:15px;
+
+  background:
+    rgba(2,10,16,.56);
+
+  border:
+    1px solid rgba(149,230,255,.13);
+
+  color:#91a6b1;
+
+  font-size:12px;
+
+  line-height:1.45;
+
+  backdrop-filter:blur(12px);
+}
+
+.cube-tip strong{
+  color:#42efa9;
+}
+
+/* =========================
+   INPUT PANEL
+========================= */
+
+.side-panel{
+  border-radius:27px;
+
+  padding:21px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(12,30,44,.82),
+      rgba(5,17,28,.68)
+    );
+
+  border:
+    1px solid rgba(153,237,255,.23);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 25px 75px rgba(0,0,0,.36);
+
+  backdrop-filter:blur(22px);
+}
+
+.section-label{
+  color:#3eeeb0;
+
+  font-size:11px;
+
+  font-weight:900;
+
+  letter-spacing:.16em;
+
+  text-transform:uppercase;
+}
+
+.input-head{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:10px;
+}
+
+.input-head h2{
+  margin:6px 0 0;
+
+  font-size:25px;
+
+  font-weight:900;
+
+  letter-spacing:-.04em;
+}
+
+.input-desc{
+  margin-top:5px;
+
+  color:#738792;
+
+  font-size:13px;
+}
+
+.sticker-count{
+  color:#53f0aa;
+
+  font-size:22px;
+
+  font-weight:950;
+
+  text-align:right;
+}
+
+.sticker-count span{
+  display:block;
+
+  color:#596e79;
+
+  font-size:8px;
+
+  letter-spacing:.14em;
+
+  text-transform:uppercase;
+}
+
+/* =========================
+   PALETTE
+========================= */
+
+.palette{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:9px;
+
+  margin-top:20px;
+}
+
+.color-btn{
+  min-height:64px;
+
+  border-radius:15px;
+
+  border:
+    1px solid rgba(255,255,255,.18);
+
+  cursor:pointer;
+
+  position:relative;
+
+  overflow:hidden;
+
+  font-weight:800;
+
+  transition:
+    transform .18s,
+    box-shadow .18s,
+    border-color .18s;
+}
+
+.color-btn::before{
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    linear-gradient(
+      140deg,
+      rgba(255,255,255,.42),
+      transparent 36%,
+      transparent 70%,
+      rgba(0,0,0,.14)
+    );
+
+  pointer-events:none;
+}
+
+.color-btn:hover{
+  transform:translateY(-2px);
+}
+
+.color-btn.active{
+  border-color:white;
+
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.16),
+    0 12px 28px rgba(0,0,0,.25);
+}
+
+.white{
+  background:linear-gradient(145deg,#fff,#d9e0e4);
+  color:#5a646a;
+}
+
+.yellow{
+  background:
+    linear-gradient(
+      145deg,
+      #fff16a,
+      #ffd02c 55%,
+      #e8aa15
+    );
+  color:#765700;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.7);
+}
+
+.green{
+  background:
+    linear-gradient(
+      145deg,
+      #49f5b8,
+      #19d58e,
+      #078d64
+    );
+  color:#063e2c;
+}
+
+.blue{
+  background:
+    linear-gradient(
+      145deg,
+      #67bdff,
+      #3c88ff,
+      #2058c8
+    );
+  color:#062d6e;
+}
+
+.red{
+  background:
+    linear-gradient(
+      145deg,
+      #ff777d,
+      #f04a59,
+      #b72039
+    );
+  color:#5e0d19;
+}
+
+.orange{
+  background:
+    linear-gradient(
+      145deg,
+      #ffc16d,
+      #ff933d,
+      #d75d1d
+    );
+  color:#69300d;
+}
+
+/* =========================
+   LOCK MESSAGE
+========================= */
+
+.lock-message{
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+
+  margin-top:16px;
+
+  color:#6f838d;
+
+  font-size:12px;
+
+  line-height:1.45;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.actions{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:10px;
+
+  margin-top:20px;
+}
+
+.action{
+  min-height:55px;
+
+  border-radius:16px;
+
+  border:
+    1px solid rgba(255,255,255,.09);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.07),
+      rgba(255,255,255,.02)
+    );
+
+  color:#c9d9df;
+
+  font-weight:850;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.action:hover{
+  transform:translateY(-2px);
+
+  border-color:
+    rgba(105,232,255,.30);
+}
+
+.action.primary{
+  color:#9effd2;
+
+  border-color:
+    rgba(55,240,173,.29);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34,231,163,.22),
+      rgba(40,165,255,.11)
+    );
+
+  box-shadow:
+    0 0 25px rgba(34,231,163,.07);
+}
+
+/* =========================
+   SOLUTION
+========================= */
+
+.solution-panel{
+  margin-top:15px;
+
+  padding:16px;
+
+  border-radius:19px;
+
+  border:
+    1px solid rgba(139,232,255,.12);
+
+  background:
+    rgba(0,0,0,.15);
+}
+
+.solution-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.solution-title{
+  color:#48eeb0;
+
+  font-size:11px;
+
+  font-weight:900;
+
+  letter-spacing:.14em;
+
+  text-transform:uppercase;
+}
+
+.solution-count{
+  color:#768b96;
+
+  font-size:11px;
+}
+
+.move-list{
+  display:flex;
+  flex-wrap:wrap;
+
+  gap:6px;
+
+  margin-top:12px;
+
+  max-height:120px;
+
+  overflow:auto;
+}
+
+.move{
+  min-width:42px;
+
+  padding:7px 8px;
+
+  border-radius:9px;
+
+  border:
+    1px solid rgba(255,255,255,.07);
+
+  background:
+    rgba(0,0,0,.25);
+
+  color:#aebfc7;
+
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+
+  font-size:12px;
+}
+
+.move.active{
+  color:#03130e;
+
+  background:
+    linear-gradient(
+      135deg,
+      #73f5c1,
+      #62ddff
+    );
+
+  border-color:transparent;
+
+  box-shadow:
+    0 0 18px rgba(76,230,181,.15);
+}
+
+.playback{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:7px;
+
+  margin-top:12px;
+}
+
+.play-btn{
+  height:38px;
+
+  border-radius:11px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  background:
+    rgba(255,255,255,.035);
+
+  color:#9db0ba;
+
+  cursor:pointer;
+}
+
+.play-btn:hover{
+  border-color:
+    rgba(78,233,188,.28);
+
+  color:white;
+}
+
+.play-btn.main{
+  background:
+    rgba(43,230,165,.12);
+
+  color:#67efbd;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+  margin-top:14px;
+
+  padding:13px;
+
+  border-radius:15px;
+
+  background:
+    rgba(255,255,255,.025);
+
+  border:
+    1px solid rgba(255,255,255,.06);
+}
+
+.status-title{
+  font-size:13px;
+  font-weight:850;
+}
+
+.status-text{
+  margin-top:4px;
+
+  color:#6f838e;
+
+  font-size:11px;
+
+  line-height:1.4;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.features{
+  margin-top:18px;
+
+  padding:22px;
+
+  border-radius:25px;
+}
+
+.feature-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:12px;
+
+  margin-top:17px;
+}
+
+.feature{
+  padding:17px;
+
+  min-height:125px;
+
+  border-radius:17px;
+
+  border:
+    1px solid rgba(157,234,255,.13);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.045),
+      rgba(255,255,255,.012)
+    );
+}
+
+.feature-icon{
+  width:38px;
+  height:38px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:12px;
+
+  background:
+    rgba(50,230,180,.08);
+
+  color:#49edb0;
+
+  margin-bottom:12px;
+}
+
+.feature h3{
+  margin:0;
+
+  font-size:14px;
+
+  font-weight:850;
+}
+
+.feature p{
+  margin:6px 0 0;
+
+  color:#718590;
+
+  font-size:11px;
+
+  line-height:1.5;
+}
+
+/* =========================
+   AD
+========================= */
+
+.ad{
+  margin-top:22px;
+
+  padding:20px;
+
+  min-height:100px;
+
+  border-radius:20px;
+
+  border:
+    1px dashed rgba(146,224,245,.16);
+
+  background:
+    rgba(0,0,0,.15);
+
+  text-align:center;
+
+  color:#596c76;
+
+  font-size:10px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+  padding:30px 0 10px;
+
+  text-align:center;
+
+  color:#52636d;
+
+  font-size:11px;
+}
+
+.footer a{
+  color:#788d98;
+  text-decoration:none;
+}
+
+/* =========================
+   LOADER / TOAST
+========================= */
+
+.loader{
+  position:absolute;
+
+  inset:0;
+
+  z-index:50;
+
+  display:grid;
+  place-items:center;
+
+  background:
+    rgba(1,8,14,.67);
+
+  backdrop-filter:blur(10px);
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:.2s;
+}
+
+.loader.show{
+  opacity:1;
+
+  pointer-events:auto;
+}
+
+.spinner{
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+
+  border:
+    3px solid rgba(255,255,255,.12);
+
+  border-top-color:#45efb0;
+
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.toast{
+  position:fixed;
+
+  left:50%;
+  bottom:24px;
+
+  z-index:500;
+
+  transform:
+    translate(-50%,20px);
+
+  opacity:0;
+
+  pointer-events:none;
+
+  max-width:90vw;
+
+  padding:11px 16px;
+
+  border-radius:13px;
+
+  background:
+    rgba(3,12,18,.94);
+
+  border:
+    1px solid rgba(160,236,255,.16);
+
+  color:#d7e6ec;
+
+  font-size:12px;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.4);
+
+  transition:.22s;
+}
+
+.toast.show{
+  opacity:1;
+
+  transform:
+    translate(-50%,0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1050px){
+
+  .main-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cube-panel{
+    height:620px;
+  }
+
+  .side-panel{
+    position:relative;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+}
+
+@media(max-width:700px){
+
+  .navbar{
+    height:64px;
+  }
+
+  .nav-inner{
+    padding:0 14px;
+  }
+
+  .page{
+    padding:
+      25px 12px 50px;
+  }
+
+  .hero{
+    padding:0 4px;
+  }
+
+  .hero h1{
+    font-size:
+      clamp(37px,12vw,58px);
+  }
+
+  .hero p{
+    font-size:13px;
+  }
+
+  .cube-panel{
+    height:
+      min(570px,118vw);
+
+    min-height:440px;
+
+    border-radius:24px;
+  }
+
+  .cube-panel::before{
+    inset:8px;
+
+    border-radius:18px;
+  }
+
+  .cube-header{
+    top:19px;
+    left:19px;
+    right:19px;
+  }
+
+  .cube-live{
+    display:none;
+  }
+
+  .cube-tip{
+    left:19px;
+    right:19px;
+    bottom:18px;
+
+    font-size:10px;
+  }
+
+  .side-panel{
+    padding:17px;
+
+    border-radius:23px;
+  }
+
+  .palette{
+    gap:7px;
+  }
+
+  .color-btn{
+    min-height:58px;
+
+    font-size:11px;
+  }
+
+  .actions{
+    gap:8px;
+  }
+
+  .action{
+    min-height:51px;
+  }
+
+  .feature-grid{
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+}
+
+@media(max-width:430px){
+
+  .logo-text{
+    font-size:18px;
+  }
+
+  .nav-button{
+    padding:
+      9px 11px;
+
+    font-size:11px;
+  }
+
+  .palette{
+    grid-template-columns:
+      repeat(3,1fr);
+  }
+
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
 </head>
-<body class="text-gray-200 font-sans antialiased perspective-1000">
 
-    <!-- Navbar -->
-    <nav class="border-b border-gray-800 bg-[#111B21]/80 backdrop-blur-md p-4 sticky top-0 z-50 shadow-lg">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="tools.html" class="text-xl font-bold text-green-500 hover:text-green-400 transition"><i class="fas fa-arrow-left mr-2"></i> Back to Tools</a>
-            <span class="text-orange-500 text-sm font-bold tracking-widest"><i class="fas fa-cube mr-1"></i> CUBE ACADEMY</span>
-        </div>
-    </nav>
+<body>
 
-    <!-- Main Content -->
-    <main class="max-w-6xl mx-auto p-6 py-12">
-        <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-500 mb-4 drop-shadow-lg">
-                Advanced Cubing
-            </h1>
-            <p class="text-gray-400 max-w-2xl mx-auto text-lg">Optimized Layer-by-Layer formulas and high-end execution strategies to drastically drop your solve time.</p>
-        </div>
+<!-- =========================
+     NAVIGATION
+========================= -->
 
-        <!-- 3D Glossy Grid Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            
-            <!-- Card 1: Advanced F2L -->
-            <div class="glossy-card p-8 tilt-element">
-                <div class="flex justify-between items-start mb-6" style="transform: translateZ(20px);">
-                    <div>
-                        <span class="text-xs text-orange-400 font-bold tracking-widest block mb-1">PHASE 01</span>
-                        <h2 class="text-3xl font-black text-white">Advanced F2L</h2>
-                    </div>
-                    <!-- CSS Mini Cube Visual -->
-                    <div class="cube-grid">
-                        <div class="c-cell c-gray"></div><div class="c-cell c-gray"></div><div class="c-cell c-gray"></div>
-                        <div class="c-cell c-gray"></div><div class="c-cell c-gray"></div><div class="c-cell c-blue"></div>
-                        <div class="c-cell c-red"></div><div class="c-cell c-red"></div><div class="c-cell c-blue"></div>
-                    </div>
-                </div>
-                <p class="text-gray-300 text-sm mb-6 leading-relaxed" style="transform: translateZ(25px);">
-                    Minimize cube rotations. Focus on "Look-ahead" execution strategies. Insert pairs into the back slots first to keep your front vision clear.
-                </p>
-                <div class="bg-black/40 p-4 rounded-xl border border-gray-700/50 algo-text">
-                    <span class="block text-xs text-gray-500 mb-1">Back Slot Insertion (Right)</span>
-                    <code class="text-xl font-bold text-orange-400 tracking-wider">R' U' R</code>
-                </div>
-            </div>
+<nav class="navbar">
 
-            <!-- Card 2: OLL Optimization -->
-            <div class="glossy-card p-8 tilt-element">
-                <div class="flex justify-between items-start mb-6" style="transform: translateZ(20px);">
-                    <div>
-                        <span class="text-xs text-yellow-400 font-bold tracking-widest block mb-1">PHASE 02</span>
-                        <h2 class="text-3xl font-black text-white">OLL Formulas</h2>
-                    </div>
-                    <div class="cube-grid">
-                        <div class="c-cell c-yellow"></div><div class="c-cell c-gray"></div><div class="c-cell c-yellow"></div>
-                        <div class="c-cell c-gray"></div><div class="c-cell c-yellow"></div><div class="c-cell c-gray"></div>
-                        <div class="c-cell c-yellow"></div><div class="c-cell c-gray"></div><div class="c-cell c-yellow"></div>
-                    </div>
-                </div>
-                <p class="text-gray-300 text-sm mb-6 leading-relaxed" style="transform: translateZ(25px);">
-                    Orientation of the Last Layer. The 'Sune' algorithm is the fastest execution strategy for edge-oriented crosses.
-                </p>
-                <div class="bg-black/40 p-4 rounded-xl border border-gray-700/50 algo-text">
-                    <span class="block text-xs text-gray-500 mb-1">Sune Algorithm (Top Cross)</span>
-                    <code class="text-xl font-bold text-yellow-400 tracking-wider">R U R' U R U2 R'</code>
-                </div>
-            </div>
+  <div class="nav-inner">
 
-            <!-- Card 3: PLL Execution -->
-            <div class="glossy-card p-8 tilt-element lg:col-span-2">
-                <div class="flex justify-between items-start mb-6" style="transform: translateZ(20px);">
-                    <div>
-                        <span class="text-xs text-green-400 font-bold tracking-widest block mb-1">PHASE 03 (FINAL)</span>
-                        <h2 class="text-3xl font-black text-white">PLL T-Permutation</h2>
-                    </div>
-                    <div class="cube-grid flex gap-2">
-                        <div class="grid grid-cols-3 gap-1"><div class="c-cell c-green"></div><div class="c-cell c-red"></div><div class="c-cell c-green"></div></div>
-                    </div>
-                </div>
-                <p class="text-gray-300 text-sm mb-6 max-w-2xl leading-relaxed" style="transform: translateZ(25px);">
-                    Permutation of the Last Layer. The T-Perm is essential for swapping two adjacent corners and two opposite edges. Focus on your right-hand trigger speed.
-                </p>
-                <div class="bg-black/40 p-5 rounded-xl border border-gray-700/50 algo-text text-center">
-                    <code class="text-2xl md:text-3xl font-bold text-green-400 tracking-widest drop-shadow-md">R U R' U' R' F R2 U' R' U' R U R' F'</code>
-                </div>
-            </div>
+    <a href="tools.html" class="logo">
 
-        </div>
+      <span class="logo-cube">
+        <i class="fas fa-cube"></i>
+      </span>
 
-        <!-- AdSense Display Space -->
-        <div class="mt-16 text-center p-4 border border-dashed border-gray-700/50 bg-black/20 rounded-xl text-gray-500">
-            <span class="text-sm">Advertisement</span>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-6277909939753506"
-                 data-ad-slot="auto"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
+      <span>
+        <span class="logo-text">Velqur</span>
+      </span>
 
-    </main>
+    </a>
 
-    <!-- 🚀 Custom 3D Tilt JavaScript Engine -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.tilt-element');
-            
-            cards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left; // x position within the element.
-                    const y = e.clientY - rect.top;  // y position within the element.
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    // Calculate rotation (Max 12 degrees for a smooth, premium feel)
-                    const rotateX = ((y - centerY) / centerY) * -12;
-                    const rotateY = ((x - centerX) / centerX) * 12;
-                    
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                });
-                
-                // Snap back to normal when mouse leaves
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+    <div class="nav-links">
+
+      <a href="tools.html">Tools</a>
+
+      <a href="#" class="active">
+        Cube Solver
+      </a>
+
+      <a href="algorithms.html">
+        Algorithms
+      </a>
+
+      <a href="learn.html">
+        Learn
+      </a>
+
+      <a href="about.html">
+        About
+      </a>
+
+    </div>
+
+    <div>
+
+      <button
+        id="shareBtn"
+        class="nav-button"
+        type="button">
+
+        <i class="fas fa-share-nodes mr-1"></i>
+
+        Share
+
+      </button>
+
+    </div>
+
+  </div>
+
+</nav>
+
+
+<main class="page">
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+  <h1>
+    3D RUBIK'S CUBE SOLVER
+  </h1>
+
+  <p>
+
+    Paint your cube • Get an exact solution •
+    Watch every move in 3D • Master your cube.
+
+    Velqur combines an interactive glossy Rubik's Cube,
+    cube-state validation and a Kociemba two-phase solver
+    into one browser-based speedcubing tool.
+
+  </p>
+
+  <div class="badges">
+
+    <div class="badge">
+      <i class="fas fa-cube"></i>
+      3D Interactive
+    </div>
+
+    <div class="badge">
+      <i class="fas fa-bolt"></i>
+      Kociemba Solver
+    </div>
+
+    <div class="badge">
+      <i class="fas fa-shield-halved"></i>
+      100% Browser Based
+    </div>
+
+    <div class="badge">
+      <i class="fas fa-mobile-screen"></i>
+      PC + Mobile
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ===
