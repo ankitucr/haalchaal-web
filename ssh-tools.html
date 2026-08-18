@@ -3,54 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- 🚀 Advanced SEO Meta Tags -->
-    <title>Terminal & SSH Cheat Sheet | Cloud & Local Sync | Velqur</title>
-    <meta name="description" content="Essential mobile terminal SSH commands, cloud instance troubleshooting, and local database sync scripts for developers. Direct server control without GUI.">
-    <meta name="keywords" content="Mobile terminal SSH commands, Direct server control via secure shell, Local database sync scripts, Backend data controller troubleshoot, Linux cheat sheet">
-    <meta name="robots" content="index, follow">
+
+    <!-- 🚀 SEO Meta Tags -->
+    <title>230+ Terminal & SSH Commands Cheat Sheet 2026 | Linux, Docker, Git, DB | Velqur</title>
+    <meta name="description" content="The ultimate terminal & SSH cheat sheet: 230+ commands for Linux, SSH, Git, Docker, Kubernetes, MySQL, PostgreSQL, MongoDB, Redis, npm, pip, cron, systemd, and more. Copy-paste ready, searchable, free.">
+    <meta name="keywords" content="terminal commands cheat sheet, ssh cheat sheet, linux commands, docker commands, git commands, kubectl commands, mysql commands, postgresql commands, npm commands, pip commands, vim commands, mobile terminal SSH commands, direct server control secure shell, local database sync scripts, backend data controller troubleshoot">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="Velqur">
+    <link rel="canonical" href="https://www.velqur.in/terminal-ssh-cheatsheet.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="230+ Terminal & SSH Commands Cheat Sheet | Velqur">
+    <meta property="og:description" content="Every terminal command a developer actually needs — Linux, SSH, Git, Docker, Kubernetes, databases and more. Searchable & copy-paste ready.">
+    <meta property="og:url" content="https://www.velqur.in/terminal-ssh-cheatsheet.html">
+    <meta property="og:site_name" content="Velqur">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="230+ Terminal & SSH Commands Cheat Sheet | Velqur">
+    <meta name="twitter:description" content="Searchable, copy-paste ready terminal cheat sheet — Linux, SSH, Docker, Git, Kubernetes, databases & more.">
 
     <!-- 💰 Google AdSense Code -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6277909939753506" crossorigin="anonymous"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- 🎨 Custom Terminal & Cyberpunk CSS -->
+
+    <!-- JSON-LD structured data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "230+ Terminal & SSH Commands Cheat Sheet",
+      "description": "A categorized, searchable reference of terminal, SSH, Git, Docker, Kubernetes and database commands for developers.",
+      "author": { "@type": "Organization", "name": "Velqur" },
+      "publisher": { "@type": "Organization", "name": "Velqur" },
+      "dateModified": "2026-08-18"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I connect to a cloud server using SSH?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Use ssh -i ~/.ssh/your_key.pem user@server-ip -p port. Make sure your private key file has permissions set to 600 before connecting." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I copy files between local and remote servers?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Use scp for one-off transfers (scp file.txt user@host:/path/) or rsync -avz for incremental, resumable syncs." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between kill and kill -9?",
+          "acceptedAnswer": { "@type": "Answer", "text": "kill sends a graceful termination signal (SIGTERM) that a process can catch and clean up after. kill -9 sends SIGKILL, which force-stops the process immediately with no cleanup." }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I safely back up a MySQL or PostgreSQL database?",
+          "acceptedAnswer": { "@type": "Answer", "text": "For MySQL use mysqldump -u root -p dbname > backup.sql. For PostgreSQL use pg_dump dbname > backup.sql. Store backups off-server and test restores periodically." }
+        }
+      ]
+    }
+    </script>
+
     <style>
         body { background-color: #050505; }
-        
-        /* Neon Glow Accents */
         .glow-purple { box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); }
         .glow-green { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-        
-        /* Terminal Window Styling */
-        .terminal-window {
-            background-color: #0a0a0a;
-            border: 1px solid #1f2937;
-            border-radius: 0.5rem;
-            overflow: hidden;
-        }
-        .terminal-header {
-            background-color: #111827;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #1f2937;
-        }
+        .terminal-window { background-color: #0a0a0a; border: 1px solid #1f2937; border-radius: 0.5rem; overflow: hidden; scroll-margin-top: 90px; }
+        .terminal-header { background-color: #111827; padding: 8px 16px; display: flex; align-items: center; border-bottom: 1px solid #1f2937; }
         .terminal-dots { display: flex; gap: 6px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .dot-red { background-color: #ef4444; }
         .dot-yellow { background-color: #f59e0b; }
         .dot-green { background-color: #10b981; }
-        
-        /* Custom Scrollbar for terminal body */
         .terminal-body::-webkit-scrollbar { width: 6px; }
         .terminal-body::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
-        
-        /* Blinking Cursor */
         .cursor-blink { animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
+        .cmd-row:last-child { margin-bottom: 0 !important; }
+        .level-badge { font-size: 10px; padding: 2px 8px; border-radius: 9999px; letter-spacing: 0.05em; }
+        .level-Beginner { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+        .level-Intermediate { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+        .level-Advanced { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+        .toc-link:hover { color: #a855f7; }
+        ::selection { background: rgba(168,85,247,0.4); }
+        @media (prefers-reduced-motion: reduce) { .cursor-blink, #typewriter { animation: none !important; } }
     </style>
 </head>
 <body class="text-gray-300 font-sans antialiased">
@@ -59,88 +102,57 @@
     <nav class="border-b border-gray-900 bg-black/80 backdrop-blur-md p-4 sticky top-0 z-50 shadow-lg">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <a href="tools.html" class="text-xl font-bold text-green-500 hover:text-green-400 transition"><i class="fas fa-arrow-left mr-2"></i> Back to Tools</a>
-            <span class="text-purple-500 text-sm font-mono tracking-widest"><i class="fas fa-terminal mr-1"></i> ROOT ACCESS</span>
+            <span class="text-purple-500 text-sm font-mono tracking-widest hidden sm:inline"><i class="fas fa-terminal mr-1"></i> ROOT ACCESS</span>
         </div>
     </nav>
 
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto p-6 py-12">
-        <div class="text-center mb-16">
+
+        <!-- Hero -->
+        <header class="text-center mb-12">
             <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4 font-mono">
                 > <span id="typewriter" class="text-purple-500"></span><span class="cursor-blink text-purple-500">_</span>
             </h1>
-            <p class="text-gray-400 max-w-2xl mx-auto text-lg mt-4">Bypass the GUI. Direct server control commands, live cloud instance troubleshooting, and secure database syncs.</p>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg mt-4">Bypass the GUI. <span id="cmd-count" class="text-green-400 font-mono">230+</span> direct server control commands — SSH, Git, Docker, Kubernetes, databases, and cloud instance troubleshooting, all in one searchable reference.</p>
+        </header>
+
+        <!-- Intro copy for SEO / dwell time -->
+        <section class="max-w-3xl mx-auto mb-10 text-gray-400 text-sm leading-relaxed">
+            <p>Whether you're SSH-ing into a cloud instance from your phone, syncing a local database, or debugging a production server at 2 AM, this page collects the terminal commands developers actually reach for — organized by category, tagged by difficulty, and ready to copy with one tap. Bookmark it; it's built to be your default reference instead of re-Googling the same <code class="text-green-400">tar</code> flags every time.</p>
+        </section>
+
+        <!-- Search -->
+        <div class="max-w-2xl mx-auto mb-10">
+            <div class="relative">
+                <i class="fas fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-600"></i>
+                <input id="cmd-search" type="text" placeholder="Search commands... e.g. 'docker', 'ssh key', 'grep'"
+                    class="w-full bg-gray-900 border border-gray-800 rounded-lg py-3 pl-11 pr-4 font-mono text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-600">
+            </div>
+            <p id="search-result-count" class="text-xs text-gray-600 mt-2 font-mono"></p>
         </div>
 
-        <!-- Terminal Grids -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
-            <!-- Terminal 1: Cloud SSH Connection -->
-            <div class="terminal-window glow-purple transition-all hover:border-purple-500">
-                <div class="terminal-header justify-between">
-                    <div class="terminal-dots">
-                        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
-                    </div>
-                    <span class="text-xs text-gray-400 font-mono">user@cloud-instance:~</span>
-                </div>
-                <div class="terminal-body p-5 font-mono text-sm h-64 overflow-y-auto">
-                    <p class="text-gray-500 mb-2"># Secure connection to live cloud systems via mobile/desktop terminal</p>
-                    <div class="flex justify-between items-start mb-6 group">
-                        <code id="cmd-1" class="text-green-400 break-all">ssh -i ~/.ssh/cloud_key.pem root@192.168.1.100 -p 2222</code>
-                        <button onclick="copyCmd('cmd-1', this)" class="text-gray-500 hover:text-purple-400 ml-4 transition"><i class="fas fa-copy"></i></button>
-                    </div>
-
-                    <p class="text-gray-500 mb-2"># Generate a new robust RSA SSH key pair</p>
-                    <div class="flex justify-between items-start mb-6 group">
-                        <code id="cmd-2" class="text-green-400 break-all">ssh-keygen -t rsa -b 4096 -C "admin@velqur.in"</code>
-                        <button onclick="copyCmd('cmd-2', this)" class="text-gray-500 hover:text-purple-400 ml-4 transition"><i class="fas fa-copy"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Terminal 2: Live Server Logs -->
-            <div class="terminal-window glow-green transition-all hover:border-green-500">
-                <div class="terminal-header justify-between">
-                    <div class="terminal-dots">
-                        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
-                    </div>
-                    <span class="text-xs text-gray-400 font-mono">root@backend-controller:~</span>
-                </div>
-                <div class="terminal-body p-5 font-mono text-sm h-64 overflow-y-auto">
-                    <p class="text-gray-500 mb-2"># Tail live terminal logs for backend troubleshooting</p>
-                    <div class="flex justify-between items-start mb-6 group">
-                        <code id="cmd-3" class="text-green-400 break-all">tail -f /var/log/nginx/error.log | grep "CRITICAL"</code>
-                        <button onclick="copyCmd('cmd-3', this)" class="text-gray-500 hover:text-green-400 ml-4 transition"><i class="fas fa-copy"></i></button>
-                    </div>
-
-                    <p class="text-gray-500 mb-2"># Check running PM2 node instances dynamically</p>
-                    <div class="flex justify-between items-start mb-6 group">
-                        <code id="cmd-4" class="text-green-400 break-all">pm2 status && pm2 monit</code>
-                        <button onclick="copyCmd('cmd-4', this)" class="text-gray-500 hover:text-green-400 ml-4 transition"><i class="fas fa-copy"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Terminal 3: Local Database Sync -->
-            <div class="terminal-window transition-all hover:border-blue-500 lg:col-span-2">
-                <div class="terminal-header justify-between">
-                    <div class="terminal-dots">
-                        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
-                    </div>
-                    <span class="text-xs text-gray-400 font-mono">admin@local-db-sync:~</span>
-                </div>
-                <div class="terminal-body p-5 font-mono text-sm">
-                    <p class="text-gray-500 mb-2"># Safely dump remote database and sync to local system via SSH</p>
-                    <div class="bg-gray-900 p-4 rounded border border-gray-800 flex justify-between items-center">
-                        <code id="cmd-5" class="text-blue-400 break-all">mysqldump -u root -p core_database > backup.sql && scp root@remote:/backup.sql ./local_dir/</code>
-                        <button onclick="copyCmd('cmd-5', this)" class="text-gray-400 hover:text-blue-400 ml-4 transition"><i class="fas fa-copy text-lg"></i></button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        <!-- Table of contents -->
+        <nav id="toc" aria-label="Command categories" class="max-w-4xl mx-auto mb-16 flex flex-wrap gap-2 justify-center"></nav>
 
         <!-- AdSense Display Space -->
+        <div class="mb-16 text-center p-4 border border-dashed border-gray-800 bg-gray-900/50 rounded-xl text-gray-600 font-mono text-sm">
+            <span>/* ADVERTISEMENT BLOCK */</span>
+            <ins class="adsbygoogle mt-2"
+                 style="display:block"
+                 data-ad-client="ca-pub-6277909939753506"
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <!-- Terminal Grids: rendered by JS -->
+        <div id="terminal-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8"></div>
+
+        <p id="no-results" class="hidden text-center text-gray-600 font-mono py-16">No commands match your search. Try another keyword.</p>
+
+        <!-- Mid-content AdSense slot -->
         <div class="mt-16 text-center p-4 border border-dashed border-gray-800 bg-gray-900/50 rounded-xl text-gray-600 font-mono text-sm">
             <span>/* ADVERTISEMENT BLOCK */</span>
             <ins class="adsbygoogle mt-2"
@@ -149,15 +161,421 @@
                  data-ad-slot="auto"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
+
+        <!-- FAQ section for SEO + engagement -->
+        <section class="max-w-3xl mx-auto mt-20" aria-label="Frequently asked questions">
+            <h2 class="text-2xl font-bold text-white mb-6 font-mono">// Frequently Asked Questions</h2>
+            <div class="space-y-3" id="faq-list"></div>
+        </section>
+
+        <footer class="mt-20 pt-8 border-t border-gray-900 text-center text-gray-600 text-xs font-mono">
+            <p>Velqur Terminal Reference — copy responsibly, test in staging first.</p>
+        </footer>
 
     </main>
 
-    <!-- JavaScript For Copy & Typewriter -->
     <script>
+        // ---------------------------------------------------------------
+        // Command data — categorized, tagged by difficulty
+        // ---------------------------------------------------------------
+        const categories = [
+          { id:"basic-nav", title:"Basic Navigation", icon:"fas fa-compass", level:"Beginner", prompt:"user@local:~",
+            commands:[
+              ["Print current working directory","pwd"],
+              ["List files with details, hidden included","ls -la"],
+              ["List with human-readable sizes, colorized","ls -lh --color=auto"],
+              ["Go up one directory","cd .."],
+              ["Jump to home directory","cd ~"],
+              ["Show directory tree, 2 levels deep","tree -L 2"],
+              ["Find all JS files recursively","find . -name \"*.js\""],
+              ["Locate a file by indexed name","locate filename"],
+              ["Check where a binary lives","which node"],
+              ["Show last 20 commands run","history | tail -20"]
+            ]},
+          { id:"file-ops", title:"File Operations", icon:"fas fa-folder-tree", level:"Beginner", prompt:"user@local:~",
+            commands:[
+              ["Create an empty file","touch newfile.txt"],
+              ["Create nested folders in one go","mkdir -p project/src/components"],
+              ["Copy a directory recursively","cp -r src/ backup/"],
+              ["Rename or move a file","mv old.txt new.txt"],
+              ["Force-delete a directory","rm -rf node_modules"],
+              ["Sync a folder to a remote server","rsync -avz ./dist/ user@server:/var/www/"],
+              ["Create a symbolic link","ln -s /path/to/file symlink"],
+              ["Merge multiple files into one","cat file1 file2 > merged.txt"],
+              ["Show detailed file metadata","stat filename"],
+              ["Compare two files line by line","diff file1.txt file2.txt"]
+            ]},
+          { id:"permissions", title:"Permissions & Ownership", icon:"fas fa-lock", level:"Beginner", prompt:"root@server:~",
+            commands:[
+              ["Make a script executable","chmod 755 script.sh"],
+              ["Set read/write on all config files","chmod -R 644 *.conf"],
+              ["Change owner recursively","chown -R www-data:www-data /var/www"],
+              ["Change group ownership","chgrp developers project/"],
+              ["Set default permission mask","umask 022"],
+              ["Edit sudoers file safely","sudo visudo"],
+              ["List your sudo privileges","sudo -l"],
+              ["View access control list","getfacl file.txt"],
+              ["Grant a specific user rwx via ACL","setfacl -m u:john:rwx file.txt"],
+              ["Change a user's password","passwd username"]
+            ]},
+          { id:"process-mgmt", title:"Process Management", icon:"fas fa-microchip", level:"Intermediate", prompt:"user@local:~",
+            commands:[
+              ["Find running Node processes","ps aux | grep node"],
+              ["Live process viewer","top"],
+              ["Better interactive process viewer","htop"],
+              ["Force-kill a process by PID","kill -9 1234"],
+              ["Kill all processes by name","killall node"],
+              ["Kill process matching a command pattern","pkill -f \"npm start\""],
+              ["Run a process immune to hangups, in background","nohup node server.js &"],
+              ["List background jobs with PIDs","jobs -l"],
+              ["Bring job 1 to foreground","fg %1"],
+              ["Send job 1 to background","bg %1"],
+              ["Run with lower CPU priority","nice -n 10 ./heavy-script.sh"]
+            ]},
+          { id:"networking", title:"Networking & Connectivity", icon:"fas fa-network-wired", level:"Intermediate", prompt:"user@local:~",
+            commands:[
+              ["Check host reachability, 4 packets","ping -c 4 google.com"],
+              ["Fetch response headers only","curl -I https://api.example.com"],
+              ["Download a file from the web","wget https://example.com/file.zip"],
+              ["Show listening ports and PIDs","netstat -tulnp"],
+              ["Modern replacement for netstat","ss -tulwn"],
+              ["Trace the network path to a host","traceroute google.com"],
+              ["Resolve a domain's DNS records","nslookup example.com"],
+              ["Short-form DNS lookup","dig example.com +short"],
+              ["Show network interface config (legacy)","ifconfig"],
+              ["Show IP addresses (modern)","ip addr show"],
+              ["Test a raw TCP connection","nc -zv host 22"],
+              ["Legacy port connectivity test","telnet host 80"]
+            ]},
+          { id:"ssh-remote", title:"SSH & Remote Access", icon:"fas fa-key", level:"Intermediate", prompt:"user@cloud-instance:~",
+            commands:[
+              ["Connect to a remote server","ssh user@host"],
+              ["Connect with a specific key and port","ssh -i ~/.ssh/cloud_key.pem root@192.168.1.100 -p 2222"],
+              ["Generate a modern Ed25519 key pair","ssh-keygen -t ed25519 -C \"you@example.com\""],
+              ["Push your public key to a server","ssh-copy-id user@host"],
+              ["Copy a single file to a remote host","scp file.txt user@host:/remote/path/"],
+              ["Copy a whole folder to a remote host","scp -r ./dist user@host:/var/www/"],
+              ["Sync over SSH, resumable","rsync -avz -e ssh ./local/ user@host:/remote/"],
+              ["Forward a remote port to localhost","ssh -L 8080:localhost:80 user@host"],
+              ["Background tunnel for a remote database","ssh -N -f -L 3306:localhost:3306 user@host"],
+              ["Start a persistent terminal session","tmux new -s work"],
+              ["Alternative persistent session manager","screen -S session"]
+            ]},
+          { id:"sys-monitoring", title:"System Monitoring", icon:"fas fa-heart-pulse", level:"Intermediate", prompt:"root@backend-controller:~",
+            commands:[
+              ["Show disk usage per mounted volume","df -h"],
+              ["Show folder sizes in current directory","du -sh *"],
+              ["Show memory usage in MB","free -m"],
+              ["Sample CPU/memory/IO stats 5 times","vmstat 1 5"],
+              ["Show extended disk I/O stats","iostat -x 1"],
+              ["Show system load averages","uptime"],
+              ["Show recent kernel messages","dmesg | tail"],
+              ["Show recent systemd journal errors","journalctl -xe"],
+              ["Live-refresh disk usage every second","watch -n 1 \"df -h\""],
+              ["Sample CPU utilization over time","sar -u 1 5"]
+            ]},
+          { id:"disk-storage", title:"Disk & Storage", icon:"fas fa-hard-drive", level:"Intermediate", prompt:"root@server:~",
+            commands:[
+              ["List block devices as a tree","lsblk"],
+              ["List partition tables","fdisk -l"],
+              ["Mount a device to a folder","mount /dev/sdb1 /mnt/data"],
+              ["Unmount a device","umount /mnt/data"],
+              ["Format a partition as ext4","mkfs.ext4 /dev/sdb1"],
+              ["Check and repair a filesystem","fsck /dev/sdb1"],
+              ["Create a 100MB test image file","dd if=/dev/zero of=test.img bs=1M count=100"],
+              ["Interactive partition editor","parted /dev/sdb print"],
+              ["Show UUIDs and filesystem types","blkid"],
+              ["Show active swap usage","swapon -s"]
+            ]},
+          { id:"apt-pkg", title:"Package Management (APT)", icon:"fas fa-box-open", level:"Beginner", prompt:"root@server:~",
+            commands:[
+              ["Update package lists and upgrade all","sudo apt update && sudo apt upgrade -y"],
+              ["Install a package","sudo apt install nginx -y"],
+              ["Remove a package and its configs","sudo apt remove --purge package-name"],
+              ["Clean up unused dependencies","sudo apt autoremove"],
+              ["List all installed packages","apt list --installed"],
+              ["Search the package cache","apt-cache search nginx"],
+              ["Install a local .deb file","sudo dpkg -i package.deb"],
+              ["Add a third-party PPA repository","sudo add-apt-repository ppa:name/ppa"],
+              ["Show detailed info on a package","apt show nginx"]
+            ]},
+          { id:"npm-node", title:"NPM & Node.js", icon:"fab fa-node-js", level:"Beginner", prompt:"user@local:~/project",
+            commands:[
+              ["Scaffold a new package.json","npm init -y"],
+              ["Install and save a dependency","npm install express --save"],
+              ["Install a dev-only dependency","npm install -D nodemon"],
+              ["Remove a package","npm uninstall package-name"],
+              ["Run the build script","npm run build"],
+              ["List outdated dependencies","npm outdated"],
+              ["Update all dependencies","npm update"],
+              ["Scaffold a React app instantly","npx create-react-app my-app"],
+              ["List globally installed packages","npm ls -g --depth=0"],
+              ["Check installed Node & npm versions","node --version && npm --version"]
+            ]},
+          { id:"pip-python", title:"Python & pip", icon:"fab fa-python", level:"Beginner", prompt:"user@local:~/project",
+            commands:[
+              ["Create an isolated virtual environment","python3 -m venv venv"],
+              ["Activate the virtual environment","source venv/bin/activate"],
+              ["Install all dependencies from a file","pip install -r requirements.txt"],
+              ["Freeze current packages to a file","pip freeze > requirements.txt"],
+              ["Upgrade pip itself","pip install --upgrade pip"],
+              ["Remove a package","pip uninstall package-name"],
+              ["Serve current folder over HTTP","python3 -m http.server 8000"],
+              ["Run a Django development server","python3 manage.py runserver"],
+              ["List packages with newer versions available","pip list --outdated"]
+            ]},
+          { id:"git-vcs", title:"Git & Version Control", icon:"fas fa-code-branch", level:"Intermediate", prompt:"user@local:~/repo",
+            commands:[
+              ["Initialize a new repository","git init"],
+              ["Clone a remote repository","git clone https://github.com/user/repo.git"],
+              ["Check current status","git status"],
+              ["Stage and commit all changes","git add . && git commit -m \"message\""],
+              ["Push to the main branch","git push origin main"],
+              ["Pull and rebase on top of remote","git pull --rebase origin main"],
+              ["Delete a merged local branch","git branch -d feature-branch"],
+              ["Create and switch to a new branch","git checkout -b new-feature"],
+              ["Merge a feature branch in","git merge feature-branch"],
+              ["View a compact visual commit graph","git log --oneline --graph --all"],
+              ["Stash changes, then reapply later","git stash && git stash pop"],
+              ["Undo the last commit, keep changes staged","git reset --soft HEAD~1"]
+            ]},
+          { id:"docker-cmds", title:"Docker", icon:"fab fa-docker", level:"Advanced", prompt:"user@local:~/project",
+            commands:[
+              ["Build an image from the current folder","docker build -t myapp:latest ."],
+              ["Run a container, detached, port-mapped","docker run -d -p 3000:3000 myapp"],
+              ["List all containers, running or not","docker ps -a"],
+              ["Open a shell inside a running container","docker exec -it container_id bash"],
+              ["Stream a container's logs live","docker logs -f container_id"],
+              ["Stop every running container","docker stop $(docker ps -aq)"],
+              ["Remove every stopped container","docker rm $(docker ps -aq)"],
+              ["Remove every unused image","docker rmi $(docker images -q)"],
+              ["Start a multi-container stack","docker-compose up -d"],
+              ["Reclaim disk space from unused data","docker system prune -a"]
+            ]},
+          { id:"mysql-db", title:"MySQL", icon:"fas fa-database", level:"Intermediate", prompt:"admin@local-db-sync:~",
+            commands:[
+              ["Log into the MySQL shell","mysql -u root -p"],
+              ["Create a new database","CREATE DATABASE myapp;"],
+              ["List all databases","SHOW DATABASES;"],
+              ["Switch to a database","USE myapp;"],
+              ["List tables in current database","SHOW TABLES;"],
+              ["Dump a database to a SQL file","mysqldump -u root -p myapp > backup.sql"],
+              ["Restore a database from a SQL file","mysql -u root -p myapp < backup.sql"],
+              ["Grant full privileges to a user","GRANT ALL PRIVILEGES ON myapp.* TO 'user'@'localhost';"],
+              ["Reload the grant tables","FLUSH PRIVILEGES;"]
+            ]},
+          { id:"postgres-db", title:"PostgreSQL", icon:"fas fa-database", level:"Intermediate", prompt:"admin@local-db-sync:~",
+            commands:[
+              ["Log into the psql shell","psql -U postgres"],
+              ["Create a new database","CREATE DATABASE myapp;"],
+              ["List all databases","\\l"],
+              ["Connect to a specific database","\\c myapp"],
+              ["List tables in current database","\\dt"],
+              ["Dump a database to a SQL file","pg_dump myapp > backup.sql"],
+              ["Restore a database from a SQL file","psql myapp < backup.sql"],
+              ["Create a new role with a password","CREATE USER dev WITH PASSWORD 'pass';"],
+              ["Grant full privileges to a role","GRANT ALL PRIVILEGES ON DATABASE myapp TO dev;"]
+            ]},
+          { id:"nosql-db", title:"MongoDB & Redis", icon:"fas fa-layer-group", level:"Intermediate", prompt:"admin@local-db-sync:~",
+            commands:[
+              ["Open the MongoDB shell","mongosh"],
+              ["Switch to (or create) a database","use myapp"],
+              ["Query a collection, formatted output","db.users.find().pretty()"],
+              ["Export a database to a backup folder","mongodump --db myapp --out ./backup"],
+              ["Restore a database from a backup folder","mongorestore --db myapp ./backup/myapp"],
+              ["Open the Redis CLI","redis-cli"],
+              ["Check the Redis server is alive","redis-cli ping"],
+              ["Set a key's value","redis-cli SET key value"],
+              ["Read a key's value","redis-cli GET key"],
+              ["Wipe all keys in all databases","redis-cli FLUSHALL"]
+            ]},
+          { id:"text-processing", title:"Text Processing", icon:"fas fa-filter", level:"Advanced", prompt:"root@backend-controller:~",
+            commands:[
+              ["Recursively search for a string","grep -r \"TODO\" ./src"],
+              ["Case-insensitive search in one file","grep -i \"error\" logfile.txt"],
+              ["Count matching lines","grep -c \"pattern\" file.txt"],
+              ["Replace text in-place across a file","sed -i 's/old/new/g' file.txt"],
+              ["Print only lines 10 through 20","sed -n '10,20p' file.txt"],
+              ["Print the first column of each line","awk '{print $1}' file.txt"],
+              ["Print the 2nd comma-separated field","awk -F, '{print $2}' data.csv"],
+              ["Sort and count unique lines","sort file.txt | uniq -c"],
+              ["Count lines in a file","wc -l file.txt"],
+              ["Extract specific CSV columns","cut -d, -f1,3 data.csv"]
+            ]},
+          { id:"compression", title:"Compression & Archives", icon:"fas fa-file-zipper", level:"Beginner", prompt:"user@local:~",
+            commands:[
+              ["Create a gzipped tarball","tar -czvf archive.tar.gz folder/"],
+              ["Extract a gzipped tarball","tar -xzvf archive.tar.gz"],
+              ["Create a zip archive","zip -r archive.zip folder/"],
+              ["Extract a zip archive","unzip archive.zip"],
+              ["Compress a single file","gzip file.txt"],
+              ["Decompress a gzipped file","gunzip file.txt.gz"],
+              ["Create a high-ratio 7z archive","7z a archive.7z folder/"],
+              ["Compress with maximum xz compression","xz -9 file.txt"]
+            ]},
+          { id:"cron-scheduling", title:"Cron & Task Scheduling", icon:"fas fa-clock", level:"Intermediate", prompt:"root@server:~",
+            commands:[
+              ["Edit your crontab","crontab -e"],
+              ["List your current cron jobs","crontab -l"],
+              ["Run a script every day at 2 AM","0 2 * * * /path/to/backup.sh"],
+              ["Ping an endpoint every 15 minutes","*/15 * * * * curl -s https://api.com/ping"],
+              ["Schedule a one-off job for tomorrow","at 10:00 tomorrow"],
+              ["List all active systemd timers","systemctl list-timers"],
+              ["Remove all your cron jobs","crontab -r"]
+            ]},
+          { id:"systemd-services", title:"Systemd & Services", icon:"fas fa-gears", level:"Intermediate", prompt:"root@server:~",
+            commands:[
+              ["Start a service","sudo systemctl start nginx"],
+              ["Stop a service","sudo systemctl stop nginx"],
+              ["Restart a service","sudo systemctl restart nginx"],
+              ["Check a service's status","sudo systemctl status nginx"],
+              ["Enable a service on boot","sudo systemctl enable nginx"],
+              ["Disable a service from boot","sudo systemctl disable nginx"],
+              ["Reload unit files after editing them","sudo systemctl daemon-reload"],
+              ["Stream a service's live logs","journalctl -u nginx -f"]
+            ]},
+          { id:"user-mgmt", title:"User Management", icon:"fas fa-users-gear", level:"Intermediate", prompt:"root@server:~",
+            commands:[
+              ["Create a new user","sudo adduser newuser"],
+              ["Grant a user sudo access","sudo usermod -aG sudo newuser"],
+              ["Delete a user","sudo deluser newuser"],
+              ["Set a user's password","sudo passwd newuser"],
+              ["Show the current user","whoami"],
+              ["Show a user's ID and groups","id username"],
+              ["List currently logged-in users","who"],
+              ["Show recent login history","last -10"],
+              ["Switch to another user","su - username"]
+            ]},
+          { id:"firewall-security", title:"Firewall & Security", icon:"fas fa-shield-halved", level:"Advanced", prompt:"root@server:~",
+            commands:[
+              ["Enable the uncomplicated firewall","sudo ufw enable"],
+              ["Allow SSH through the firewall","sudo ufw allow 22/tcp"],
+              ["Allow HTTPS traffic","sudo ufw allow 443"],
+              ["Show detailed firewall status","sudo ufw status verbose"],
+              ["List low-level iptables rules","sudo iptables -L -n"],
+              ["Check banned-IP status","sudo fail2ban-client status"],
+              ["Generate a self-signed TLS certificate","sudo openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365"],
+              ["Issue a free Let's Encrypt certificate","sudo certbot --nginx -d example.com"]
+            ]},
+          { id:"kubernetes", title:"Kubernetes", icon:"fas fa-dharmachakra", level:"Advanced", prompt:"user@local:~",
+            commands:[
+              ["List all pods","kubectl get pods"],
+              ["List all cluster nodes","kubectl get nodes"],
+              ["Apply a manifest file","kubectl apply -f deployment.yaml"],
+              ["Delete a pod","kubectl delete pod pod-name"],
+              ["Stream a pod's logs","kubectl logs -f pod-name"],
+              ["Open a shell inside a pod","kubectl exec -it pod-name -- bash"],
+              ["Scale a deployment to 3 replicas","kubectl scale deployment myapp --replicas=3"],
+              ["Show detailed pod diagnostics","kubectl describe pod pod-name"],
+              ["List all services","kubectl get svc"]
+            ]},
+          { id:"vim-essentials", title:"Vim Essentials", icon:"fas fa-keyboard", level:"Intermediate", prompt:"user@local:~",
+            commands:[
+              ["Open a file in Vim","vim filename"],
+              ["Enter insert mode","i"],
+              ["Save and quit",":wq"],
+              ["Quit without saving",":q!"],
+              ["Delete the current line","dd"],
+              ["Copy (yank) the current line","yy"],
+              ["Paste after the cursor","p"],
+              ["Search forward for a term","/searchterm"],
+              ["Replace all matches on every line",":%s/old/new/g"],
+              ["Jump to top / bottom of file","gg / G"]
+            ]}
+        ];
+
+        // ---------------------------------------------------------------
+        // Render
+        // ---------------------------------------------------------------
+        const grid = document.getElementById('terminal-grid');
+        const toc = document.getElementById('toc');
+        const totalCmds = categories.reduce((n,c) => n + c.commands.length, 0);
+        document.getElementById('cmd-count').textContent = totalCmds + '+';
+
+        function escapeHtml(str){
+            return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        categories.forEach((cat, idx) => {
+            // TOC pill
+            const a = document.createElement('a');
+            a.href = '#' + cat.id;
+            a.className = 'toc-link text-xs font-mono px-3 py-1.5 rounded-full border border-gray-800 bg-gray-900 text-gray-400 hover:border-purple-500 transition';
+            a.textContent = cat.title;
+            toc.appendChild(a);
+
+            // Card
+            const card = document.createElement('article');
+            card.id = cat.id;
+            card.className = 'terminal-window transition-all hover:border-purple-500 category-card' + (idx % 5 === 0 ? ' lg:col-span-2' : '');
+            card.dataset.category = cat.id;
+
+            const cmdRows = cat.commands.map(([comment, cmd]) => `
+                <div class="cmd-row mb-5 group" data-comment="${escapeHtml(comment.toLowerCase())}" data-cmd="${escapeHtml(cmd.toLowerCase())}">
+                    <p class="text-gray-500 mb-1.5 text-xs">/* ${escapeHtml(comment)} */</p>
+                    <div class="flex justify-between items-start gap-3">
+                        <code class="text-green-400 break-all text-sm">${escapeHtml(cmd)}</code>
+                        <button class="copy-btn shrink-0 text-gray-500 hover:text-purple-400 transition" data-clip="${escapeHtml(cmd)}" aria-label="Copy command">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>`).join('');
+
+            card.innerHTML = `
+                <div class="terminal-header justify-between">
+                    <div class="terminal-dots">
+                        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="level-badge level-${cat.level}">${cat.level}</span>
+                        <span class="text-xs text-gray-400 font-mono"><i class="${cat.icon} mr-1"></i>${cat.prompt}</span>
+                    </div>
+                </div>
+                <h2 class="text-sm font-bold text-white px-5 pt-4 font-mono tracking-wide">${cat.title}</h2>
+                <div class="terminal-body p-5 pt-3 font-mono text-sm max-h-80 overflow-y-auto">${cmdRows}</div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Copy handling via delegation
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.copy-btn');
+            if (!btn) return;
+            navigator.clipboard.writeText(btn.dataset.clip).then(() => {
+                const original = btn.innerHTML;
+                btn.innerHTML = '<span class="text-xs font-bold text-white bg-green-600 px-2 py-1 rounded">COPIED</span>';
+                setTimeout(() => { btn.innerHTML = original; }, 1500);
+            });
+        });
+
+        // Live search / filter
+        const searchInput = document.getElementById('cmd-search');
+        const resultCount = document.getElementById('search-result-count');
+        const noResults = document.getElementById('no-results');
+
+        searchInput.addEventListener('input', () => {
+            const q = searchInput.value.trim().toLowerCase();
+            let visibleCmds = 0;
+            document.querySelectorAll('.category-card').forEach(card => {
+                let anyVisible = false;
+                card.querySelectorAll('.cmd-row').forEach(row => {
+                    const match = !q || row.dataset.comment.includes(q) || row.dataset.cmd.includes(q);
+                    row.style.display = match ? '' : 'none';
+                    if (match) { anyVisible = true; visibleCmds++; }
+                });
+                card.style.display = anyVisible ? '' : 'none';
+            });
+            if (q) {
+                resultCount.textContent = visibleCmds + ' command' + (visibleCmds === 1 ? '' : 's') + ' found';
+                noResults.classList.toggle('hidden', visibleCmds !== 0);
+            } else {
+                resultCount.textContent = '';
+                noResults.classList.add('hidden');
+            }
+        });
+
         // Typewriter Effect for Header
         const textToType = "Server Commands & SSH";
         let i = 0;
@@ -165,29 +583,26 @@
             if (i < textToType.length) {
                 document.getElementById("typewriter").innerHTML += textToType.charAt(i);
                 i++;
-                setTimeout(typeWriter, 100);
+                setTimeout(typeWriter, 90);
             }
         }
-        
-        // Start typing effect on load
-        window.onload = () => {
-            setTimeout(typeWriter, 500);
-        };
+        window.addEventListener('load', () => setTimeout(typeWriter, 400));
 
-        // Custom Terminal Copy Function
-        function copyCmd(elementId, btnElement) {
-            var copyText = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(copyText).then(() => {
-                let originalHTML = btnElement.innerHTML;
-                
-                // Show 'Copied' in terminal style
-                btnElement.innerHTML = '<span class="text-xs font-bold text-white bg-green-600 px-2 py-1 rounded">[ COPIED ]</span>';
-                
-                setTimeout(() => {
-                    btnElement.innerHTML = originalHTML;
-                }, 2000);
-            });
-        }
+        // FAQ (kept in sync with JSON-LD above)
+        const faqs = [
+            ["How do I connect to a cloud server using SSH?", "Use <code class='text-green-400'>ssh -i ~/.ssh/your_key.pem user@server-ip -p port</code>. Make sure your private key file has permissions set to 600 before connecting."],
+            ["How do I copy files between local and remote servers?", "Use <code class='text-green-400'>scp</code> for one-off transfers or <code class='text-green-400'>rsync -avz</code> for incremental, resumable syncs."],
+            ["What's the difference between kill and kill -9?", "<code class='text-green-400'>kill</code> sends a graceful SIGTERM a process can catch and clean up after. <code class='text-green-400'>kill -9</code> force-stops it immediately, no cleanup."],
+            ["How do I safely back up a MySQL or PostgreSQL database?", "MySQL: <code class='text-green-400'>mysqldump -u root -p dbname > backup.sql</code>. PostgreSQL: <code class='text-green-400'>pg_dump dbname > backup.sql</code>. Store backups off-server and test restores periodically."]
+        ];
+        const faqList = document.getElementById('faq-list');
+        faqs.forEach(([q, a]) => {
+            const el = document.createElement('details');
+            el.className = 'bg-gray-900 border border-gray-800 rounded-lg p-4 open:border-purple-500 transition';
+            el.innerHTML = `<summary class="cursor-pointer font-semibold text-gray-200 text-sm">${q}</summary>
+                             <p class="text-gray-500 text-sm mt-3 leading-relaxed">${a}</p>`;
+            faqList.appendChild(el);
+        });
     </script>
 </body>
 </html>
