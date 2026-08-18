@@ -9,8 +9,8 @@
     <meta name="description" content="Free 3D Rubik's Cube Solver online. Paint your cube colors on an interactive glossy 3D cube, hit Solve, and get the exact step-by-step algorithm (R U R' U'...) with animated playback. Powered by the Kociemba two-phase algorithm. Plus advanced speedcubing formulas: F2L, OLL, PLL.">
     <meta name="keywords" content="3D Rubik's Cube Solver Online, Rubik's Cube Solver 3x3, Cube Solver Color Input, Online Rubik Solver Step by Step, Kociemba Algorithm Solver, Rubik Cube Solution Finder, Speedcubing advanced algorithms, Layer-by-layer optimization formulas, Rubik's cube execution strategies, Solve time reduction techniques, CFOP OLL PLL algorithms, Interactive 3D Cube Solver, Rubik Cube Formula Calculator">
     <meta name="robots" content="index, follow">
-    <meta name="author" content="Velqur Cube Academy">
-    <meta name="theme-color" content="#0B141A">
+    <meta name="author" content="Velqur Cube Solver">
+    <meta name="theme-color" content="#050A14">
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website">
@@ -30,7 +30,7 @@
       "operatingSystem": "Any (Web Browser)",
       "description": "Interactive 3D Rubik's Cube solver with color input, Kociemba two-phase solving engine and step-by-step animated solution playback.",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-      "featureList": "3D cube color input, Instant cube solving, Step-by-step move animation, Scramble generator, Speedcubing algorithm library (F2L, OLL, PLL)"
+      "featureList": "3D cube color input, Instant cube solving, Step-by-step move animation, Scramble generator, Shareable cube state links, Speedcubing algorithm library (F2L, OLL, PLL)"
     }
     </script>
 
@@ -39,6 +39,8 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
     <!-- 🧠 Kociemba Two-Phase Solver Engine (client-side, GitHub Pages safe) -->
     <script src="https://cdn.jsdelivr.net/npm/cubejs@1.3.0/lib/cube.js"></script>
@@ -46,9 +48,30 @@
 
     <!-- 🎨 Custom 3D Glossy & Glassmorphism CSS -->
     <style>
-        body { background-color: #0B141A; overflow-x: hidden; }
+        :root { --panel-border: rgba(94, 234, 212, 0.10); }
+        html { scroll-behavior: smooth; }
+        body {
+            background:
+                radial-gradient(ellipse 70% 40% at 70% -10%, rgba(37, 99, 235, 0.16), transparent 60%),
+                radial-gradient(ellipse 50% 35% at 10% 20%, rgba(16, 185, 129, 0.08), transparent 60%),
+                #050A14;
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+        }
+        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
 
-        /* The Glossy Glass Card */
+        /* Glass panel (matches reference UI) */
+        .panel {
+            background: linear-gradient(165deg, rgba(17, 30, 50, 0.72), rgba(7, 12, 24, 0.88));
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            box-shadow: 0 24px 70px -24px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255,255,255,0.05);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        .label-green { color: #4ADE80; font-size: 11px; letter-spacing: 0.22em; font-weight: 800; text-transform: uppercase; }
+
+        /* Glossy glass card (algorithms section) */
         .glossy-card {
             background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
             backdrop-filter: blur(16px);
@@ -61,232 +84,359 @@
             transition: transform 0.1s ease-out;
             transform-style: preserve-3d;
         }
-
-        /* The Moving Shine/Glare Effect */
         .glossy-card::before {
             content: '';
-            position: absolute;
-            top: 0; left: -100%;
+            position: absolute; top: 0; left: -100%;
             width: 50%; height: 100%;
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
             transform: skewX(-25deg);
             animation: shine 5s infinite;
-            pointer-events: none;
-            z-index: 10;
+            pointer-events: none; z-index: 10;
         }
+        @keyframes shine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+        .algo-text { transform: translateZ(30px); text-shadow: 0px 4px 10px rgba(0,0,0,0.8); }
 
-        @keyframes shine {
-            0% { left: -100%; }
-            20% { left: 200%; }
-            100% { left: 200%; }
-        }
-
-        /* Algorithm Text Pop out (3D Layering) */
-        .algo-text {
-            transform: translateZ(30px);
-            text-shadow: 0px 4px 10px rgba(0,0,0,0.8);
-        }
-
-        /* Mini CSS Cube Faces */
+        /* Mini CSS cube faces */
         .cube-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; transform: translateZ(20px); }
         .c-cell { width: 14px; height: 14px; border-radius: 2px; }
-        .c-yellow { background-color: #FACC15; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
+        .c-yellow { background-color: #FFD500; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
         .c-gray { background-color: #374151; box-shadow: inset 0 0 4px rgba(0,0,0,0.5); }
-        .c-red { background-color: #EF4444; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
-        .c-blue { background-color: #3B82F6; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
-        .c-green { background-color: #10B981; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
+        .c-red { background-color: #FF3B30; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
+        .c-blue { background-color: #2E62FF; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
+        .c-green { background-color: #00C853; box-shadow: inset 0 0 4px rgba(0,0,0,0.3); }
 
-        /* ===== 3D SOLVER STAGE ===== */
+        /* ===== 3D STAGE ===== */
         #stage-wrap {
             position: relative;
-            border-radius: 24px;
+            border-radius: 18px;
             background:
-                radial-gradient(ellipse 60% 45% at 50% 62%, rgba(249,115,22,0.14), transparent 70%),
-                radial-gradient(ellipse 45% 35% at 30% 25%, rgba(59,130,246,0.10), transparent 70%),
-                linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.005));
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 25px 80px -20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08);
+                radial-gradient(ellipse 62% 48% at 50% 60%, rgba(46, 98, 255, 0.14), transparent 70%),
+                radial-gradient(ellipse 45% 35% at 30% 22%, rgba(0, 200, 83, 0.08), transparent 70%),
+                linear-gradient(160deg, rgba(20, 34, 58, 0.6), rgba(5, 9, 18, 0.85));
+            border: 1px solid rgba(94, 234, 212, 0.12);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -30px 60px -30px rgba(46,98,255,0.15);
             overflow: hidden;
         }
         #stage-wrap::after {
             content: '';
             position: absolute; inset: 0;
-            background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.045) 45%, transparent 60%);
+            background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.04) 45%, transparent 60%);
             pointer-events: none;
         }
         #cube-canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
         #cube-canvas:active { cursor: grabbing; }
-
-        .stage-hint {
-            position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
-            font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-            color: rgba(156,163,175,0.75);
-            background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.08);
-            padding: 6px 14px; border-radius: 999px; backdrop-filter: blur(6px);
-            pointer-events: none; white-space: nowrap;
+        .stage-tip {
+            display: flex; gap: 10px; align-items: flex-start;
+            background: rgba(4, 8, 16, 0.65);
+            border: 1px solid rgba(250, 204, 21, 0.18);
+            border-radius: 12px; padding: 12px 14px;
+            font-size: 12.5px; color: #9CA3AF; line-height: 1.5;
         }
 
-        /* Color Palette */
+        /* Color swatches with labels */
         .swatch {
-            width: 46px; height: 46px; border-radius: 14px; cursor: pointer;
-            border: 2px solid rgba(255,255,255,0.15);
-            box-shadow: inset 0 -6px 12px rgba(0,0,0,0.35), inset 0 3px 6px rgba(255,255,255,0.35), 0 6px 16px rgba(0,0,0,0.5);
-            transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
-            position: relative;
+            position: relative; cursor: pointer;
+            height: 62px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 800; letter-spacing: 0.02em;
+            border: 2px solid rgba(255,255,255,0.14);
+            box-shadow: inset 0 -10px 18px rgba(0,0,0,0.35), inset 0 4px 8px rgba(255,255,255,0.35), 0 8px 18px rgba(0,0,0,0.5);
+            transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
         }
-        .swatch:hover { transform: translateY(-3px) scale(1.06); }
+        .swatch:hover { transform: translateY(-3px) scale(1.04); }
         .swatch.active {
             border-color: #fff;
-            transform: translateY(-3px) scale(1.12);
-            box-shadow: 0 0 0 3px rgba(255,255,255,0.25), 0 0 22px var(--glow), inset 0 -6px 12px rgba(0,0,0,0.35), inset 0 3px 6px rgba(255,255,255,0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.22), 0 0 26px var(--glow), inset 0 -10px 18px rgba(0,0,0,0.35), inset 0 4px 8px rgba(255,255,255,0.4);
         }
+        .swatch .lock { position: absolute; top: 5px; right: 7px; font-size: 9px; opacity: 0.7; }
 
-        /* Premium glossy buttons */
+        /* Buttons */
         .btn-gloss {
             position: relative; overflow: hidden;
-            border-radius: 14px; font-weight: 700; letter-spacing: 0.03em;
+            border-radius: 14px; font-weight: 700; letter-spacing: 0.02em;
             border: 1px solid rgba(255,255,255,0.14);
-            transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-            box-shadow: 0 8px 20px -6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.25);
+            transition: transform .15s ease, filter .15s ease;
+            box-shadow: 0 10px 24px -8px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.22);
         }
-        .btn-gloss:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.12); }
-        .btn-gloss:active:not(:disabled) { transform: translateY(0px) scale(0.98); }
+        .btn-gloss:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.15); }
+        .btn-gloss:active:not(:disabled) { transform: translateY(0) scale(0.98); }
         .btn-gloss:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn-dark { background: linear-gradient(160deg, #1E293B, #0B1220); color: #E2E8F0; }
+
+        /* Playback round buttons */
+        .pb-btn {
+            width: 44px; height: 44px; border-radius: 12px;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: linear-gradient(160deg, #1E293B, #0B1220);
+            border: 1px solid rgba(255,255,255,0.12); color: #CBD5E1;
+            transition: all .15s ease; font-size: 13px;
+        }
+        .pb-btn:hover:not(:disabled) { border-color: rgba(74,222,128,0.5); color: #4ADE80; transform: translateY(-2px); }
+        .pb-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+        .pb-play {
+            width: 54px; height: 54px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 25%, #34D399, #059669);
+            color: #04150D; font-size: 17px;
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: 0 0 26px rgba(16,185,129,0.45), inset 0 2px 4px rgba(255,255,255,0.4);
+        }
+        .pb-play:hover:not(:disabled) { color: #04150D; transform: scale(1.06); }
 
         /* Move chips */
         .move-chip {
             display: inline-flex; align-items: center; justify-content: center;
-            min-width: 44px; padding: 6px 10px; margin: 3px;
-            border-radius: 10px; font-family: ui-monospace, monospace; font-weight: 800;
+            min-width: 42px; padding: 5px 9px; margin: 3px;
+            border-radius: 9px; font-family: ui-monospace, monospace; font-weight: 800; font-size: 13px;
             background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-            color: #FDE68A; transition: all .2s ease;
+            color: #7DD3FC; transition: all .2s ease;
         }
-        .move-chip.now {
-            background: linear-gradient(135deg, #F97316, #FACC15); color: #111827;
-            transform: scale(1.18); box-shadow: 0 0 18px rgba(249,115,22,0.6);
-        }
-        .move-chip.done { opacity: 0.45; }
+        .move-chip.now { background: linear-gradient(135deg, #10B981, #34D399); color: #04150D; transform: scale(1.18); box-shadow: 0 0 18px rgba(16,185,129,0.6); }
+        .move-chip.done { opacity: 0.4; }
 
-        /* Status toast */
         #status-box { transition: all .3s ease; }
         .pulse-dot { animation: pdot 1.4s ease-in-out infinite; }
         @keyframes pdot { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
 
-        /* Scrollbar */
         .scroll-slim::-webkit-scrollbar { width: 6px; }
         .scroll-slim::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
 
         @keyframes floatBadge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         .float-badge { animation: floatBadge 3.2s ease-in-out infinite; }
+
+        select.speed-select {
+            background: #0B1220; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; padding: 8px 12px; font-size: 13px; color: #CBD5E1; outline: none;
+        }
     </style>
 </head>
-<body class="text-gray-200 font-sans antialiased">
+<body class="text-gray-200 antialiased">
 
-<!-- Navbar -->
-<nav class="border-b border-gray-800 bg-[#111B21]/80 backdrop-blur-md p-4 sticky top-0 z-50 shadow-lg">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-        <a href="tools.html" class="text-xl font-bold text-green-500 hover:text-green-400 transition"><i class="fas fa-arrow-left mr-2"></i> Back to Tools</a>
-        <span class="text-orange-500 text-sm font-bold tracking-widest"><i class="fas fa-cube mr-1"></i> CUBE ACADEMY</span>
+<!-- ================= NAVBAR ================= -->
+<nav class="sticky top-0 z-50 border-b border-white/5 bg-[#060D18]/85 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+        <a href="#" class="flex items-center gap-2.5 shrink-0">
+            <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <i class="fas fa-cube text-white text-sm"></i>
+            </span>
+            <span class="leading-tight">
+                <span class="block text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-purple-400 font-display">Velqur</span>
+                <span class="block text-[8px] tracking-[0.4em] text-gray-500 font-bold">CUBE SOLVER</span>
+            </span>
+        </a>
+        <div class="hidden md:flex items-center gap-7 text-sm font-semibold text-gray-400">
+            <a href="tools.html" class="hover:text-white transition">Tools</a>
+            <a href="#" class="text-green-400 border-b-2 border-green-400 pb-1">Cube Solver</a>
+            <a href="#algorithms" class="hover:text-white transition">Algorithms</a>
+            <a href="#learn" class="hover:text-white transition">Learn</a>
+            <a href="#about" class="hover:text-white transition">About</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="tools.html" class="md:hidden text-xs font-bold text-green-400 border border-green-500/40 rounded-lg px-3 py-2"><i class="fas fa-arrow-left mr-1"></i> Tools</a>
+            <button id="btn-share-top" class="btn-gloss bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs md:text-sm px-4 py-2.5">
+                <i class="fas fa-share-nodes mr-1.5"></i>Share
+            </button>
+        </div>
     </div>
 </nav>
 
-<!-- Main Content -->
-<main class="max-w-6xl mx-auto p-6 py-12">
+<main class="max-w-7xl mx-auto px-4 py-8 md:py-12">
 
-    <div class="text-center mb-12">
-        <div class="inline-block float-badge mb-4 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-bold tracking-widest">
-            <i class="fas fa-wand-magic-sparkles mr-1"></i> KOCIEMBA ENGINE • 100% CLIENT-SIDE
+    <!-- ================= HERO ================= -->
+    <header class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
+        <div>
+            <h1 class="text-4xl md:text-5xl font-black font-display tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 drop-shadow-lg">
+                3D RUBIK'S CUBE SOLVER
+            </h1>
+            <p class="text-gray-400 mt-2 text-sm md:text-base">Paint your cube &nbsp;•&nbsp; Get solution &nbsp;•&nbsp; Master the cube</p>
         </div>
-        <h1 class="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-400 to-green-400 mb-4 drop-shadow-lg">
-            3D Cube Solver
-        </h1>
-        <p class="text-gray-400 max-w-2xl mx-auto text-lg">Apne cube ke colors 3D cube par paint karo, <span class="text-orange-400 font-semibold">Solve</span> dabao — aur exact formula step-by-step animation ke saath pao.</p>
-        <div class="flex flex-wrap justify-center gap-3 mt-6 text-xs font-bold tracking-wider">
-            <span class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300"><i class="fas fa-cube text-orange-400 mr-1"></i> REAL 3D</span>
-            <span class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300"><i class="fas fa-fill-drip text-blue-400 mr-1"></i> COLOR INPUT</span>
-            <span class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300"><i class="fas fa-play text-green-400 mr-1"></i> ANIMATED SOLUTION</span>
+        <div class="flex flex-wrap gap-2.5 text-[11px] font-bold tracking-wider">
+            <span class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-300 flex items-center gap-2"><i class="fas fa-cube text-green-400"></i> 3D Interactive</span>
+            <span class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-300 flex items-center gap-2"><i class="fas fa-bolt text-yellow-400"></i> Kociemba Solver</span>
+            <span class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-300 flex items-center gap-2"><i class="fas fa-shield-halved text-emerald-400"></i> 100% Free</span>
+        </div>
+    </header>
+
+    <!-- ================= MAIN SOLVER GRID ================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- ===== LEFT: 3D STAGE + SOLUTION ===== -->
+        <div class="lg:col-span-2 flex flex-col gap-6">
+
+            <!-- LIVE 3D CUBE -->
+            <section class="panel p-4 md:p-5" aria-label="Interactive 3D cube">
+                <div class="flex items-center justify-between mb-3 px-1">
+                    <span class="label-green flex items-center gap-2"><i class="fas fa-cube"></i> LIVE 3D CUBE</span>
+                    <span class="hidden sm:block text-[11px] text-gray-500">Click a sticker to paint &nbsp;•&nbsp; Drag to rotate &nbsp;•&nbsp; Pinch to zoom</span>
+                </div>
+                <div id="stage-wrap" class="w-full h-[340px] sm:h-[420px] lg:h-[460px]">
+                    <canvas id="cube-canvas"></canvas>
+                </div>
+                <div class="stage-tip mt-4">
+                    <i class="fas fa-lightbulb text-yellow-400 mt-0.5"></i>
+                    <span><strong class="text-gray-300">Tip:</strong> Leave the cube untouched for a few seconds and it will slowly rotate in the air.</span>
+                </div>
+            </section>
+
+            <!-- SOLUTION STEPS -->
+            <section class="panel p-4 md:p-5" aria-label="Solution steps">
+                <div class="flex items-center justify-between mb-3 px-1">
+                    <span class="label-green flex items-center gap-2"><i class="fas fa-list-ol"></i> SOLUTION STEPS</span>
+                    <span id="sol-state" class="text-[11px] text-gray-500">No solution yet</span>
+                </div>
+                <div id="solution-area" class="scroll-slim min-h-[88px] max-h-44 overflow-y-auto rounded-xl bg-black/30 border border-white/5 p-4">
+                    <p id="solution-empty" class="text-center text-gray-500 text-sm py-4">
+                        Your solution will appear here.<br>
+                        Click <span class="text-green-400 font-bold">Solve Cube</span> to get the solution!
+                    </p>
+                    <div id="solution-moves" class="text-center"></div>
+                </div>
+                <!-- Playback controls -->
+                <div class="mt-4">
+                    <span class="label-green block mb-3">PLAYBACK CONTROLS</span>
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <button id="pb-first" class="pb-btn" title="Back to start" disabled><i class="fas fa-backward-step"></i></button>
+                            <button id="pb-prev" class="pb-btn" title="Previous move" disabled><i class="fas fa-backward"></i></button>
+                            <button id="pb-play" class="pb-btn pb-play" title="Play / Pause" disabled><i class="fas fa-play"></i></button>
+                            <button id="pb-next" class="pb-btn" title="Next move" disabled><i class="fas fa-forward"></i></button>
+                            <button id="pb-last" class="pb-btn" title="Jump to end" disabled><i class="fas fa-forward-step"></i></button>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span id="play-progress" class="text-[11px] text-gray-500 font-mono"></span>
+                            <label class="text-xs text-gray-400 font-semibold">Speed</label>
+                            <select id="speed-select" class="speed-select">
+                                <option value="600">Slow</option>
+                                <option value="340" selected>Normal</option>
+                                <option value="150">Fast</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===== RIGHT: INPUT / ACTIONS / SHARE / CONTROLS ===== -->
+        <div class="flex flex-col gap-6">
+
+            <!-- INPUT PANEL -->
+            <section class="panel p-5" aria-label="Cube color input">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="label-green">INPUT</span>
+                    <span class="text-right">
+                        <span id="paint-count" class="text-green-400 font-black text-lg font-display">0 / 54</span>
+                        <span class="block text-[9px] tracking-[0.25em] text-gray-500 font-bold">STICKERS PAINTED</span>
+                    </span>
+                </div>
+                <h2 class="text-xl font-black text-white mt-2">Build your cube</h2>
+                <p class="text-xs text-gray-500 mt-1 mb-4">Pick a color, then tap/click stickers.</p>
+                <div id="palette" class="grid grid-cols-3 gap-2.5"></div>
+                <div class="mt-4 flex gap-2.5 items-start rounded-xl bg-black/30 border border-white/5 p-3">
+                    <i class="fas fa-lock text-gray-500 text-xs mt-0.5"></i>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Center stickers are locked because they define the cube's orientation.</p>
+                </div>
+                <div id="status-box" class="mt-4 text-xs font-semibold rounded-xl px-4 py-3 bg-black/40 border border-gray-700/60 text-gray-400">
+                    <span class="pulse-dot inline-block w-2 h-2 rounded-full bg-yellow-400 mr-2"></span><span id="status-text">Loading solver engine… (first load ~2s)</span>
+                </div>
+            </section>
+
+            <!-- QUICK ACTIONS -->
+            <section class="panel p-5" aria-label="Quick actions">
+                <span class="label-green block mb-4">QUICK ACTIONS</span>
+                <div class="flex flex-col gap-3">
+                    <button id="btn-solve" class="btn-gloss bg-gradient-to-r from-emerald-500 to-green-600 text-white py-3.5 text-base w-full">
+                        <i class="fas fa-wand-magic-sparkles mr-2"></i>Solve Cube
+                    </button>
+                    <button id="btn-scramble" class="btn-gloss btn-dark py-3 text-sm w-full">
+                        <i class="fas fa-shuffle mr-2"></i>Scramble
+                    </button>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="btn-reset" class="btn-gloss btn-dark py-2.5 text-xs"><i class="fas fa-rotate-left mr-1.5"></i>Reset</button>
+                        <button id="btn-demo" class="btn-gloss btn-dark py-2.5 text-xs"><i class="fas fa-flask mr-1.5"></i>Demo State</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SHARE CUBE STATE -->
+            <section class="panel p-5" aria-label="Share cube state">
+                <span class="label-green block mb-3">SHARE CUBE STATE</span>
+                <p class="text-xs text-gray-500 mb-4 leading-relaxed">Copy your cube state and share with friends!</p>
+                <button id="btn-copy-link" class="btn-gloss btn-dark py-3 text-sm w-full">
+                    <i class="fas fa-link mr-2"></i>Copy State Link
+                </button>
+            </section>
+
+            <!-- CONTROLS LEGEND -->
+            <section class="panel p-5" aria-label="Controls help">
+                <span class="label-green block mb-4">CONTROLS</span>
+                <ul class="space-y-3 text-xs text-gray-400">
+                    <li class="flex items-center gap-3"><i class="fas fa-hand-pointer text-gray-500 w-4"></i> Drag – Rotate</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-magnifying-glass-plus text-gray-500 w-4"></i> Scroll / Pinch – Zoom</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-fill-drip text-gray-500 w-4"></i> Click Sticker – Paint Color</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-rotate text-gray-500 w-4"></i> Idle – Auto Rotate</li>
+                </ul>
+            </section>
         </div>
     </div>
 
-    <!-- ============ 3D SOLVER SECTION ============ -->
-    <section class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-20" aria-label="Interactive 3D Rubik's Cube Solver">
-
-        <!-- 3D Stage -->
-        <div class="lg:col-span-3">
-            <div id="stage-wrap" class="w-full aspect-square max-h-[620px]">
-                <canvas id="cube-canvas"></canvas>
-                <div class="stage-hint"><i class="fas fa-rotate mr-1"></i> Drag to rotate &nbsp;•&nbsp; <i class="fas fa-hand-pointer mx-1"></i> Click a sticker to paint</div>
+    <!-- ================= WHY THIS SOLVER ================= -->
+    <section class="panel p-6 md:p-8 mt-10" aria-label="Why this solver">
+        <span class="label-green block mb-6">WHY THIS SOLVER?</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="rounded-2xl bg-black/25 border border-white/5 p-5">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-rose-500 to-red-700 flex items-center justify-center mb-4 shadow-lg shadow-rose-500/25"><i class="fas fa-bullseye text-white"></i></div>
+                <h3 class="font-bold text-white text-sm mb-1.5">Exact Solver</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">Uses Kociemba two-phase algorithm for optimal solutions.</p>
             </div>
-        </div>
-
-        <!-- Control Panel -->
-        <div class="lg:col-span-2 flex flex-col gap-5">
-
-            <!-- Palette -->
-            <div class="glossy-card p-5">
-                <h3 class="text-sm font-black tracking-widest text-gray-300 mb-4" style="transform: translateZ(15px);"><i class="fas fa-palette text-yellow-400 mr-2"></i>1 · SELECT COLOR</h3>
-                <div id="palette" class="flex flex-wrap gap-3 justify-center" style="transform: translateZ(15px);"></div>
-                <p class="text-[11px] text-gray-500 mt-3 text-center" style="transform: translateZ(15px);">Color select karo → 3D cube ke kisi bhi sticker par click karke paint karo. Center colors fixed hain (White top, Green front).</p>
+            <div class="rounded-2xl bg-black/25 border border-white/5 p-5">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-700 flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/25"><i class="fas fa-cubes text-white"></i></div>
+                <h3 class="font-bold text-white text-sm mb-1.5">3D Interactive</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">Paint stickers directly on the 3D cube. Real-time updates.</p>
             </div>
-
-            <!-- Actions -->
-            <div class="glossy-card p-5">
-                <h3 class="text-sm font-black tracking-widest text-gray-300 mb-4" style="transform: translateZ(15px);"><i class="fas fa-bolt text-orange-400 mr-2"></i>2 · ACTIONS</h3>
-                <div class="grid grid-cols-2 gap-3" style="transform: translateZ(15px);">
-                    <button id="btn-scramble" class="btn-gloss bg-gradient-to-br from-purple-600 to-indigo-700 text-white py-3 text-sm"><i class="fas fa-shuffle mr-1"></i> Scramble</button>
-                    <button id="btn-reset" class="btn-gloss bg-gradient-to-br from-gray-600 to-gray-800 text-white py-3 text-sm"><i class="fas fa-rotate-left mr-1"></i> Reset</button>
-                    <button id="btn-solve" class="btn-gloss bg-gradient-to-br from-orange-500 to-yellow-500 text-gray-900 py-3 text-sm col-span-2 text-base"><i class="fas fa-brain mr-1"></i> SOLVE MY CUBE</button>
-                    <button id="btn-play" class="btn-gloss bg-gradient-to-br from-green-500 to-emerald-700 text-white py-3 text-sm col-span-2" disabled><i class="fas fa-play mr-1"></i> Animate Solution</button>
-                </div>
-                <div id="status-box" class="mt-4 text-xs font-semibold rounded-xl px-4 py-3 bg-black/40 border border-gray-700/60 text-gray-400" style="transform: translateZ(15px);">
-                    <span class="pulse-dot inline-block w-2 h-2 rounded-full bg-yellow-400 mr-2"></span><span id="status-text">Solver engine loading… (first time ~2 sec)</span>
-                </div>
+            <div class="rounded-2xl bg-black/25 border border-white/5 p-5">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-green-700 flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/25"><i class="fas fa-circle-play text-white"></i></div>
+                <h3 class="font-bold text-white text-sm mb-1.5">Step by Step</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">Watch each move animate on the cube with playback controls.</p>
             </div>
-
-            <!-- Solution -->
-            <div id="solution-card" class="glossy-card p-5 hidden">
-                <div class="flex justify-between items-center mb-3" style="transform: translateZ(15px);">
-                    <h3 class="text-sm font-black tracking-widest text-green-400"><i class="fas fa-list-ol mr-2"></i>SOLUTION <span id="sol-count" class="text-gray-400"></span></h3>
-                    <button id="btn-copy" class="text-xs font-bold text-gray-400 hover:text-white transition border border-gray-700 rounded-lg px-3 py-1.5 bg-black/30"><i class="fas fa-copy mr-1"></i> Copy</button>
-                </div>
-                <div id="solution-moves" class="scroll-slim max-h-40 overflow-y-auto pr-1" style="transform: translateZ(15px);"></div>
-                <div id="play-progress" class="text-[11px] text-gray-500 mt-2 font-mono" style="transform: translateZ(15px);"></div>
+            <div class="rounded-2xl bg-black/25 border border-white/5 p-5">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center mb-4 shadow-lg shadow-violet-500/25"><i class="fas fa-mobile-screen text-white"></i></div>
+                <h3 class="font-bold text-white text-sm mb-1.5">Mobile Friendly</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">Smooth experience on both desktop and mobile devices.</p>
             </div>
         </div>
     </section>
 
-    <!-- ============ HOW TO USE (SEO) ============ -->
-    <section class="glossy-card p-8 mb-20" aria-label="How to use the 3D cube solver">
-        <h2 class="text-2xl md:text-3xl font-black text-white mb-6" style="transform: translateZ(20px);"><i class="fas fa-circle-question text-blue-400 mr-2"></i>How to Solve Your Rubik's Cube in 30 Seconds</h2>
+    <!-- ================= LEARN / HOW TO (SEO) ================= -->
+    <section id="learn" class="glossy-card p-8 mt-10" aria-label="How to use the 3D cube solver">
+        <h2 class="text-2xl md:text-3xl font-black text-white mb-6" style="transform: translateZ(20px);"><i class="fas fa-graduation-cap text-cyan-400 mr-2"></i>Solve Your Cube in 3 Easy Steps</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm leading-relaxed text-gray-300" style="transform: translateZ(20px);">
             <div class="bg-black/30 rounded-2xl p-5 border border-white/5">
-                <div class="text-orange-400 font-black text-lg mb-2">Step 1 — Paint</div>
-                Apne physical cube ko dekho aur 3D cube ke stickers par click karke same colors bharo. Palette se color select karo, sticker par click karo — done. Drag karke cube ko ghumao aur saare 6 faces cover karo.
+                <div class="text-cyan-400 font-black text-lg mb-2">Step 1 — Paint</div>
+                Look at your physical cube and paint the same colors onto the 3D cube. Pick a color from the palette, then click any sticker. Drag to rotate and cover all 6 faces.
             </div>
             <div class="bg-black/30 rounded-2xl p-5 border border-white/5">
-                <div class="text-yellow-400 font-black text-lg mb-2">Step 2 — Solve</div>
-                <strong>SOLVE MY CUBE</strong> dabao. Hamara Kociemba two-phase engine aapki exact cube state ko read karke optimal algorithm (jaise <code class="text-yellow-300">R U R' U'</code>) nikal dega — average sirf ~20 moves mein.
+                <div class="text-green-400 font-black text-lg mb-2">Step 2 — Solve</div>
+                Hit <strong>Solve Cube</strong>. Our Kociemba two-phase engine reads your exact cube state and computes an optimal algorithm — usually around 20 moves.
             </div>
             <div class="bg-black/30 rounded-2xl p-5 border border-white/5">
-                <div class="text-green-400 font-black text-lg mb-2">Step 3 — Animate</div>
-                <strong>Animate Solution</strong> dabao aur dekho 3D cube khud solve hota hua. Har move highlight hota hai — saath-saath apne real cube par follow karo aur cube solved!
+                <div class="text-purple-400 font-black text-lg mb-2">Step 3 — Follow Along</div>
+                Press play and watch the 3D cube solve itself. Use the step controls to go move-by-move while you copy each turn on your real cube.
             </div>
         </div>
     </section>
 
-    <!-- ============ 3D GLOSSY ALGORITHM GRID ============ -->
-    <div class="text-center mb-10">
-        <h2 class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-500 mb-3 drop-shadow-lg">Advanced Cubing</h2>
-        <p class="text-gray-400 max-w-2xl mx-auto">Optimized Layer-by-Layer formulas and high-end execution strategies to drastically drop your solve time.</p>
+    <!-- ================= ALGORITHMS LIBRARY (SEO) ================= -->
+    <div id="algorithms" class="text-center mt-16 mb-10 scroll-mt-24">
+        <h2 class="text-3xl md:text-5xl font-extrabold font-display text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-3 drop-shadow-lg">Advanced Cubing</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">Optimized layer-by-layer formulas and high-end execution strategies to drastically drop your solve time.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10" aria-label="Speedcubing algorithms library">
 
-        <!-- Card 1: Advanced F2L -->
         <article class="glossy-card p-8 tilt-element">
             <div class="flex justify-between items-start mb-6" style="transform: translateZ(20px);">
                 <div>
-                    <span class="text-xs text-orange-400 font-bold tracking-widest block mb-1">PHASE 01</span>
+                    <span class="text-xs text-cyan-400 font-bold tracking-widest block mb-1">PHASE 01</span>
                     <h3 class="text-3xl font-black text-white">Advanced F2L</h3>
                 </div>
                 <div class="cube-grid">
@@ -296,15 +446,14 @@
                 </div>
             </div>
             <p class="text-gray-300 text-sm mb-6 leading-relaxed" style="transform: translateZ(25px);">
-                Minimize cube rotations. Focus on "Look-ahead" execution strategies. Insert pairs into the back slots first to keep your front vision clear.
+                Minimize cube rotations. Focus on "look-ahead" execution strategies. Insert pairs into the back slots first to keep your front vision clear.
             </p>
             <div class="bg-black/40 p-4 rounded-xl border border-gray-700/50 algo-text">
                 <span class="block text-xs text-gray-500 mb-1">Back Slot Insertion (Right)</span>
-                <code class="text-xl font-bold text-orange-400 tracking-wider">R' U' R</code>
+                <code class="text-xl font-bold text-cyan-400 tracking-wider">R' U' R</code>
             </div>
         </article>
 
-        <!-- Card 2: OLL Optimization -->
         <article class="glossy-card p-8 tilt-element">
             <div class="flex justify-between items-start mb-6" style="transform: translateZ(20px);">
                 <div>
@@ -326,7 +475,6 @@
             </div>
         </article>
 
-        <!-- Card 3: PLL Execution -->
         <article class="glossy-card p-8 tilt-element lg:col-span-2">
             <div class="flex justify-between items-start mb-6" style="transform: translateZ(20px);">
                 <div>
@@ -346,8 +494,8 @@
         </article>
     </div>
 
-    <!-- ============ FAQ (SEO long-tail) ============ -->
-    <section class="glossy-card p-8 mt-20" aria-label="Frequently asked questions">
+    <!-- ================= FAQ (SEO long-tail) ================= -->
+    <section class="glossy-card p-8 mt-16" aria-label="Frequently asked questions">
         <h2 class="text-2xl md:text-3xl font-black text-white mb-6" style="transform: translateZ(20px);"><i class="fas fa-comments text-purple-400 mr-2"></i>Rubik's Cube Solver — FAQ</h2>
         <div class="space-y-4 text-sm" style="transform: translateZ(20px);">
             <details class="bg-black/30 rounded-xl border border-white/5 p-4">
@@ -370,7 +518,7 @@
     </section>
 
     <!-- AdSense Display Space -->
-    <div class="mt-16 text-center p-4 border border-dashed border-gray-700/50 bg-black/20 rounded-xl text-gray-500">
+    <div class="mt-14 text-center p-4 border border-dashed border-gray-700/50 bg-black/20 rounded-xl text-gray-500">
         <span class="text-sm">Advertisement</span>
         <ins class="adsbygoogle"
              style="display:block"
@@ -383,8 +531,11 @@
         </script>
     </div>
 
-    <footer class="mt-14 text-center text-xs text-gray-600 pb-6">
-        <i class="fas fa-cube text-orange-500/60 mr-1"></i> Velqur Cube Academy — Free 3D Rubik's Cube Solver & Speedcubing Algorithm Library
+    <footer id="about" class="mt-14 pb-8 scroll-mt-24">
+        <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600">
+            <span>© 2026 Velqur Cube Solver. All rights reserved.</span>
+            <span>Master the cube. Solve with passion. <i class="fas fa-fire text-orange-500"></i></span>
+        </div>
     </footer>
 
 </main>
@@ -403,13 +554,14 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
 /* ================= CONFIG ================= */
-const FACE_HEX = { U:0xF1F5F9, D:0xFACC15, R:0xEF4444, L:0xF97316, F:0x10B981, B:0x3B82F6 };
+const FACE_HEX = { U:0xFFFFFF, D:0xFFD500, R:0xFF3B30, L:0xFF9500, F:0x00C853, B:0x2E62FF };
 const FACE_NAME = { U:'White', D:'Yellow', R:'Red', L:'Orange', F:'Green', B:'Blue' };
-const HIDDEN_HEX = 0x0D1117;
+const PALETTE_ORDER = ['U', 'D', 'F', 'B', 'R', 'L']; // White Yellow Green / Blue Red Orange
 const HEX2LETTER = {};
-for (const [k,v] of Object.entries(FACE_HEX)) HEX2LETTER[v] = k;
+for (const [k, v] of Object.entries(FACE_HEX)) HEX2LETTER[v] = k;
 const DIRS = [new THREE.Vector3(1,0,0), new THREE.Vector3(-1,0,0), new THREE.Vector3(0,1,0), new THREE.Vector3(0,-1,0), new THREE.Vector3(0,0,1), new THREE.Vector3(0,0,-1)];
 const MOVES = { U:{a:'y',s:1}, D:{a:'y',s:-1}, R:{a:'x',s:1}, L:{a:'x',s:-1}, F:{a:'z',s:1}, B:{a:'z',s:-1} };
 const GRID = {
@@ -420,25 +572,35 @@ const GRID = {
     L:{axis:'x', s:-1, rc:(r,c)=>({x:-1, y:1-r, z:c-1})},
     B:{axis:'z', s:-1, rc:(r,c)=>({x:1-c, y:1-r, z:-1})}
 };
+const invert = t => t.endsWith("'") ? t.slice(0, -1) : t.endsWith('2') ? t : t + "'";
 
 /* ================= UI REFS ================= */
 const wrap = document.getElementById('stage-wrap');
 const canvas = document.getElementById('cube-canvas');
-const statusText = document.getElementById('status-text');
 const statusBox = document.getElementById('status-box');
+const solveBtn = document.getElementById('btn-solve');
 const scrambleBtn = document.getElementById('btn-scramble');
 const resetBtn = document.getElementById('btn-reset');
-const solveBtn = document.getElementById('btn-solve');
-const playBtn = document.getElementById('btn-play');
-const copyBtn = document.getElementById('btn-copy');
-const solCard = document.getElementById('solution-card');
-const solCount = document.getElementById('sol-count');
+const demoBtn = document.getElementById('btn-demo');
+const copyLinkBtn = document.getElementById('btn-copy-link');
+const shareTopBtn = document.getElementById('btn-share-top');
+const paintCountEl = document.getElementById('paint-count');
+const solState = document.getElementById('sol-state');
+const solEmpty = document.getElementById('solution-empty');
 const movesBox = document.getElementById('solution-moves');
 const playProgress = document.getElementById('play-progress');
+const speedSelect = document.getElementById('speed-select');
+const pbFirst = document.getElementById('pb-first');
+const pbPrev = document.getElementById('pb-prev');
+const pbPlay = document.getElementById('pb-play');
+const pbNext = document.getElementById('pb-next');
+const pbLast = document.getElementById('pb-last');
 
 let lastInteract = performance.now();
-let isAnimating = false;
-let currentSolution = [];
+let animating = false;
+let playing = false;
+let solution = [];
+let solIdx = 0;
 let selectedColor = 'F';
 const bump = () => { lastInteract = performance.now(); };
 document.addEventListener('pointerdown', bump);
@@ -447,110 +609,149 @@ function setStatus(msg, type = 'info') {
     const colors = { info:'bg-yellow-400', ok:'bg-green-400', err:'bg-red-500' };
     statusBox.className = 'mt-4 text-xs font-semibold rounded-xl px-4 py-3 bg-black/40 border text-gray-300 ' +
         (type === 'err' ? 'border-red-500/50' : type === 'ok' ? 'border-green-500/40' : 'border-gray-700/60');
-    statusBox.innerHTML = '<span class="pulse-dot inline-block w-2 h-2 rounded-full mr-2 ' + colors[type] + '"></span><span></span>';
-    statusBox.lastElementChild.textContent = msg;
+    statusBox.innerHTML = '';
+    const dot = document.createElement('span');
+    dot.className = 'pulse-dot inline-block w-2 h-2 rounded-full mr-2 ' + colors[type];
+    const txt = document.createElement('span');
+    txt.textContent = msg;
+    statusBox.append(dot, txt);
 }
 function setButtons(on) {
-    scrambleBtn.disabled = !on;
-    resetBtn.disabled = !on;
-    solveBtn.disabled = !on;
-    playBtn.disabled = !on || !currentSolution.length;
+    [solveBtn, scrambleBtn, resetBtn, demoBtn].forEach(b => b.disabled = !on);
+    refreshPlayback();
+}
+function refreshPlayback() {
+    const has = solution.length > 0;
+    pbFirst.disabled = pbPrev.disabled = !has || solIdx === 0 || animating;
+    pbNext.disabled = pbLast.disabled = !has || solIdx === solution.length || animating;
+    pbPlay.disabled = !has || (animating && !playing);
+    pbPlay.innerHTML = playing ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+    if (has) playProgress.textContent = 'Move ' + solIdx + ' / ' + solution.length;
+    document.querySelectorAll('.move-chip').forEach((c, j) => {
+        c.classList.toggle('done', j < solIdx);
+        if (!playing && !animating) c.classList.remove('now');
+    });
 }
 
 /* ================= THREE.JS SCENE ================= */
-let renderer, scene, camera, controls, cubeGroup;
-const cubies = [];
-
+let renderer;
 try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
 } catch (e) {
-    setStatus('WebGL supported nahi hai is browser mein — latest Chrome/Firefox try karo.', 'err');
+    setStatus('WebGL is not supported in this browser. Please try the latest Chrome or Firefox.', 'err');
     throw e;
 }
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMapping = THREE.NeutralToneMapping;
+renderer.toneMappingExposure = 1.15;
 
-scene = new THREE.Scene();
-camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-camera.position.set(8, 7, 12); // intro start (zooms in)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+camera.position.set(8.5, 7, 12.5); // intro start (zooms in)
 
-controls = new OrbitControls(camera, canvas);
+const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
 controls.enablePan = false;
-controls.minDistance = 4.2;
-controls.maxDistance = 13;
+controls.minDistance = 3.6;
+controls.maxDistance = 12;
 controls.addEventListener('start', bump);
 
 // Glossy studio reflections (procedural — no external files needed)
 const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.06).texture;
 
-scene.add(new THREE.AmbientLight(0xffffff, 0.25));
-const keyLight = new THREE.DirectionalLight(0xffffff, 1.4); keyLight.position.set(5, 9, 6); scene.add(keyLight);
-const rimLight = new THREE.DirectionalLight(0x88AAFF, 0.7); rimLight.position.set(-7, -4, -6); scene.add(rimLight);
-const warmFill = new THREE.PointLight(0xF97316, 12, 30); warmFill.position.set(0, -5, 4); scene.add(warmFill);
+scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+const keyLight = new THREE.DirectionalLight(0xffffff, 1.6); keyLight.position.set(5, 9, 6); scene.add(keyLight);
+const rimLight = new THREE.DirectionalLight(0x88AAFF, 0.8); rimLight.position.set(-7, -4, -6); scene.add(rimLight);
+const warmFill = new THREE.PointLight(0xFF9500, 14, 30); warmFill.position.set(0, -5, 4); scene.add(warmFill);
+const coolFill = new THREE.PointLight(0x2E62FF, 10, 30); coolFill.position.set(-4, 5, -5); scene.add(coolFill);
 
-/* ---- Build 27 glossy cubies ---- */
-cubeGroup = new THREE.Group();
+/* ---- Build 27 glossy cubies: black rounded frame + rounded vibrant stickers ---- */
+const cubeGroup = new THREE.Group();
 scene.add(cubeGroup);
-cubeGroup.rotation.set(0.35, 0.6, 0.12);
+cubeGroup.rotation.set(0.32, 0.65, 0.1);
 
-const cubieGeo = new THREE.BoxGeometry(0.96, 0.96, 0.96);
-function makeMat(hex, hidden) {
-    return new THREE.MeshPhysicalMaterial({
-        color: hex,
-        roughness: hidden ? 0.55 : 0.16,
-        metalness: 0.08,
-        clearcoat: hidden ? 0.2 : 1.0,
-        clearcoatRoughness: 0.12,
-        envMapIntensity: hidden ? 0.15 : 0.9
-    });
+function roundedRectShape(w, h, r) {
+    const s = new THREE.Shape();
+    const x = -w / 2, y = -h / 2;
+    s.moveTo(x + r, y);
+    s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+    s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+    s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y);
+    return s;
 }
-function faceHexFor(dir) {
-    if (dir.y === 1) return FACE_HEX.U;
-    if (dir.y === -1) return FACE_HEX.D;
-    if (dir.x === 1) return FACE_HEX.R;
-    if (dir.x === -1) return FACE_HEX.L;
-    if (dir.z === 1) return FACE_HEX.F;
-    return FACE_HEX.B;
+const frameGeo = new RoundedBoxGeometry(0.98, 0.98, 0.98, 4, 0.09);
+const stickerGeo = new THREE.ShapeGeometry(roundedRectShape(0.8, 0.8, 0.14), 6);
+const frameMat = new THREE.MeshPhysicalMaterial({ color: 0x05070C, roughness: 0.32, metalness: 0.1, clearcoat: 0.9, clearcoatRoughness: 0.25, envMapIntensity: 0.7 });
+
+const cubies = [];
+const stickerMeshes = [];
+
+function orientSticker(mesh, d) {
+    const o = 0.502;
+    if (d.x === 1) { mesh.position.set(o, 0, 0); mesh.rotation.y = Math.PI / 2; }
+    else if (d.x === -1) { mesh.position.set(-o, 0, 0); mesh.rotation.y = -Math.PI / 2; }
+    else if (d.y === 1) { mesh.position.set(0, o, 0); mesh.rotation.x = -Math.PI / 2; }
+    else if (d.y === -1) { mesh.position.set(0, -o, 0); mesh.rotation.x = Math.PI / 2; }
+    else if (d.z === 1) { mesh.position.set(0, 0, o); }
+    else { mesh.position.set(0, 0, -o); mesh.rotation.y = Math.PI; }
+}
+function letterForDir(d) {
+    if (d.y === 1) return 'U';
+    if (d.y === -1) return 'D';
+    if (d.x === 1) return 'R';
+    if (d.x === -1) return 'L';
+    if (d.z === 1) return 'F';
+    return 'B';
 }
 for (let x = -1; x <= 1; x++) for (let y = -1; y <= 1; y++) for (let z = -1; z <= 1; z++) {
-    const mats = DIRS.map(d => {
+    const g = new THREE.Group();
+    g.position.set(x, y, z);
+    const frame = new THREE.Mesh(frameGeo, frameMat);
+    g.add(frame);
+    const stickers = [];
+    DIRS.forEach(d => {
         const outward = (d.x !== 0 && d.x === x) || (d.y !== 0 && d.y === y) || (d.z !== 0 && d.z === z);
-        return makeMat(outward ? faceHexFor(d) : HIDDEN_HEX, !outward);
+        if (!outward) return;
+        const letter = letterForDir(d);
+        const mat = new THREE.MeshPhysicalMaterial({
+            color: FACE_HEX[letter], roughness: 0.19, metalness: 0.0,
+            clearcoat: 1.0, clearcoatRoughness: 0.08, envMapIntensity: 0.55
+        });
+        const sm = new THREE.Mesh(stickerGeo, mat);
+        orientSticker(sm, d);
+        sm.userData.sticker = { cubie: g, dir: d.clone(), mesh: sm, painted: false };
+        g.add(sm);
+        stickers.push(sm.userData.sticker);
+        stickerMeshes.push(sm);
     });
-    const m = new THREE.Mesh(cubieGeo, mats);
-    m.position.set(x, y, z);
-    m.userData.cubie = true;
-    cubeGroup.add(m);
-    cubies.push(m);
+    g.userData.stickers = stickers;
+    cubeGroup.add(g);
+    cubies.push(g);
+}
+function updateCounter() {
+    let n = 0;
+    cubies.forEach(g => g.userData.stickers.forEach(s => { if (s.painted) n++; }));
+    paintCountEl.textContent = n + ' / 54';
 }
 
-/* Repaint every outward sticker with its solved color (Reset) */
+/* Reset: repaint every sticker with its solved color (based on where it faces now) */
 function paintSolved() {
     const v = new THREE.Vector3();
-    cubies.forEach(m => {
-        for (let i = 0; i < 6; i++) {
-            v.copy(DIRS[i]).applyQuaternion(m.quaternion);
-            const wx = Math.round(v.x), wy = Math.round(v.y), wz = Math.round(v.z);
-            const px = Math.round(m.position.x), py = Math.round(m.position.y), pz = Math.round(m.position.z);
-            let hex = HIDDEN_HEX, hidden = true;
-            if (wy === 1 && py === 1) { hex = FACE_HEX.U; hidden = false; }
-            else if (wy === -1 && py === -1) { hex = FACE_HEX.D; hidden = false; }
-            else if (wx === 1 && px === 1) { hex = FACE_HEX.R; hidden = false; }
-            else if (wx === -1 && px === -1) { hex = FACE_HEX.L; hidden = false; }
-            else if (wz === 1 && pz === 1) { hex = FACE_HEX.F; hidden = false; }
-            else if (wz === -1 && pz === -1) { hex = FACE_HEX.B; hidden = false; }
-            m.material[i].color.setHex(hex);
-            m.material[i].roughness = hidden ? 0.55 : 0.16;
-            m.material[i].clearcoat = hidden ? 0.2 : 1.0;
-        }
+    cubies.forEach(g => {
+        g.userData.stickers.forEach(s => {
+            v.copy(s.dir).applyQuaternion(g.quaternion);
+            const d = new THREE.Vector3(Math.round(v.x), Math.round(v.y), Math.round(v.z));
+            s.mesh.material.color.setHex(FACE_HEX[letterForDir(d)]);
+            s.painted = false;
+        });
     });
+    updateCounter();
 }
 
-/* ================= RESIZE + RENDER LOOP ================= */
+/* ================= RESIZE + RENDER LOOP (idle auto-rotate + float) ================= */
 function resize() {
     const w = wrap.clientWidth, h = wrap.clientHeight;
     renderer.setSize(w, h, false);
@@ -558,11 +759,12 @@ function resize() {
     camera.updateProjectionMatrix();
 }
 new ResizeObserver(resize).observe(wrap);
+window.addEventListener('resize', resize);
 resize();
 
 const clock = new THREE.Clock();
 let introK = 0;
-const camTarget = new THREE.Vector3(4.6, 3.6, 5.8);
+const camTarget = new THREE.Vector3(3.9, 3.0, 4.9);
 const camStart = camera.position.clone();
 function tick() {
     requestAnimationFrame(tick);
@@ -572,10 +774,10 @@ function tick() {
         const e = 1 - Math.pow(1 - introK, 3);
         camera.position.lerpVectors(camStart, camTarget, e);
     }
-    // 🌬️ Idle slow-spin: cube floats in the air when user is not touching it
-    if (!isAnimating && performance.now() - lastInteract > 4000) {
-        cubeGroup.rotation.y += 0.0032;
-        cubeGroup.rotation.x += 0.0006;
+    // 🌬️ Idle mode: the cube slowly rotates and floats in the air
+    if (!animating && performance.now() - lastInteract > 4000) {
+        cubeGroup.rotation.y += 0.0034;
+        cubeGroup.rotation.x += 0.0005;
         cubeGroup.position.y = Math.sin(t * 0.9) * 0.07;
     }
     controls.update();
@@ -585,12 +787,14 @@ tick();
 
 /* ================= COLOR PALETTE ================= */
 const paletteEl = document.getElementById('palette');
-Object.keys(FACE_HEX).forEach(letter => {
+PALETTE_ORDER.forEach(letter => {
     const cssHex = '#' + FACE_HEX[letter].toString(16).padStart(6, '0');
     const b = document.createElement('button');
     b.className = 'swatch' + (letter === selectedColor ? ' active' : '');
     b.style.background = cssHex;
-    b.style.setProperty('--glow', cssHex + '88');
+    b.style.setProperty('--glow', cssHex + '99');
+    b.style.color = (letter === 'U' || letter === 'D') ? '#1F2937' : '#FFFFFF';
+    b.textContent = FACE_NAME[letter];
     b.title = FACE_NAME[letter] + ' (' + letter + ' face)';
     b.setAttribute('aria-label', 'Paint color ' + FACE_NAME[letter]);
     b.addEventListener('click', () => {
@@ -612,24 +816,23 @@ canvas.addEventListener('pointerup', e => {
     const moved = Math.hypot(e.clientX - downInfo.x, e.clientY - downInfo.y);
     const dt = performance.now() - downInfo.t;
     downInfo = null;
-    if (moved > 7 || dt > 400) return; // that was a drag, not a click
+    if (moved > 7 || dt > 400) return; // drag, not a click
+    if (animating) return;
     const r = canvas.getBoundingClientRect();
     ptr.x = ((e.clientX - r.left) / r.width) * 2 - 1;
     ptr.y = -((e.clientY - r.top) / r.height) * 2 + 1;
     ray.setFromCamera(ptr, camera);
-    const hits = ray.intersectObjects(cubies, false);
+    const hits = ray.intersectObjects(stickerMeshes, false);
     if (!hits.length) return;
-    const mesh = hits[0].object;
-    const idx = hits[0].face.materialIndex;
-    // Only paint stickers that face OUTWARD (not internal faces seen through gaps)
-    const w = DIRS[idx].clone().applyQuaternion(mesh.quaternion);
-    const wx = Math.round(w.x), wy = Math.round(w.y), wz = Math.round(w.z);
-    const px = Math.round(mesh.position.x), py = Math.round(mesh.position.y), pz = Math.round(mesh.position.z);
-    const outward = (wx !== 0 && wx === px) || (wy !== 0 && wy === py) || (wz !== 0 && wz === pz);
-    if (!outward) return;
-    mesh.material[idx].color.setHex(FACE_HEX[selectedColor]);
-    mesh.material[idx].roughness = 0.16;
-    mesh.material[idx].clearcoat = 1.0;
+    const st = hits[0].object.userData.sticker;
+    // Center stickers are locked — they define the cube's orientation
+    const p = st.cubie.position;
+    const isCenter = (Math.abs(Math.round(p.x)) + Math.abs(Math.round(p.y)) + Math.abs(Math.round(p.z))) === 1;
+    if (isCenter) { setStatus('Center stickers are locked — they define the orientation of each face.', 'info'); return; }
+    st.mesh.material.color.setHex(FACE_HEX[selectedColor]);
+    st.painted = true;
+    updateCounter();
+    clearSolution(); // cube changed — old solution no longer applies
     bump();
 });
 
@@ -641,7 +844,7 @@ function snapQuat(q) {
     for (let i = 0; i < 16; i++) e[i] = Math.round(e[i]);
     return new THREE.Quaternion().setFromRotationMatrix(m);
 }
-function applyMove(token, dur = 260) {
+function applyMove(token, dur = 300) {
     return new Promise(res => {
         const face = token[0];
         const suf = token.slice(1);
@@ -649,17 +852,17 @@ function applyMove(token, dur = 260) {
         let angle = -s * Math.PI / 2;
         if (suf === "'") angle *= -1;
         else if (suf === '2') angle *= 2;
-        const layer = cubies.filter(m => Math.round(m.position[a]) === s);
+        const layer = cubies.filter(g => Math.round(g.position[a]) === s);
         const pivot = new THREE.Group();
         cubeGroup.add(pivot);
-        layer.forEach(m => pivot.attach(m));
+        layer.forEach(g => pivot.attach(g));
         const finalize = () => {
             pivot.rotation[a] = angle;
             pivot.updateMatrixWorld(true);
-            layer.forEach(m => {
-                cubeGroup.attach(m);
-                m.position.set(Math.round(m.position.x), Math.round(m.position.y), Math.round(m.position.z));
-                m.quaternion.copy(snapQuat(m.quaternion));
+            layer.forEach(g => {
+                cubeGroup.attach(g);
+                g.position.set(Math.round(g.position.x), Math.round(g.position.y), Math.round(g.position.z));
+                g.quaternion.copy(snapQuat(g.quaternion));
             });
             cubeGroup.remove(pivot);
             res();
@@ -676,27 +879,26 @@ function applyMove(token, dur = 260) {
 }
 
 /* ================= READ 3D CUBE → FACELET STRING ================= */
+const _v = new THREE.Vector3();
+function findStickerAt(g, axis, sign) {
+    return g.userData.stickers.find(s => {
+        _v.copy(s.dir).applyQuaternion(g.quaternion);
+        const wx = Math.round(_v.x), wy = Math.round(_v.y), wz = Math.round(_v.z);
+        return (axis === 'x' && wx === sign && wy === 0 && wz === 0) ||
+               (axis === 'y' && wy === sign && wx === 0 && wz === 0) ||
+               (axis === 'z' && wz === sign && wx === 0 && wy === 0);
+    });
+}
 function readFacelets() {
     let str = '';
-    const v = new THREE.Vector3();
     for (const f of ['U', 'R', 'F', 'D', 'L', 'B']) {
         const g = GRID[f];
         for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
             const p = g.rc(r, c);
-            const cubie = cubies.find(m => Math.round(m.position.x) === p.x && Math.round(m.position.y) === p.y && Math.round(m.position.z) === p.z);
-            let letter = null;
-            for (let i = 0; i < 6; i++) {
-                v.copy(DIRS[i]).applyQuaternion(cubie.quaternion);
-                const wx = Math.round(v.x), wy = Math.round(v.y), wz = Math.round(v.z);
-                const onAxis = (g.axis === 'x' && wx === g.s && wy === 0 && wz === 0) ||
-                               (g.axis === 'y' && wy === g.s && wx === 0 && wz === 0) ||
-                               (g.axis === 'z' && wz === g.s && wx === 0 && wy === 0);
-                if (onAxis) {
-                    const hex = cubie.material[i].color.getHex();
-                    if (HEX2LETTER[hex]) letter = HEX2LETTER[hex];
-                }
-            }
-            if (!letter) return { error: 'Sticker read nahi ho paya — cube ko Reset karke dobara try karo.' };
+            const cubie = cubies.find(o => Math.round(o.position.x) === p.x && Math.round(o.position.y) === p.y && Math.round(o.position.z) === p.z);
+            const st = findStickerAt(cubie, g.axis, g.s);
+            const letter = st ? HEX2LETTER[st.mesh.material.color.getHex()] : null;
+            if (!letter) return { error: 'Could not read a sticker — please press Reset and paint again.' };
             str += letter;
         }
     }
@@ -708,17 +910,17 @@ function validateCubeString(str) {
     const counts = {};
     for (const ch of str) counts[ch] = (counts[ch] || 0) + 1;
     for (const k of ['U', 'R', 'F', 'D', 'L', 'B']) {
-        if ((counts[k] || 0) !== 9) return `Har color ke exactly 9 stickers hone chahiye — ${FACE_NAME[k]} abhi ${counts[k] || 0} hai. Colors recheck karo.`;
+        if ((counts[k] || 0) !== 9) return `Each color must appear exactly 9 times — ${FACE_NAME[k]} currently has ${counts[k] || 0}. Please recheck your colors.`;
     }
     let cube;
-    try { cube = Cube.fromString(str); } catch (e) { return 'Cube state parse nahi ho payi — colors recheck karo.'; }
+    try { cube = Cube.fromString(str); } catch (e) { return 'Could not parse the cube state — please recheck your colors.'; }
     const isPerm = a => [...a].sort((x, y) => x - y).every((val, i) => val === i);
-    if (!isPerm(cube.cp) || !isPerm(cube.ep)) return 'Pieces match nahi ho rahe — kisi corner/edge ke colors galat bhare gaye hain.';
+    if (!isPerm(cube.cp) || !isPerm(cube.ep)) return 'Some pieces do not match — a corner or edge has wrong colors. Please recheck them.';
     const sum = a => a.reduce((x, y) => x + y, 0);
-    if (sum(cube.co) % 3 !== 0) return 'Ek corner akele twisted hai — real cube mein possible nahi. Corner ke 3 colors recheck karo.';
-    if (sum(cube.eo) % 2 !== 0) return 'Ek edge akele flipped hai — real cube mein possible nahi. Edge ke 2 colors recheck karo.';
+    if (sum(cube.co) % 3 !== 0) return 'One corner looks twisted on its own — impossible on a real cube. Recheck that corner\'s 3 colors.';
+    if (sum(cube.eo) % 2 !== 0) return 'One edge looks flipped on its own — impossible on a real cube. Recheck that edge\'s 2 colors.';
     const parity = a => { const b = [...a]; let p = 0; for (let i = 0; i < b.length; i++) { while (b[i] !== i) { const j = b[i]; [b[i], b[j]] = [b[j], b[i]]; p++; } } return p % 2; };
-    if (parity(cube.cp) !== parity(cube.ep)) return 'Do pieces aapas mein swapped lag rahe hain — ye state solvable nahi hai. Colors recheck karo.';
+    if (parity(cube.cp) !== parity(cube.ep)) return 'Two pieces appear swapped — this state is not solvable. Please recheck your colors.';
     return null;
 }
 
@@ -740,10 +942,10 @@ function initSolver() {
         useWorker = true;
         solverWorker.onmessage = e => {
             const d = e.data;
-            if (d.type === 'ready') setStatus('Solver engine ready! Colors paint karo aur SOLVE dabao.', 'ok');
+            if (d.type === 'ready') setStatus('Solver engine ready. Paint your colors and hit Solve Cube!', 'ok');
             else if (d.type === 'solution') onSolution(d.solution);
             else if (d.type === 'scramble') onScramble(d.scramble);
-            else if (d.type === 'error') { setStatus('Engine error — state recheck karo.', 'err'); isAnimating = false; setButtons(true); }
+            else if (d.type === 'error') { setStatus('Engine error — please recheck the cube state.', 'err'); animating = false; setButtons(true); }
         };
         solverWorker.onerror = () => { useWorker = false; fallbackSolver(); };
     } catch (e) { fallbackSolver(); }
@@ -751,57 +953,122 @@ function initSolver() {
 function fallbackSolver() {
     try {
         if (typeof Cube !== 'undefined') { Cube.initSolver(); setStatus('Solver ready (compatibility mode).', 'ok'); }
-        else setStatus('Solver engine load nahi hua — internet connection check karo.', 'err');
-    } catch (e) { setStatus('Solver engine load nahi hua — internet connection check karo.', 'err'); }
+        else setStatus('Solver engine failed to load — please check your internet connection.', 'err');
+    } catch (e) { setStatus('Solver engine failed to load — please check your internet connection.', 'err'); }
 }
 initSolver();
 
-/* ================= SOLUTION FLOW ================= */
+/* ================= SOLUTION + PLAYBACK ================= */
+function clearSolution() {
+    solution = [];
+    solIdx = 0;
+    playing = false;
+    movesBox.innerHTML = '';
+    solEmpty.style.display = '';
+    solState.textContent = 'No solution yet';
+    playProgress.textContent = '';
+    refreshPlayback();
+}
 function onSolution(sol) {
-    currentSolution = String(sol || '').trim().split(/\s+/).filter(Boolean);
-    isAnimating = false;
-    if (!currentSolution.length) {
-        setStatus('Cube pehle se hi solved hai!', 'ok');
+    solution = String(sol || '').trim().split(/\s+/).filter(Boolean);
+    solIdx = 0;
+    animating = false;
+    if (!solution.length) {
+        setStatus('The cube is already solved. Nothing to do!', 'ok');
         setButtons(true);
         return;
     }
-    solCard.classList.remove('hidden');
-    solCount.textContent = '• ' + currentSolution.length + ' MOVES';
+    solEmpty.style.display = 'none';
     movesBox.innerHTML = '';
-    currentSolution.forEach((mv, i) => {
+    solution.forEach((mv, i) => {
         const chip = document.createElement('span');
         chip.className = 'move-chip';
-        chip.id = 'mv' + i;
         chip.textContent = mv;
         movesBox.appendChild(chip);
     });
-    playProgress.textContent = '';
-    setStatus('Solved! ' + currentSolution.length + ' moves mein — ab "Animate Solution" dabao ya manually follow karo.', 'ok');
+    solState.textContent = solution.length + ' moves';
+    setStatus('Solved in ' + solution.length + ' moves! Press play or step through them one by one.', 'ok');
     setButtons(true);
-    solCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    refreshPlayback();
 }
+function highlightChip(i) {
+    document.querySelectorAll('.move-chip').forEach((c, j) => {
+        c.classList.toggle('now', j === i);
+        c.classList.toggle('done', j < i);
+    });
+}
+const speed = () => parseInt(speedSelect.value, 10) || 340;
 
+pbNext.addEventListener('click', async () => {
+    bump();
+    if (animating || solIdx >= solution.length) return;
+    animating = true; refreshPlayback();
+    highlightChip(solIdx);
+    await applyMove(solution[solIdx], speed());
+    solIdx++;
+    animating = false; refreshPlayback();
+});
+pbPrev.addEventListener('click', async () => {
+    bump();
+    if (animating || solIdx <= 0) return;
+    animating = true; refreshPlayback();
+    solIdx--;
+    highlightChip(solIdx);
+    await applyMove(invert(solution[solIdx]), speed());
+    animating = false; refreshPlayback();
+});
+async function jumpTo(target) {
+    if (animating) return;
+    animating = true; refreshPlayback();
+    while (solIdx < target) { await applyMove(solution[solIdx], 0); solIdx++; }
+    while (solIdx > target) { solIdx--; await applyMove(invert(solution[solIdx]), 0); }
+    animating = false; refreshPlayback();
+}
+pbFirst.addEventListener('click', () => { bump(); jumpTo(0); });
+pbLast.addEventListener('click', () => { bump(); jumpTo(solution.length); });
+pbPlay.addEventListener('click', async () => {
+    bump();
+    if (playing) { playing = false; return; }
+    if (animating || !solution.length) return;
+    if (solIdx >= solution.length) { await jumpTo(0); }
+    playing = true; animating = true; refreshPlayback();
+    while (playing && solIdx < solution.length) {
+        highlightChip(solIdx);
+        await applyMove(solution[solIdx], speed());
+        solIdx++;
+        playProgress.textContent = 'Move ' + solIdx + ' / ' + solution.length;
+    }
+    playing = false; animating = false;
+    if (solIdx === solution.length) {
+        playProgress.textContent = 'Solved! 🎉';
+        setStatus('Cube solved! Follow the same moves on your real cube.', 'ok');
+    }
+    refreshPlayback();
+});
+
+/* ================= SOLVE / SCRAMBLE / RESET / DEMO / SHARE ================= */
 solveBtn.addEventListener('click', () => {
     bump();
-    if (isAnimating) return;
-    if (typeof Cube === 'undefined') { setStatus('Solver engine abhi load nahi hua — internet check karke refresh karo.', 'err'); return; }
+    if (animating) return;
+    if (typeof Cube === 'undefined') { setStatus('Solver engine is still loading — please check your connection and refresh.', 'err'); return; }
     const { str, error } = readFacelets();
     if (error) { setStatus(error, 'err'); return; }
     const invalid = validateCubeString(str);
     if (invalid) { setStatus(invalid, 'err'); return; }
+    clearSolution();
+    animating = true;
     setButtons(false);
-    setStatus('Solving… optimal formula nikala ja raha hai', 'info');
+    setStatus('Solving… computing the optimal formula', 'info');
     if (useWorker && solverWorker) {
         solverWorker.postMessage({ cmd: 'solve', state: str });
     } else {
         setTimeout(() => {
             try { onSolution(Cube.fromString(str).solve()); }
-            catch (e) { setStatus('Solve failed — cube state recheck karo.', 'err'); setButtons(true); }
+            catch (e) { setStatus('Solve failed — please recheck the cube state.', 'err'); animating = false; setButtons(true); }
         }, 50);
     }
 });
 
-/* ================= SCRAMBLE / RESET / PLAY / COPY ================= */
 function randomScramble() {
     const faces = 'URFDLB';
     const out = [];
@@ -817,59 +1084,109 @@ function randomScramble() {
 }
 async function onScramble(scr) {
     const tokens = String(scr).trim().split(/\s+/).filter(Boolean);
-    isAnimating = true;
-    setButtons(false);
-    for (const tk of tokens) await applyMove(tk, 110);
-    isAnimating = false;
-    setButtons(true);
+    animating = true; setButtons(false);
+    for (const tk of tokens) await applyMove(tk, 105);
+    animating = false; setButtons(true);
     setStatus('Scrambled: ' + scr, 'info');
 }
 scrambleBtn.addEventListener('click', () => {
     bump();
-    if (isAnimating) return;
-    currentSolution = [];
-    solCard.classList.add('hidden');
-    setStatus('Mixing…', 'info');
-    setButtons(false);
+    if (animating) return;
+    clearSolution();
+    setStatus('Mixing the cube…', 'info');
+    animating = true; setButtons(false);
     if (useWorker && solverWorker) solverWorker.postMessage({ cmd: 'scramble' });
     else onScramble(randomScramble());
 });
 
 resetBtn.addEventListener('click', () => {
     bump();
-    if (isAnimating) return;
+    if (animating) return;
     paintSolved();
-    currentSolution = [];
-    solCard.classList.add('hidden');
-    setStatus('Cube reset — bilkul solved state par wapas.', 'ok');
+    clearSolution();
+    setStatus('Cube reset to its solved state.', 'ok');
 });
 
-playBtn.addEventListener('click', async () => {
+// Famous "superflip" pattern — every edge flipped in place
+demoBtn.addEventListener('click', async () => {
     bump();
-    if (!currentSolution.length || isAnimating) return;
-    isAnimating = true;
-    setButtons(false);
-    for (let i = 0; i < currentSolution.length; i++) {
-        movesBox.querySelectorAll('.move-chip').forEach((c, j) => {
-            c.classList.toggle('now', j === i);
-            c.classList.toggle('done', j < i);
-        });
-        playProgress.textContent = 'Move ' + (i + 1) + ' / ' + currentSolution.length + ' — ' + currentSolution[i];
-        await applyMove(currentSolution[i], 340);
-    }
-    movesBox.querySelectorAll('.move-chip').forEach(c => { c.classList.remove('now'); c.classList.add('done'); });
-    playProgress.textContent = 'Cube solved! Shandaar — ab Reset ya Scramble try karo.';
-    isAnimating = false;
-    setButtons(true);
-    setStatus('Cube successfully solved!', 'ok');
+    if (animating) return;
+    paintSolved();
+    clearSolution();
+    const demo = "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2".split(' ');
+    animating = true; setButtons(false);
+    setStatus('Loading demo pattern (Superflip)…', 'info');
+    for (const tk of demo) await applyMove(tk, 110);
+    animating = false; setButtons(true);
+    cubies.forEach(g => g.userData.stickers.forEach(s => s.painted = true));
+    updateCounter();
+    setStatus('Demo state loaded — the famous "Superflip". Now hit Solve Cube!', 'ok');
 });
 
-copyBtn.addEventListener('click', () => {
-    if (!currentSolution.length) return;
-    navigator.clipboard.writeText(currentSolution.join(' '))
-        .then(() => setStatus('Solution copied to clipboard!', 'ok'))
-        .catch(() => setStatus('Copy nahi hua — manually select karke copy karo.', 'err'));
-});
+function shareCubeLink() {
+    bump();
+    if (animating) return;
+    const { str, error } = readFacelets();
+    if (error) { setStatus(error, 'err'); return; }
+    const url = location.origin + location.pathname + '#state=' + str;
+    const done = () => setStatus('State link copied! Share it with your friends.', 'ok');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done).catch(() => setStatus('Copy failed — copy the URL from the address bar instead.', 'err'));
+    } else {
+        location.hash = 'state=' + str;
+        setStatus('Copy the URL from your address bar to share this cube state.', 'info');
+    }
+}
+copyLinkBtn.addEventListener('click', shareCubeLink);
+shareTopBtn.addEventListener('click', shareCubeLink);
+
+/* ================= LOAD SHARED STATE FROM URL (#state=...) ================= */
+(function loadFromHash() {
+    const m = location.hash.match(/state=([URFDLB]{54})/i);
+    if (!m) return;
+    const str = m[1].toUpperCase();
+    if (typeof Cube !== 'undefined') {
+        const invalid = validateCubeString(str);
+        if (invalid) { setStatus('The shared cube state is invalid: ' + invalid, 'err'); return; }
+    }
+    let i = 0;
+    for (const f of ['U', 'R', 'F', 'D', 'L', 'B']) {
+        const g = GRID[f];
+        for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+            const ch = str[i++];
+            const p = g.rc(r, c);
+            const cubie = cubies.find(o => Math.round(o.position.x) === p.x && Math.round(o.position.y) === p.y && Math.round(o.position.z) === p.z);
+            const st = findStickerAt(cubie, g.axis, g.s);
+            if (st) { st.mesh.material.color.setHex(FACE_HEX[ch]); st.painted = true; }
+        }
+    }
+    updateCounter();
+    setStatus('Shared cube state loaded — hit Solve Cube to see the solution!', 'ok');
+})();
+
+refreshPlayback();
+
+/* ================= HIDDEN SELF-TEST HOOK (dev QA only) ================= */
+if (new URLSearchParams(location.search).has('selftest')) {
+    setTimeout(async () => {
+        try {
+            const scr = randomScramble().split(' ');
+            for (const tk of scr) await applyMove(tk, 0);
+            const { str, error } = readFacelets();
+            const invalid = error || validateCubeString(str);
+            let sol = null, solved = false;
+            if (!invalid && typeof Cube !== 'undefined') {
+                Cube.initSolver();
+                sol = Cube.fromString(str).solve();
+                for (const tk of sol.split(' ')) await applyMove(tk, 0);
+                solved = readFacelets().str === 'UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB';
+            }
+            document.title = 'SELFTEST | invalid=' + invalid + ' | sol=' + sol + ' | solved=' + solved;
+        } catch (e) {
+            document.title = 'SELFTEST ERROR | ' + e.message + ' || ' + String(e.stack).split('\n').slice(0, 3).join(' @@ ');
+        }
+    }, 2000);
+}
 </script>
 
 <!-- 🚀 Custom 3D Tilt JavaScript Engine (algorithm cards) -->
