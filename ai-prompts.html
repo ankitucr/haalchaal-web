@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- 🚀 Advanced SEO Meta Tags -->
-    <title>AI Prompt Engineering | DaVinci, Fliki & Canva Pro | Velqur</title>
-    <meta name="description" content="Copy high-quality, professional AI prompts for DaVinci AI Image Generator, Fliki Video Editor scripts, and Canva Pro designs. Maximize your AI output.">
-    <meta name="keywords" content="DaVinci AI prompt generator, Fliki video editor scripts, Canva Pro design prompts, AI image formulas, ChatGPT video scripts, AI prompt directory">
+    <!-- 🚀 High-CPC SEO Meta Tags -->
+    <title>Dynamic AI Prompt Generator & Engine | Velqur</title>
+    <meta name="description" content="Generate high-converting custom prompts for DaVinci AI, Fliki Video Editor, and Canva Pro designs instantly with our interactive frontend prompt matrix.">
+    <meta name="keywords" content="DaVinci AI prompt generator, Fliki video script maker, Canva Pro design formulas, AI image prompt builder, Custom AI prompt scriptwriter">
     <meta name="robots" content="index, follow">
 
     <!-- 💰 Google AdSense Code -->
@@ -15,16 +15,6 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Custom Style for Copy Animation -->
-    <style>
-        .copied-anim { animation: pulseGreen 0.5s ease-in-out; }
-        @keyframes pulseGreen {
-            0% { transform: scale(1); background-color: #3b82f6; }
-            50% { transform: scale(1.1); background-color: #10b981; }
-            100% { transform: scale(1); background-color: #10b981; }
-        }
-    </style>
 </head>
 <body class="bg-[#0B141A] text-gray-200 font-sans antialiased">
 
@@ -32,76 +22,88 @@
     <nav class="border-b border-gray-800 bg-[#111B21] p-4 sticky top-0 z-50 shadow-lg">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <a href="tools.html" class="text-xl font-bold text-green-500 hover:text-green-400 transition"><i class="fas fa-arrow-left mr-2"></i> Back to Tools</a>
-            <span class="text-blue-500 text-sm font-bold tracking-widest"><i class="fas fa-robot mr-1"></i> AI LAB</span>
+            <span class="text-blue-500 text-sm font-mono tracking-widest"><i class="fas fa-robot mr-1"></i> DYNAMIC AI LAB</span>
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Main Container -->
     <main class="max-w-6xl mx-auto p-6 py-10">
-        <div class="text-center mb-12">
-            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Master AI <span class="text-blue-500">Prompting</span></h1>
-            <p class="text-gray-400 max-w-2xl mx-auto">Stop writing basic commands. Copy our highly optimized, production-ready prompts designed specifically for top AI engines.</p>
+        
+        <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-3">Dynamic AI <span class="text-blue-500">Prompt Generator</span></h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">Build infinite production-ready prompt combinations for images, scripts, and designs on the fly.</p>
         </div>
 
-        <!-- Prompts Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Generator Workspace Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <!-- Category 1: DaVinci AI (Images) -->
-            <div class="bg-[#111B21] border border-gray-800 rounded-2xl p-6 hover:border-purple-500 transition-colors">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 bg-purple-500/20 text-purple-500 rounded-lg flex items-center justify-center text-xl mr-3"><i class="fas fa-image"></i></div>
-                    <h2 class="text-xl font-bold text-white">DaVinci AI Generator</h2>
+            <!-- Left Controls (Inputs) -->
+            <div class="lg:col-span-5 bg-[#111B21] border border-gray-800 p-6 rounded-2xl shadow-xl space-y-5">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-sliders-h text-blue-500"></i> Prompt Parameters</h2>
+
+                <div>
+                    <label class="block text-gray-400 text-xs font-semibold uppercase mb-1.5">Target AI Engine</label>
+                    <select id="ai-engine" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500">
+                        <option value="davinci">DaVinci AI (Image Generator)</option>
+                        <option value="fliki">Fliki (Video Scriptwriter)</option>
+                        <option value="canva">Canva Pro (Design & Layout)</option>
+                    </select>
                 </div>
-                <div class="bg-[#0B141A] p-4 rounded-xl border border-gray-700 relative group">
-                    <span class="text-xs text-purple-400 font-bold mb-2 block">Cinematic Photography</span>
-                    <p id="prompt-1" class="text-gray-300 text-sm mb-4 leading-relaxed">
-                        A hyper-realistic cinematic portrait of a cyberpunk hacker in a neon-lit Tokyo alleyway. Shot on 35mm lens, f/1.8, cinematic lighting, 8k resolution, highly detailed, Unreal Engine 5 render style.
-                    </p>
-                    <button onclick="copyText('prompt-1', this)" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-lg transition text-sm flex items-center justify-center">
-                        <i class="fas fa-copy mr-2"></i> Copy Prompt
-                    </button>
+
+                <div>
+                    <label class="block text-gray-400 text-xs font-semibold uppercase mb-1.5">Core Subject / Topic</label>
+                    <input type="text" id="prompt-subject" value="Cyberpunk Hacker in Tokyo Alley" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500">
                 </div>
+
+                <div>
+                    <label class="block text-gray-400 text-xs font-semibold uppercase mb-1.5">Visual / Writing Style</label>
+                    <select id="prompt-style" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500">
+                        <option value="Hyper-realistic Cinematic 8k">Hyper-realistic Cinematic 8k</option>
+                        <option value="Dark Moody & Suspenseful">Dark Moody & Suspenseful</option>
+                        <option value="Minimalist Corporate Tech">Minimalist Corporate Tech</option>
+                        <option value="Vibrant Retro Synthwave">Vibrant Retro Synthwave</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-gray-400 text-xs font-semibold uppercase mb-1.5">Output Lighting / Tone</label>
+                    <select id="prompt-lighting" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500">
+                        <option value="Neon Glow & Volumetric Fog">Neon Glow & Volumetric Fog</option>
+                        <option value="Studio Softbox Lighting">Studio Softbox Lighting</option>
+                        <option value="Golden Hour Natural Sunlight">Golden Hour Natural Sunlight</option>
+                        <option value="High Contrast Dramatic Shadows">High Contrast Dramatic Shadows</option>
+                    </select>
+                </div>
+
+                <button onclick="generateCustomPrompt()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-lg transition duration-200 uppercase tracking-wide text-sm shadow-lg shadow-blue-600/20">Generate Custom Prompt</button>
             </div>
 
-            <!-- Category 2: Fliki (Video Scripts) -->
-            <div class="bg-[#111B21] border border-gray-800 rounded-2xl p-6 hover:border-red-500 transition-colors">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 bg-red-500/20 text-red-500 rounded-lg flex items-center justify-center text-xl mr-3"><i class="fas fa-video"></i></div>
-                    <h2 class="text-xl font-bold text-white">Fliki Video Editor</h2>
-                </div>
-                <div class="bg-[#0B141A] p-4 rounded-xl border border-gray-700 relative group">
-                    <span class="text-xs text-red-400 font-bold mb-2 block">Viral YouTube Short</span>
-                    <p id="prompt-2" class="text-gray-300 text-sm mb-4 leading-relaxed">
-                        Act as a professional scriptwriter. Write a 60-second engaging script about "3 Secrets of the Universe". Use a captivating hook, suspenseful pacing, and a strong call-to-action. Tone: Mysterious and educational.
-                    </p>
-                    <button onclick="copyText('prompt-2', this)" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-lg transition text-sm flex items-center justify-center">
-                        <i class="fas fa-copy mr-2"></i> Copy Prompt
-                    </button>
-                </div>
-            </div>
+            <!-- Right Output Display -->
+            <div class="lg:col-span-7 bg-[#111B21] border border-gray-800 p-6 rounded-2xl shadow-xl flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-terminal text-green-500"></i> Generated Output Matrix</h2>
+                        <span id="badge-engine" class="text-xs font-mono bg-blue-500/10 text-blue-400 px-2.5 py-1 rounded-md border border-blue-500/20">DAVINCI ENGINE</span>
+                    </div>
 
-            <!-- Category 3: Canva Pro (Design) -->
-            <div class="bg-[#111B21] border border-gray-800 rounded-2xl p-6 hover:border-teal-500 transition-colors">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 bg-teal-500/20 text-teal-500 rounded-lg flex items-center justify-center text-xl mr-3"><i class="fas fa-paint-brush"></i></div>
-                    <h2 class="text-xl font-bold text-white">Canva Pro Assets</h2>
+                    <div class="bg-[#0B141A] border border-gray-700/80 rounded-xl p-5 min-h-[180px] flex items-center mb-4">
+                        <p id="output-box" class="text-gray-200 font-mono text-sm leading-relaxed select-all">Click 'Generate Custom Prompt' to initialize matrix parameters...</p>
+                    </div>
                 </div>
-                <div class="bg-[#0B141A] p-4 rounded-xl border border-gray-700 relative group">
-                    <span class="text-xs text-teal-400 font-bold mb-2 block">Premium Pitch Deck</span>
-                    <p id="prompt-3" class="text-gray-300 text-sm mb-4 leading-relaxed">
-                        Generate a professional structure for a modern tech startup pitch deck. Include 10 slides with suggested color hex codes (dark theme with neon accents), typography pairings, and layout directions for a minimalist corporate aesthetic.
-                    </p>
-                    <button onclick="copyText('prompt-3', this)" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-lg transition text-sm flex items-center justify-center">
-                        <i class="fas fa-copy mr-2"></i> Copy Prompt
+
+                <div class="space-y-3">
+                    <button onclick="copyGeneratedPrompt()" id="copy-btn" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-200 font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 text-sm border border-gray-700">
+                        <i class="fas fa-copy text-blue-400"></i> Copy Prompt to Clipboard
                     </button>
+                    <div class="text-center text-xs text-gray-500 font-mono">Engine Status: Ready / 0ms Latency</div>
                 </div>
             </div>
 
         </div>
 
-        <!-- AdSense Display Space (Middle of the page for high CTR) -->
-        <div class="mt-12 mb-8 text-center p-4 border border-dashed border-gray-700 rounded-lg text-gray-500">
-            <span class="text-sm">Advertisement</span>
+        <!-- AdSense Display Ad Slot -->
+        <div class="mt-12 text-center p-4 border border-dashed border-gray-800 bg-gray-900/30 rounded-xl text-gray-500 font-mono text-xs">
+            <span class="block mb-2">SPONSORED ADVERTISEMENT</span>
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-6277909939753506"
@@ -115,31 +117,59 @@
 
     </main>
 
-    <!-- JavaScript For Copy Functionality -->
+    <!-- Dynamic Engine Script -->
     <script>
-        function copyText(elementId, btnElement) {
-            // Get the text from the paragraph
-            var copyText = document.getElementById(elementId).innerText;
+        function generateCustomPrompt() {
+            const engine = document.getElementById('ai-engine').value;
+            const subject = document.getElementById('prompt-subject').value.trim() || "Futuristic Cityscape";
+            const style = document.getElementById('prompt-style').value;
+            const lighting = document.getElementById('prompt-lighting').value;
+            const badge = document.getElementById('badge-engine');
+            const outputBox = document.getElementById('output-box');
 
-            // Copy to clipboard
-            navigator.clipboard.writeText(copyText).then(() => {
-                // Change button appearance on success
-                let originalHTML = btnElement.innerHTML;
-                let originalClasses = btnElement.className;
-                
-                btnElement.innerHTML = '<i class="fas fa-check mr-2"></i> Copied!';
-                btnElement.className = "w-full bg-green-500 text-white font-bold py-2 rounded-lg transition text-sm flex items-center justify-center copied-anim";
+            let finalPrompt = "";
 
-                // Revert button back after 2 seconds
+            if(engine === 'davinci') {
+                badge.innerText = "DAVINCI ENGINE";
+                badge.className = "text-xs font-mono bg-purple-500/10 text-purple-400 px-2.5 py-1 rounded-md border border-purple-500/20";
+                finalPrompt = `A ${style.toLowerCase()} digital artwork featuring ${subject}. Enhanced with ${lighting.toLowerCase()}. Shot on 35mm lens, f/1.8 aperture, cinematic depth of field, 8k resolution, highly detailed volumetric rendering, Unreal Engine 5 aesthetic.`;
+            } 
+            else if(engine === 'fliki') {
+                badge.innerText = "FLIKI SCRIPT ENGINE";
+                badge.className = "text-xs font-mono bg-red-500/10 text-red-400 px-2.5 py-1 rounded-md border border-red-500/20";
+                finalPrompt = `Act as an expert viral video creator. Write a high-retention 60-second video script focusing on "${subject}". Style tone: ${style}. Visual directions to include: ${lighting}. Ensure a powerful hook in the first 3 seconds and a seamless call-to-action at the end.`;
+            } 
+            else if(engine === 'canva') {
+                badge.innerText = "CANVA PRO LAYOUT";
+                badge.className = "text-xs font-mono bg-teal-500/10 text-teal-400 px-2.5 py-1 rounded-md border border-teal-500/20";
+                finalPrompt = `Generate a professional corporate graphic design blueprint layout for "${subject}". Aesthetic requirement: ${style}. Color grading and background mood: ${lighting}. Provide exact positioning guidelines for typography hierarchy, whitespace ratio, and contrast elements.`;
+            }
+
+            outputBox.innerText = finalPrompt;
+        }
+
+        function copyGeneratedPrompt() {
+            const text = document.getElementById('output-box').innerText;
+            const btn = document.getElementById('copy-btn');
+
+            if(text.includes("Click 'Generate")) {
+                alert("Please generate a prompt first!");
+                return;
+            }
+
+            navigator.clipboard.writeText(text).then(() => {
+                btn.innerHTML = '<i class="fas fa-check text-green-400"></i> Prompt Copied Successfully!';
+                btn.className = "w-full bg-green-900/40 text-green-300 font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 text-sm border border-green-700/50";
+
                 setTimeout(() => {
-                    btnElement.innerHTML = originalHTML;
-                    btnElement.className = originalClasses;
+                    btn.innerHTML = '<i class="fas fa-copy text-blue-400"></i> Copy Prompt to Clipboard';
+                    btn.className = "w-full bg-gray-800 hover:bg-gray-700 text-gray-200 font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 text-sm border border-gray-700";
                 }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-                alert("Failed to copy text. Please try manually.");
             });
         }
+
+        // Run once on load to populate default
+        window.addEventListener('DOMContentLoaded', generateCustomPrompt);
     </script>
 </body>
 </html>
