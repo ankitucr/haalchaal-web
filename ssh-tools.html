@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 🚀 Advanced SEO Meta Tags -->
+    <title>Terminal & SSH Cheat Sheet | Cloud & Local Sync | Velqur</title>
+    <meta name="description" content="Essential mobile terminal SSH commands, cloud instance troubleshooting, and local database sync scripts for developers. Direct server control without GUI.">
+    <meta name="keywords" content="Mobile terminal SSH commands, Direct server control via secure shell, Local database sync scripts, Backend data controller troubleshoot, Linux cheat sheet">
+    <meta name="robots" content="index, follow">
+
+    <!-- 💰 Google AdSense Code -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6277909939753506" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- 🎨 Custom Terminal & Cyberpunk CSS -->
+    <style>
+        body { background-color: #050505; }
+        
+        /* Neon Glow Accents */
+        .glow-purple { box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); }
+        .glow-green { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+        
+        /* Terminal Window Styling */
+        .terminal-window {
+            background-color: #0a0a0a;
+            border: 1px solid #1f2937;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .terminal-header {
+            background-color: #111827;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #1f2937;
+        }
+        .terminal-dots { display: flex; gap: 6px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background-color: #ef4444; }
+        .dot-yellow { background-color: #f59e0b; }
+        .dot-green { background-color: #10b981; }
+        
+        /* Custom Scrollbar for terminal body */
+        .terminal-body::-webkit-scrollbar { width: 6px; }
+        .terminal-body::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        
+        /* Blinking Cursor */
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body class="text-gray-300 font-sans antialiased">
+
+    <!-- Navbar -->
+    <nav class="border-b border-gray-900 bg-black/80 backdrop-blur-md p-4 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="tools.html" class="text-xl font-bold text-green-500 hover:text-green-400 transition"><i class="fas fa-arrow-left mr-2"></i> Back to Tools</a>
+            <span class="text-purple-500 text-sm font-mono tracking-widest"><i class="fas fa-terminal mr-1"></i> ROOT ACCESS</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto p-6 py-12">
+        <div class="text-center mb-16">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4 font-mono">
+                > <span id="typewriter" class="text-purple-500"></span><span class="cursor-blink text-purple-500">_</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg mt-4">Bypass the GUI. Direct server control commands, live cloud instance troubleshooting, and secure database syncs.</p>
+        </div>
+
+        <!-- Terminal Grids -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Terminal 1: Cloud SSH Connection -->
+            <div class="terminal-window glow-purple transition-all hover:border-purple-500">
+                <div class="terminal-header justify-between">
+                    <div class="terminal-dots">
+                        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+                    </div>
+                    <span class="text-xs text-gray-400 font-mono">user@cloud-instance:~</span>
+                </div>
+                <div class="terminal-body p-5 font-mono text-sm h-64 overflow-y-auto">
+                    <p class="text-gray-500 mb-2"># Secure connection to live cloud systems via mobile/desktop terminal</p>
+                    <div class="flex justify-between items-start mb-6 group">
+                        <code id="cmd-1" class="text-green-400 break-all">ssh -i ~/.ssh/cloud_key.pem root@192.168.1.100 -p 2222</code>
+                        <button onclick="copyCmd('cmd-1', this)" class="text-gray-500 hover:text-purple-400 ml-4 transition"><i class="fas fa-copy"></i></button>
+                    </div>
+
+                    <p class="text-gray-500 mb-2"># Generate a new robust RSA SSH key pair</p>
+                    <div class="flex justify-between items-start mb-6 group">
+                        <code id="cmd-2" class="text-green-400 break-all">ssh-keygen -t rsa -b 4096 -C "admin@velqur.in"</code>
+                        <button onclick="copyCmd('cmd-2', this)" class="text-gray-500 hover:text-purple-400 ml-4 transition"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal 2: Live Server Logs -->
+            <div class="terminal-window glow-green transition-all hover:border-green-500">
+                <div class="terminal-header justify-between">
+                    <div class="terminal-dots">
+                        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+                    </div>
+                    <span class="text-xs text-gray-400 font-mono">root@backend-controller:~</span>
+                </div>
+                <div class="terminal-body p-5 font-mono text-sm h-64 overflow-y-auto">
+                    <p class="text-gray-500 mb-2"># Tail live terminal logs for backend troubleshooting</p>
+                    <div class="flex justify-between items-start mb-6 group">
+                        <code id="cmd-3" class="text-green-400 break-all">tail -f /var/log/nginx/error.log | grep "CRITICAL"</code>
+                        <button onclick="copyCmd('cmd-3', this)" class="text-gray-500 hover:text-green-400 ml-4 transition"><i class="fas fa-copy"></i></button>
+                    </div>
+
+                    <p class="text-gray-500 mb-2"># Check running PM2 node instances dynamically</p>
+                    <div class="flex justify-between items-start mb-6 group">
+                        <code id="cmd-4" class="text-green-400 break-all">pm2 status && pm2 monit</code>
+                        <button onclick="copyCmd('cmd-4', this)" class="text-gray-500 hover:text-green-400 ml-4 transition"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal 3: Local Database Sync -->
+            <div class="terminal-window transition-all hover:border-blue-500 lg:col-span-2">
+                <div class="terminal-header justify-between">
+                    <div class="terminal-dots">
+                        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+                    </div>
+                    <span class="text-xs text-gray-400 font-mono">admin@local-db-sync:~</span>
+                </div>
+                <div class="terminal-body p-5 font-mono text-sm">
+                    <p class="text-gray-500 mb-2"># Safely dump remote database and sync to local system via SSH</p>
+                    <div class="bg-gray-900 p-4 rounded border border-gray-800 flex justify-between items-center">
+                        <code id="cmd-5" class="text-blue-400 break-all">mysqldump -u root -p core_database > backup.sql && scp root@remote:/backup.sql ./local_dir/</code>
+                        <button onclick="copyCmd('cmd-5', this)" class="text-gray-400 hover:text-blue-400 ml-4 transition"><i class="fas fa-copy text-lg"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- AdSense Display Space -->
+        <div class="mt-16 text-center p-4 border border-dashed border-gray-800 bg-gray-900/50 rounded-xl text-gray-600 font-mono text-sm">
+            <span>/* ADVERTISEMENT BLOCK */</span>
+            <ins class="adsbygoogle mt-2"
+                 style="display:block"
+                 data-ad-client="ca-pub-6277909939753506"
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+    </main>
+
+    <!-- JavaScript For Copy & Typewriter -->
+    <script>
+        // Typewriter Effect for Header
+        const textToType = "Server Commands & SSH";
+        let i = 0;
+        function typeWriter() {
+            if (i < textToType.length) {
+                document.getElementById("typewriter").innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        // Start typing effect on load
+        window.onload = () => {
+            setTimeout(typeWriter, 500);
+        };
+
+        // Custom Terminal Copy Function
+        function copyCmd(elementId, btnElement) {
+            var copyText = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(copyText).then(() => {
+                let originalHTML = btnElement.innerHTML;
+                
+                // Show 'Copied' in terminal style
+                btnElement.innerHTML = '<span class="text-xs font-bold text-white bg-green-600 px-2 py-1 rounded">[ COPIED ]</span>';
+                
+                setTimeout(() => {
+                    btnElement.innerHTML = originalHTML;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
