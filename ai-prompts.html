@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- 🚀 High-CPC SEO Meta Tags -->
     <title>Dynamic AI Prompt Generator & Engine | Velqur</title>
-    <meta name="description" content="Generate high-converting custom prompts for DaVinci AI, Fliki Video Editor, and Canva Pro designs instantly with our interactive frontend prompt matrix.">
+    <meta name="description" content="Generate high-converting custom prompts for DaVinci AI, Fliki Video Editor, and Canva Pro designs instantly with our interactive prompt dispenser.">
     <meta name="keywords" content="DaVinci AI prompt generator, Fliki video script maker, Canva Pro design formulas, AI image prompt builder, Custom AI prompt scriptwriter">
     <meta name="robots" content="index, follow">
 
@@ -15,94 +15,218 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #8B5CF6;
+            --accent-soft: rgba(139,92,246,0.12);
+            --bg: #0A0C11;
+            --surface: #14171F;
+            --surface-2: #1B1F2A;
+            --border: #262B38;
+        }
+        body { background-color: var(--bg); font-family: 'Inter', sans-serif; }
+        h1, h2, .font-display { font-family: 'Space Grotesk', sans-serif; }
+        .font-mono-custom { font-family: 'JetBrains Mono', monospace; }
+
+        .engine-tab { transition: all 0.25s ease; }
+        .engine-tab.active {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            box-shadow: 0 0 0 1px var(--accent), 0 8px 24px -8px var(--accent);
+        }
+        .engine-tab.active .engine-icon { color: var(--accent); }
+        .engine-tab:not(.active):hover { border-color: #3A3F4E; }
+
+        .chip { transition: all 0.2s ease; }
+        .chip.active {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: #fff;
+        }
+        .chip:not(.active):hover { border-color: #3A3F4E; color: #d1d5db; }
+
+        .generate-btn {
+            background: var(--accent);
+            box-shadow: 0 10px 30px -10px var(--accent);
+        }
+        .generate-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+        .generate-btn:active { transform: translateY(0); }
+
+        /* Ticket / dispenser signature element */
+        .ticket {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+        }
+        .ticket::before, .ticket::after {
+            content: "";
+            position: absolute;
+            width: 26px; height: 26px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            top: 148px;
+            z-index: 3;
+        }
+        .ticket::before { left: -14px; }
+        .ticket::after { right: -14px; }
+        .perforation {
+            border-top: 2px dashed #2E3342;
+            position: relative;
+        }
+        .perforation::before {
+            content: "";
+            position: absolute;
+            inset: -1px -22px auto -22px;
+            height: 0;
+        }
+
+        .fade-in { animation: fadeIn 0.35s ease both; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+        .history-item:hover { border-color: #3A3F4E; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in, .generate-btn, .engine-tab, .chip { animation: none !important; transition: none !important; }
+        }
+
+        ::selection { background: var(--accent-soft); }
+        .scroll-thin::-webkit-scrollbar { width: 5px; }
+        .scroll-thin::-webkit-scrollbar-thumb { background: #2E3342; border-radius: 4px; }
+    </style>
 </head>
-<body class="bg-[#0B141A] text-gray-200 font-sans antialiased">
+<body class="text-gray-200 antialiased">
 
     <!-- Navbar -->
-    <nav class="border-b border-gray-800 bg-[#111B21] p-4 sticky top-0 z-50 shadow-lg">
+    <nav class="border-b border-gray-900 bg-black/40 backdrop-blur-md p-4 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="tools.html" class="text-xl font-bold text-green-500 hover:text-green-400 transition"><i class="fas fa-arrow-left mr-2"></i> Back to Tools</a>
-            <span class="text-blue-500 text-sm font-mono tracking-widest"><i class="fas fa-robot mr-1"></i> DYNAMIC AI LAB</span>
+            <a href="tools.html" class="text-sm font-semibold text-gray-400 hover:text-white transition flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i> Back to Tools
+            </a>
+            <span class="text-xs font-mono-custom tracking-widest text-gray-500 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> LAB ONLINE
+            </span>
         </div>
     </nav>
 
-    <!-- Main Container -->
-    <main class="max-w-6xl mx-auto p-6 py-10">
-        
-        <div class="text-center mb-10">
-            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-3">Dynamic AI <span class="text-blue-500">Prompt Generator</span></h1>
-            <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">Build infinite production-ready prompt combinations for images, scripts, and designs on the fly.</p>
+    <main class="max-w-6xl mx-auto px-6 py-14">
+
+        <!-- Hero -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight">Prompt <span class="text-[var(--accent)] transition-colors duration-300">Dispenser</span></h1>
+            <p class="text-gray-500 max-w-xl mx-auto text-sm md:text-base">Pick an engine, set your parameters, and pull a production-ready prompt — printed fresh, every time.</p>
         </div>
 
-        <!-- Generator Workspace Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
-            <!-- Left Controls (Inputs) -->
-            <div class="lg:col-span-5 bg-[#111B21] border border-gray-800 p-6 rounded-2xl shadow-xl space-y-5">
-                <h2 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-sliders-h text-blue-500"></i> Prompt Parameters</h2>
+        <!-- Engine Selector -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10" role="radiogroup" aria-label="Target AI engine" id="engine-tabs">
+            <button data-engine="davinci" data-accent="#8B5CF6" data-soft="rgba(139,92,246,0.12)"
+                class="engine-tab active text-left p-5 rounded-2xl border border-[#262B38] bg-[#14171F]">
+                <i class="fas fa-image engine-icon text-xl mb-3 block text-[var(--accent)]"></i>
+                <div class="font-display font-semibold text-white text-sm">DaVinci AI</div>
+                <div class="text-xs text-gray-500 mt-1">Image generation prompts</div>
+            </button>
+            <button data-engine="fliki" data-accent="#FB7185" data-soft="rgba(251,113,133,0.12)"
+                class="engine-tab text-left p-5 rounded-2xl border border-[#262B38] bg-[#14171F]">
+                <i class="fas fa-clapperboard engine-icon text-xl mb-3 block text-gray-500"></i>
+                <div class="font-display font-semibold text-white text-sm">Fliki</div>
+                <div class="text-xs text-gray-500 mt-1">Video script writing</div>
+            </button>
+            <button data-engine="canva" data-accent="#2DD4BF" data-soft="rgba(45,212,191,0.12)"
+                class="engine-tab text-left p-5 rounded-2xl border border-[#262B38] bg-[#14171F]">
+                <i class="fas fa-swatchbook engine-icon text-xl mb-3 block text-gray-500"></i>
+                <div class="font-display font-semibold text-white text-sm">Canva Pro</div>
+                <div class="text-xs text-gray-500 mt-1">Design & layout blueprints</div>
+            </button>
+        </div>
+
+        <!-- Workspace -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Left: Parameters -->
+            <div class="lg:col-span-5 bg-[#14171F] border border-[#262B38] p-6 rounded-2xl space-y-6">
+                <h2 class="text-sm font-display font-semibold text-white flex items-center gap-2">
+                    <i class="fas fa-sliders-h text-gray-500"></i> Parameters
+                </h2>
 
                 <div>
-                    <label class="block text-gray-400 text-xs font-semibold uppercase mb-1.5">Target AI Engine</label>
-                    <select id="ai-engine" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500">
-                        <option value="davinci">DaVinci AI (Image Generator)</option>
-                        <option value="fliki">Fliki (Video Scriptwriter)</option>
-                        <option value="canva">Canva Pro (Design & Layout)</option>
-                    </select>
+                    <label class="block text-gray-500 text-[11px] font-semibold uppercase tracking-wider mb-2">Core Subject / Topic</label>
+                    <input type="text" id="prompt-subject" value="Cyberpunk Hacker in Tokyo Alley"
+                        class="w-full bg-[#0A0C11] border border-[#262B38] rounded-xl p-3 text-white text-sm focus:outline-none focus:border-[var(--accent)] transition-colors">
                 </div>
 
                 <div>
-                    <label class="block text-gray-400 text-xs font-semibold uppercase mb-1.5">Core Subject / Topic</label>
-                    <input type="text" id="prompt-subject" value="Cyberpunk Hacker in Tokyo Alley" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500">
+                    <label class="block text-gray-500 text-[11px] font-semibold uppercase tracking-wider mb-2">Style</label>
+                    <div id="style-chips" class="flex flex-wrap gap-2"></div>
                 </div>
 
                 <div>
-                    <label class="block text-gray-400 text-xs font-semibold uppercase mb-1.5">Visual / Writing Style</label>
-                    <select id="prompt-style" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500">
-                        <option value="Hyper-realistic Cinematic 8k">Hyper-realistic Cinematic 8k</option>
-                        <option value="Dark Moody & Suspenseful">Dark Moody & Suspenseful</option>
-                        <option value="Minimalist Corporate Tech">Minimalist Corporate Tech</option>
-                        <option value="Vibrant Retro Synthwave">Vibrant Retro Synthwave</option>
-                    </select>
+                    <label class="block text-gray-500 text-[11px] font-semibold uppercase tracking-wider mb-2">Lighting / Tone</label>
+                    <div id="lighting-chips" class="flex flex-wrap gap-2"></div>
                 </div>
 
                 <div>
-                    <label class="block text-gray-400 text-xs font-semibold uppercase mb-1.5">Output Lighting / Tone</label>
-                    <select id="prompt-lighting" class="w-full bg-[#0B141A] border border-gray-700 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-blue-500">
-                        <option value="Neon Glow & Volumetric Fog">Neon Glow & Volumetric Fog</option>
-                        <option value="Studio Softbox Lighting">Studio Softbox Lighting</option>
-                        <option value="Golden Hour Natural Sunlight">Golden Hour Natural Sunlight</option>
-                        <option value="High Contrast Dramatic Shadows">High Contrast Dramatic Shadows</option>
-                    </select>
+                    <label id="extra-label" class="block text-gray-500 text-[11px] font-semibold uppercase tracking-wider mb-2">Aspect Ratio</label>
+                    <div id="extra-chips" class="flex flex-wrap gap-2"></div>
                 </div>
 
-                <button onclick="generateCustomPrompt()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-lg transition duration-200 uppercase tracking-wide text-sm shadow-lg shadow-blue-600/20">Generate Custom Prompt</button>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="generateCustomPrompt()" class="generate-btn flex-1 text-white font-semibold py-3.5 rounded-xl transition duration-200 text-sm">
+                        <i class="fas fa-bolt mr-1.5"></i> Generate Prompt
+                    </button>
+                    <button onclick="surpriseMe()" title="Randomize everything" class="w-14 flex items-center justify-center border border-[#262B38] rounded-xl text-gray-400 hover:text-white hover:border-[#3A3F4E] transition">
+                        <i class="fas fa-dice"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Right Output Display -->
-            <div class="lg:col-span-7 bg-[#111B21] border border-gray-800 p-6 rounded-2xl shadow-xl flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-terminal text-green-500"></i> Generated Output Matrix</h2>
-                        <span id="badge-engine" class="text-xs font-mono bg-blue-500/10 text-blue-400 px-2.5 py-1 rounded-md border border-blue-500/20">DAVINCI ENGINE</span>
+            <!-- Right: Output Ticket -->
+            <div class="lg:col-span-7">
+                <div class="ticket p-6" id="ticket">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span id="badge-engine" class="text-[11px] font-mono-custom uppercase tracking-wider px-2.5 py-1 rounded-md border" style="color:var(--accent); border-color:var(--accent); background:var(--accent-soft);">DaVinci Engine</span>
+                            <div id="ticket-id" class="text-[11px] text-gray-600 font-mono-custom mt-2">#PR-0000</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[11px] text-gray-600 font-mono-custom" id="ticket-time">--:--:--</div>
+                            <div class="text-[11px] text-gray-600 font-mono-custom" id="ticket-date">----‑--‑--</div>
+                        </div>
                     </div>
 
-                    <div class="bg-[#0B141A] border border-gray-700/80 rounded-xl p-5 min-h-[180px] flex items-center mb-4">
-                        <p id="output-box" class="text-gray-200 font-mono text-sm leading-relaxed select-all">Click 'Generate Custom Prompt' to initialize matrix parameters...</p>
+                    <div class="perforation pt-5">
+                        <p id="output-box" class="text-gray-100 font-mono-custom text-[13px] leading-relaxed min-h-[140px] select-all">Set your parameters and pull a prompt — it'll print right here.</p>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-5 pt-4 border-t border-[#262B38]">
+                        <span id="word-count" class="text-[11px] text-gray-600 font-mono-custom">0 words</span>
+                        <div class="flex gap-2">
+                            <button onclick="regenerateVariation()" class="text-xs text-gray-400 hover:text-white transition px-3 py-2 rounded-lg border border-[#262B38] hover:border-[#3A3F4E]">
+                                <i class="fas fa-rotate mr-1"></i> Variation
+                            </button>
+                            <button onclick="copyGeneratedPrompt()" id="copy-btn" class="text-xs font-semibold text-white transition px-3 py-2 rounded-lg" style="background:var(--accent);">
+                                <i class="fas fa-copy mr-1"></i> Copy
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="space-y-3">
-                    <button onclick="copyGeneratedPrompt()" id="copy-btn" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-200 font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 text-sm border border-gray-700">
-                        <i class="fas fa-copy text-blue-400"></i> Copy Prompt to Clipboard
-                    </button>
-                    <div class="text-center text-xs text-gray-500 font-mono">Engine Status: Ready / 0ms Latency</div>
+                <!-- History -->
+                <div class="mt-5">
+                    <div class="text-[11px] text-gray-600 uppercase tracking-wider font-semibold mb-2 px-1">Recent pulls</div>
+                    <div id="history-list" class="space-y-2 max-h-40 overflow-y-auto scroll-thin pr-1">
+                        <p class="text-xs text-gray-700 px-1">Nothing generated yet this session.</p>
+                    </div>
                 </div>
             </div>
 
         </div>
 
         <!-- AdSense Display Ad Slot -->
-        <div class="mt-12 text-center p-4 border border-dashed border-gray-800 bg-gray-900/30 rounded-xl text-gray-500 font-mono text-xs">
+        <div class="mt-14 text-center p-4 border border-dashed border-gray-800 bg-gray-900/30 rounded-xl text-gray-600 font-mono-custom text-xs">
             <span class="block mb-2">SPONSORED ADVERTISEMENT</span>
             <ins class="adsbygoogle"
                  style="display:block"
@@ -110,66 +234,198 @@
                  data-ad-slot="auto"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
     </main>
 
     <!-- Dynamic Engine Script -->
     <script>
-        function generateCustomPrompt() {
-            const engine = document.getElementById('ai-engine').value;
-            const subject = document.getElementById('prompt-subject').value.trim() || "Futuristic Cityscape";
-            const style = document.getElementById('prompt-style').value;
-            const lighting = document.getElementById('prompt-lighting').value;
-            const badge = document.getElementById('badge-engine');
-            const outputBox = document.getElementById('output-box');
-
-            let finalPrompt = "";
-
-            if(engine === 'davinci') {
-                badge.innerText = "DAVINCI ENGINE";
-                badge.className = "text-xs font-mono bg-purple-500/10 text-purple-400 px-2.5 py-1 rounded-md border border-purple-500/20";
-                finalPrompt = `A ${style.toLowerCase()} digital artwork featuring ${subject}. Enhanced with ${lighting.toLowerCase()}. Shot on 35mm lens, f/1.8 aperture, cinematic depth of field, 8k resolution, highly detailed volumetric rendering, Unreal Engine 5 aesthetic.`;
-            } 
-            else if(engine === 'fliki') {
-                badge.innerText = "FLIKI SCRIPT ENGINE";
-                badge.className = "text-xs font-mono bg-red-500/10 text-red-400 px-2.5 py-1 rounded-md border border-red-500/20";
-                finalPrompt = `Act as an expert viral video creator. Write a high-retention 60-second video script focusing on "${subject}". Style tone: ${style}. Visual directions to include: ${lighting}. Ensure a powerful hook in the first 3 seconds and a seamless call-to-action at the end.`;
-            } 
-            else if(engine === 'canva') {
-                badge.innerText = "CANVA PRO LAYOUT";
-                badge.className = "text-xs font-mono bg-teal-500/10 text-teal-400 px-2.5 py-1 rounded-md border border-teal-500/20";
-                finalPrompt = `Generate a professional corporate graphic design blueprint layout for "${subject}". Aesthetic requirement: ${style}. Color grading and background mood: ${lighting}. Provide exact positioning guidelines for typography hierarchy, whitespace ratio, and contrast elements.`;
+        const ENGINES = {
+            davinci: {
+                label: "DaVinci Engine",
+                extraLabel: "Aspect Ratio",
+                extraOptions: ["1:1 Square", "16:9 Widescreen", "9:16 Vertical", "4:5 Portrait"],
+                styles: ["Hyper-realistic Cinematic 8k", "Dark Moody & Suspenseful", "Minimalist Corporate Tech", "Vibrant Retro Synthwave"],
+                lighting: ["Neon Glow & Volumetric Fog", "Studio Softbox Lighting", "Golden Hour Natural Sunlight", "High Contrast Dramatic Shadows"],
+                templates: [
+                    (s,su,l,e) => `A ${s.toLowerCase()} digital artwork featuring ${su}. Enhanced with ${l.toLowerCase()}. Shot on 35mm lens, f/1.8 aperture, cinematic depth of field, 8k resolution, highly detailed volumetric rendering, Unreal Engine 5 aesthetic. Output ratio: ${e}.`,
+                    (s,su,l,e) => `Render ${su} in a ${s.toLowerCase()} style, ${l.toLowerCase()} setting the mood. Ultra-detailed textures, physically-based rendering, award-winning composition, trending on ArtStation. Frame: ${e}.`,
+                    (s,su,l,e) => `Concept art of ${su} — ${s.toLowerCase()} direction with ${l.toLowerCase()}. Sharp focus, intricate details, dramatic atmosphere, octane render quality. Aspect: ${e}.`
+                ]
+            },
+            fliki: {
+                label: "Fliki Script Engine",
+                extraLabel: "Video Length",
+                extraOptions: ["15 seconds", "30 seconds", "60 seconds", "90 seconds"],
+                styles: ["Hyper-realistic Cinematic 8k", "Dark Moody & Suspenseful", "Minimalist Corporate Tech", "Vibrant Retro Synthwave"],
+                lighting: ["Neon Glow & Volumetric Fog", "Studio Softbox Lighting", "Golden Hour Natural Sunlight", "High Contrast Dramatic Shadows"],
+                templates: [
+                    (s,su,l,e) => `Act as an expert viral video creator. Write a high-retention ${e} video script focusing on "${su}". Style tone: ${s}. Visual directions to include: ${l}. Ensure a powerful hook in the first 3 seconds and a seamless call-to-action at the end.`,
+                    (s,su,l,e) => `Write a ${e} short-form script about "${su}" for a ${s.toLowerCase()} audience. Open with a scroll-stopping hook, use ${l.toLowerCase()} as the visual backdrop, and close with one clear next step for the viewer.`,
+                    (s,su,l,e) => `Draft a ${e} narration script on "${su}". Tone: ${s.toLowerCase()}. Visuals: ${l.toLowerCase()}. Structure it as hook → 3 quick value beats → CTA, written to be read aloud in a natural pace.`
+                ]
+            },
+            canva: {
+                label: "Canva Pro Layout",
+                extraLabel: "Canvas Size",
+                extraOptions: ["Instagram Post", "Instagram Story", "Presentation Slide", "A3 Poster"],
+                styles: ["Hyper-realistic Cinematic 8k", "Dark Moody & Suspenseful", "Minimalist Corporate Tech", "Vibrant Retro Synthwave"],
+                lighting: ["Neon Glow & Volumetric Fog", "Studio Softbox Lighting", "Golden Hour Natural Sunlight", "High Contrast Dramatic Shadows"],
+                templates: [
+                    (s,su,l,e) => `Generate a professional graphic design blueprint for "${su}", sized for ${e}. Aesthetic requirement: ${s}. Color grading and background mood: ${l}. Provide exact positioning guidelines for typography hierarchy, whitespace ratio, and contrast elements.`,
+                    (s,su,l,e) => `Design a ${e} layout around "${su}". Direction: ${s.toLowerCase()}, with ${l.toLowerCase()} as the color mood. Specify grid structure, headline placement, and a clear visual focal point.`,
+                    (s,su,l,e) => `Create a ${s.toLowerCase()} ${e} concept for "${su}". Use ${l.toLowerCase()} tones throughout. Include guidance on font pairing, spacing rhythm, and where the CTA element should sit.`
+                ]
             }
+        };
 
-            outputBox.innerText = finalPrompt;
-        }
+        let currentEngine = 'davinci';
+        let selectedStyle = null, selectedLighting = null, selectedExtra = null;
+        let lastTemplateIndex = -1;
+        let history = [];
 
-        function copyGeneratedPrompt() {
-            const text = document.getElementById('output-box').innerText;
-            const btn = document.getElementById('copy-btn');
-
-            if(text.includes("Click 'Generate")) {
-                alert("Please generate a prompt first!");
-                return;
-            }
-
-            navigator.clipboard.writeText(text).then(() => {
-                btn.innerHTML = '<i class="fas fa-check text-green-400"></i> Prompt Copied Successfully!';
-                btn.className = "w-full bg-green-900/40 text-green-300 font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 text-sm border border-green-700/50";
-
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fas fa-copy text-blue-400"></i> Copy Prompt to Clipboard';
-                    btn.className = "w-full bg-gray-800 hover:bg-gray-700 text-gray-200 font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 text-sm border border-gray-700";
-                }, 2000);
+        function renderChips(containerId, options, groupKey) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = opt;
+                btn.dataset.value = opt;
+                btn.className = 'chip text-xs px-3 py-2 rounded-lg border border-[#262B38] text-gray-400' + (i === 0 ? ' active' : '');
+                btn.addEventListener('click', () => {
+                    container.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    if (groupKey === 'style') selectedStyle = opt;
+                    if (groupKey === 'lighting') selectedLighting = opt;
+                    if (groupKey === 'extra') selectedExtra = opt;
+                });
+                container.appendChild(btn);
             });
         }
 
-        // Run once on load to populate default
-        window.addEventListener('DOMContentLoaded', generateCustomPrompt);
+        function loadEngine(key) {
+            currentEngine = key;
+            const cfg = ENGINES[key];
+            renderChips('style-chips', cfg.styles, 'style');
+            renderChips('lighting-chips', cfg.lighting, 'lighting');
+            renderChips('extra-chips', cfg.extraOptions, 'extra');
+            document.getElementById('extra-label').textContent = cfg.extraLabel;
+            selectedStyle = cfg.styles[0];
+            selectedLighting = cfg.lighting[0];
+            selectedExtra = cfg.extraOptions[0];
+
+            const tab = document.querySelector(`.engine-tab[data-engine="${key}"]`);
+            const accent = tab.dataset.accent;
+            const soft = tab.dataset.soft;
+            document.documentElement.style.setProperty('--accent', accent);
+            document.documentElement.style.setProperty('--accent-soft', soft);
+
+            document.querySelectorAll('.engine-tab').forEach(t => {
+                t.classList.remove('active');
+                t.querySelector('.engine-icon').classList.remove('text-[var(--accent)]');
+                t.querySelector('.engine-icon').classList.add('text-gray-500');
+            });
+            tab.classList.add('active');
+            tab.querySelector('.engine-icon').classList.remove('text-gray-500');
+            tab.querySelector('.engine-icon').classList.add('text-[var(--accent)]');
+
+            document.getElementById('badge-engine').textContent = cfg.label;
+        }
+
+        document.getElementById('engine-tabs').addEventListener('click', (e) => {
+            const tab = e.target.closest('.engine-tab');
+            if (!tab) return;
+            loadEngine(tab.dataset.engine);
+        });
+
+        function stamp() {
+            const now = new Date();
+            document.getElementById('ticket-id').textContent = '#PR-' + Math.floor(1000 + Math.random() * 8999);
+            document.getElementById('ticket-time').textContent = now.toLocaleTimeString();
+            document.getElementById('ticket-date').textContent = now.toLocaleDateString();
+        }
+
+        function buildPrompt(templateIndex) {
+            const cfg = ENGINES[currentEngine];
+            const subject = document.getElementById('prompt-subject').value.trim() || "Futuristic Cityscape";
+            const idx = templateIndex !== undefined ? templateIndex : Math.floor(Math.random() * cfg.templates.length);
+            lastTemplateIndex = idx;
+            return cfg.templates[idx](selectedStyle, subject, selectedLighting, selectedExtra);
+        }
+
+        function renderOutput(text) {
+            const box = document.getElementById('output-box');
+            box.classList.remove('fade-in'); void box.offsetWidth; box.classList.add('fade-in');
+            box.textContent = text;
+            const words = text.trim().split(/\s+/).filter(Boolean).length;
+            document.getElementById('word-count').textContent = words + ' words';
+        }
+
+        function pushHistory(text) {
+            history.unshift({ text, engine: ENGINES[currentEngine].label, time: new Date().toLocaleTimeString() });
+            history = history.slice(0, 5);
+            const list = document.getElementById('history-list');
+            if (history.length === 0) { list.innerHTML = '<p class="text-xs text-gray-700 px-1">Nothing generated yet this session.</p>'; return; }
+            list.innerHTML = history.map((h, i) => `
+                <button data-idx="${i}" class="history-item w-full text-left bg-[#14171F] border border-[#262B38] rounded-lg px-3 py-2 transition">
+                    <div class="flex justify-between text-[10px] text-gray-600 font-mono-custom mb-1"><span>${h.engine}</span><span>${h.time}</span></div>
+                    <div class="text-xs text-gray-400 truncate">${h.text}</div>
+                </button>`).join('');
+            list.querySelectorAll('.history-item').forEach(btn => {
+                btn.addEventListener('click', () => renderOutput(history[btn.dataset.idx].text));
+            });
+        }
+
+        function generateCustomPrompt() {
+            stamp();
+            const text = buildPrompt();
+            renderOutput(text);
+            pushHistory(text);
+        }
+
+        function regenerateVariation() {
+            const cfg = ENGINES[currentEngine];
+            let idx;
+            do { idx = Math.floor(Math.random() * cfg.templates.length); } while (idx === lastTemplateIndex && cfg.templates.length > 1);
+            stamp();
+            const text = buildPrompt(idx);
+            renderOutput(text);
+            pushHistory(text);
+        }
+
+        function surpriseMe() {
+            const engines = Object.keys(ENGINES);
+            loadEngine(engines[Math.floor(Math.random() * engines.length)]);
+            const cfg = ENGINES[currentEngine];
+            document.querySelectorAll('#style-chips .chip').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('#lighting-chips .chip').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('#extra-chips .chip').forEach(c => c.classList.remove('active'));
+            selectedStyle = cfg.styles[Math.floor(Math.random() * cfg.styles.length)];
+            selectedLighting = cfg.lighting[Math.floor(Math.random() * cfg.lighting.length)];
+            selectedExtra = cfg.extraOptions[Math.floor(Math.random() * cfg.extraOptions.length)];
+            [...document.querySelectorAll('#style-chips .chip')].find(c => c.dataset.value === selectedStyle)?.classList.add('active');
+            [...document.querySelectorAll('#lighting-chips .chip')].find(c => c.dataset.value === selectedLighting)?.classList.add('active');
+            [...document.querySelectorAll('#extra-chips .chip')].find(c => c.dataset.value === selectedExtra)?.classList.add('active');
+            generateCustomPrompt();
+        }
+
+        function copyGeneratedPrompt() {
+            const text = document.getElementById('output-box').textContent;
+            const btn = document.getElementById('copy-btn');
+            if (!text || text.includes("Set your parameters")) { alert("Generate a prompt first!"); return; }
+            navigator.clipboard.writeText(text).then(() => {
+                const original = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+                setTimeout(() => { btn.innerHTML = original; }, 1500);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadEngine('davinci');
+            generateCustomPrompt();
+        });
     </script>
 </body>
 </html>
