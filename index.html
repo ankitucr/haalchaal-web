@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <link rel="preload" as="image" href="icon.png">
     <meta charset="UTF-8">
+    <link rel="preload" as="image" href="icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Haal Chaal - Premium Secure Messaging</title>
-    
+
     <!-- Google AdSense Verification Code -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6277909939753506" crossorigin="anonymous"></script>
-    
+
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -41,63 +41,62 @@
             --hc-green: #00A859;
             --hc-neon: #00E676;
             --hc-dark-green: #007A40;
-            
+
             --bg-page: #F4F9F6;
             --bg-surface: #FFFFFF;
             --bg-glass: rgba(255, 255, 255, 0.7);
             --bg-glass-heavy: rgba(255, 255, 255, 0.85);
-            
+
             --border-glass: rgba(255, 255, 255, 0.8);
             --border-glass-subtle: rgba(0, 0, 0, 0.05);
-            
+
             --text-primary: #111B21;
             --text-secondary: #667781;
-            
+
             --shadow-glass: 0 20px 40px -10px rgba(0, 168, 89, 0.15);
             --shadow-neon: 0 0 25px rgba(0, 230, 118, 0.2);
-            
+
             /* Glossy Transparent App UI (Inside Phone) */
             --app-bg-glass: rgba(255, 255, 255, 0.4);
             --app-header-glass: rgba(255, 255, 255, 0.65);
             --item-hover-glass: rgba(255, 255, 255, 0.3);
             --msg-in: rgba(255, 255, 255, 0.85);
             --msg-out: rgba(231, 255, 219, 0.9);
-            
+
             --status-ring: conic-gradient(from 0deg, var(--hc-green), var(--hc-neon), var(--hc-green));
             --particle-color: rgba(0, 168, 89, 0.25);
         }
 
         /* Enhanced Dark Mode Override (Deep & Glowing) */
         [data-theme="dark"] {
-            --bg-page: #060A0D; /* Very rich deep dark background */
+            --bg-page: #060A0D;
             --bg-surface: #0E161C;
             --bg-glass: rgba(14, 22, 28, 0.6);
             --bg-glass-heavy: rgba(14, 22, 28, 0.9);
-            
-            --border-glass: rgba(0, 230, 118, 0.15); /* Subtle green tint in borders */
+
+            --border-glass: rgba(0, 230, 118, 0.15);
             --border-glass-subtle: rgba(255, 255, 255, 0.03);
-            
+
             --text-primary: #F0F4F8;
             --text-secondary: #94A3B8;
-            
+
             --shadow-glass: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
-            --shadow-neon: 0 0 45px rgba(0, 230, 118, 0.25); /* Stronger neon shadow */
-            
-            /* Glossy Transparent App UI (Inside Phone) */
+            --shadow-neon: 0 0 45px rgba(0, 230, 118, 0.25);
+
             --app-bg-glass: rgba(10, 16, 20, 0.5);
             --app-header-glass: rgba(15, 23, 30, 0.7);
             --item-hover-glass: rgba(255, 255, 255, 0.06);
             --msg-in: rgba(20, 30, 38, 0.9);
             --msg-out: rgba(0, 92, 75, 0.9);
-            
-            --particle-color: rgba(0, 230, 118, 0.15); /* More vibrant glowing orbs */
+
+            --particle-color: rgba(0, 230, 118, 0.15);
         }
 
         /* ==========================================================================
            2. RESET & TYPOGRAPHY
            ========================================================================== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-page);
@@ -145,75 +144,42 @@
         }
 
         /* ==========================================================================
-           4. SPLASH SCREEN (PERFECT FIT & DARK MODE SUPPORT)
+           4. SPLASH SCREEN
            ========================================================================== */
         #splashScreen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-page);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            position: fixed; inset: 0; background: var(--bg-page); z-index: 9999;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
             transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
+
         .splash-pulse-bg {
-            position: absolute;
-            width: 120vw; height: 120vw;
+            position: absolute; width: 120vw; height: 120vw;
             background: radial-gradient(circle, var(--particle-color) 0%, transparent 60%);
-            animation: splash-pulse 4s infinite alternate ease-in-out;
-            opacity: 0.5;
+            animation: splash-pulse 4s infinite alternate ease-in-out; opacity: 0.5;
         }
-        
-        .splash-rings {
-            position: absolute;
-            width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-        }
+
+        .splash-rings { position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
         .s-ring { position: absolute; border-radius: 50%; border: 1px dashed var(--hc-green); opacity: 0.25; transition: 0.6s; }
         [data-theme="dark"] .s-ring { border-color: var(--hc-neon); opacity: 0.15; }
         .s-ring-1 { width: 280px; height: 280px; animation: spin 20s linear infinite; }
         .s-ring-2 { width: 420px; height: 420px; border-width: 1px; opacity: 0.15; animation: spin 30s linear infinite reverse; }
-        
-        .splash-content {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        
-        /* Splash Card: Adapts perfectly to Dark/Light mode */
+
+        .splash-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
         .splash-logo-card {
-            width: 120px; height: 120px;
-            background: var(--bg-surface);
-            backdrop-filter: blur(10px);
-            border-radius: 35px;
-            padding: 0; 
+            width: 120px; height: 120px; background: var(--bg-surface); backdrop-filter: blur(10px);
+            border-radius: 35px; padding: 0; 
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), inset 0 2px 10px rgba(255,255,255,0.4), var(--shadow-neon);
-            border: 1px solid var(--border-glass);
-            animation: float 4s infinite ease-in-out;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; /* Secures the icon inside borders */
-            transition: all 0.6s ease;
+            border: 1px solid var(--border-glass); animation: float 4s infinite ease-in-out;
+            display: flex; align-items: center; justify-content: center; overflow: hidden; transition: all 0.6s ease;
         }
         [data-theme="dark"] .splash-logo-card { background: rgba(20, 28, 35, 0.8); }
-        
-        /* Logo sizing as requested */
-        .splash-logo-card img {
-            width: 100%; height: 100%; object-fit: contain; 
-            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.25)); 
-        }
-        
+
+        .splash-logo-card img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.25)); }
+
         .splash-text-container { margin-top: 28px; text-align: center; }
         .loader-dots { display: flex; gap: 8px; margin-top: 30px; justify-content: center;}
-        .loader-dots span {
-            width: 8px; height: 8px; background: var(--hc-green); border-radius: 50%;
-            animation: dot-bounce 1.4s infinite ease-in-out both;
-        }
+        .loader-dots span { width: 8px; height: 8px; background: var(--hc-green); border-radius: 50%; animation: dot-bounce 1.4s infinite ease-in-out both; }
         .loader-dots span:nth-child(1) { animation-delay: -0.32s; }
         .loader-dots span:nth-child(2) { animation-delay: -0.16s; }
 
@@ -224,79 +190,40 @@
         @keyframes dot-bounce { 0%, 80%, 100% { transform: scale(0); opacity: 0.5;} 40% { transform: scale(1); opacity: 1;} }
 
         /* ==========================================================================
-           5. GLOSSY UI COMPONENTS & LAYOUT
+           5. GLOSSY UI COMPONENTS
            ========================================================================== */
         .glass-panel {
-            background: var(--bg-glass);
-            backdrop-filter: blur(25px) saturate(200%);
-            -webkit-backdrop-filter: blur(25px) saturate(200%);
-            border: 1px solid var(--border-glass-subtle);
-            box-shadow: var(--shadow-glass), inset 0 1px 1px var(--border-glass);
-            border-radius: 24px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--bg-glass); backdrop-filter: blur(25px) saturate(200%); -webkit-backdrop-filter: blur(25px) saturate(200%);
+            border: 1px solid var(--border-glass-subtle); box-shadow: var(--shadow-glass), inset 0 1px 1px var(--border-glass);
+            border-radius: 24px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .glass-panel:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px -12px rgba(0, 168, 89, 0.2);
-            border: 1px solid rgba(0, 230, 118, 0.4);
-        }
+        .glass-panel:hover { transform: translateY(-5px); box-shadow: 0 30px 60px -12px rgba(0, 168, 89, 0.2); border: 1px solid rgba(0, 230, 118, 0.4); }
 
         .btn-premium {
-            background: linear-gradient(135deg, var(--hc-green), var(--hc-dark-green));
-            color: white;
-            font-weight: 700;
-            padding: 16px 32px;
-            border-radius: 99px;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 25px var(--particle-color), inset 0 2px 0 rgba(255,255,255,0.3);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-            text-decoration: none;
+            background: linear-gradient(135deg, var(--hc-green), var(--hc-dark-green)); color: white; font-weight: 700;
+            padding: 16px 32px; border-radius: 99px; border: none; cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: 0 10px 25px var(--particle-color), inset 0 2px 0 rgba(255,255,255,0.3); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none;
         }
-        .btn-premium::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-20deg); transition: 0.5s;
-        }
-        .btn-premium:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 35px var(--particle-color), inset 0 2px 0 rgba(255,255,255,0.4);
-        }
+        .btn-premium::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transform: skewX(-20deg); transition: 0.5s; }
+        .btn-premium:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 35px var(--particle-color), inset 0 2px 0 rgba(255,255,255,0.4); }
         .btn-premium:hover::before { left: 150%; }
 
         .section-padding { padding: 100px 5%; min-height: 100vh; display: flex; align-items: center;}
         .main-container { max-width: 1280px; margin: 0 auto; width: 100%; position: relative; z-index: 10; }
 
         /* ==========================================================================
-           6. 3D PHONE MOCKUP (WITH GLOWING EDGES)
+           6. 3D PHONE MOCKUP
            ========================================================================== */
-        .perspective-container {
-            perspective: 2000px;
-            display: flex; justify-content: center; align-items: center;
-            width: 100%; height: 100%;
-        }
+        .perspective-container { perspective: 2000px; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; }
         .phone-mockup {
-            width: 320px; height: 650px;
-            background: #000000;
-            border-radius: 45px;
-            padding: 10px;
-            box-shadow: 
-                inset 0 0 0 2px #333, inset 0 0 0 6px #111,
-                0 40px 80px -20px rgba(0,0,0,0.8), var(--shadow-neon);
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out, box-shadow 0.6s ease;
+            width: 320px; height: 650px; background: #000000; border-radius: 45px; padding: 10px;
+            box-shadow: inset 0 0 0 2px #333, inset 0 0 0 6px #111, 0 40px 80px -20px rgba(0,0,0,0.8), var(--shadow-neon);
+            position: relative; transform-style: preserve-3d; transition: transform 0.1s ease-out, box-shadow 0.6s ease;
         }
         @media (max-width: 400px) { .phone-mockup { transform: scale(0.9); margin-top: -20px;} }
 
-        .phone-mockup::before {
-            content: ''; position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-            width: 90px; height: 28px; background: #000; border-radius: 20px; z-index: 50;
-            box-shadow: inset 0 -1px 2px rgba(255,255,255,0.1);
-        }
+        .phone-mockup::before { content: ''; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 90px; height: 28px; background: #000; border-radius: 20px; z-index: 50; box-shadow: inset 0 -1px 2px rgba(255,255,255,0.1); }
         .phone-mockup::after { content: ''; position: absolute; left: -3px; top: 120px; width: 3px; height: 50px; background: #222; border-radius: 4px 0 0 4px; box-shadow: 0 60px 0 0 #222; }
         .power-btn { position: absolute; right: -3px; top: 140px; width: 3px; height: 50px; background: #222; border-radius: 0 4px 4px 0; }
 
@@ -304,67 +231,33 @@
            7. PHONE SCREEN: DARK GLOSSY GLASS EFFECT
            ========================================================================== */
         .phone-screen {
-            --p-bg: rgba(10, 16, 20, 0.65); /* Deep dark glass */
-            --p-header: rgba(14, 22, 28, 0.75);
-            --p-text: #FFFFFF;
-            --p-text-muted: #94A3B8;
-            --p-border: rgba(255, 255, 255, 0.08);
-            --p-hover: rgba(255, 255, 255, 0.05);
-            --p-msg-in: rgba(255, 255, 255, 0.1);
-            --p-msg-out: rgba(0, 168, 89, 0.85);
-
-            width: 100%; height: 100%;
-            background: var(--p-bg);
-            backdrop-filter: blur(25px) saturate(150%);
-            -webkit-backdrop-filter: blur(25px) saturate(150%);
-            border-radius: 35px;
-            overflow: hidden;
-            position: relative;
-            display: flex; flex-direction: column;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9);
-            color: var(--p-text);
+            --p-bg: rgba(10, 16, 20, 0.65); --p-header: rgba(14, 22, 28, 0.75); --p-text: #FFFFFF; --p-text-muted: #94A3B8;
+            --p-border: rgba(255, 255, 255, 0.08); --p-hover: rgba(255, 255, 255, 0.05); --p-msg-in: rgba(255, 255, 255, 0.1); --p-msg-out: rgba(0, 168, 89, 0.85);
+            width: 100%; height: 100%; background: var(--p-bg); backdrop-filter: blur(25px) saturate(150%); -webkit-backdrop-filter: blur(25px) saturate(150%);
+            border-radius: 35px; overflow: hidden; position: relative; display: flex; flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9); color: var(--p-text);
         }
 
-        .phone-screen .app-header {
-            background: var(--p-header);
-            padding: 45px 18px 12px;
-            display: flex; flex-direction: column; gap: 12px;
-            border-bottom: 1px solid var(--p-border);
-            z-index: 40;
-            backdrop-filter: blur(15px);
-        }
+        .phone-screen .app-header { background: var(--p-header); padding: 45px 18px 12px; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--p-border); z-index: 40; backdrop-filter: blur(15px); }
         .phone-screen .app-top-bar { display: flex; justify-content: space-between; align-items: center; }
         .phone-screen .app-title { font-size: 20px; font-weight: 800; color: var(--hc-green); letter-spacing: -0.5px;}
         .phone-screen .app-icons { display: flex; gap: 16px; color: var(--p-text-muted); font-size: 16px; }
-        
+
         .phone-screen .app-tabs { display: flex; justify-content: space-between; font-weight: 600; color: var(--p-text-muted); font-size: 14px; position: relative;}
         .phone-screen .app-tab { padding-bottom: 8px; cursor: pointer; flex: 1; text-align: center; transition: 0.3s; }
         .phone-screen .app-tab.active { color: var(--hc-green); }
-        .phone-screen .tab-indicator {
-            position: absolute; bottom: 0; left: 0; height: 3px; width: 33.33%;
-            background: var(--hc-green); border-radius: 3px 3px 0 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .phone-screen .tab-indicator { position: absolute; bottom: 0; left: 0; height: 3px; width: 33.33%; background: var(--hc-green); border-radius: 3px 3px 0 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 
         .phone-screen .views-container { flex: 1; position: relative; overflow: hidden; background: transparent; }
-        .phone-screen .app-view {
-            position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
-            transform: translateX(100%); opacity: 0; pointer-events: none;
-        }
+        .phone-screen .app-view { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s; transform: translateX(100%); opacity: 0; pointer-events: none; }
         .phone-screen .app-view.active { transform: translateX(0); opacity: 1; pointer-events: auto; }
         .phone-screen .app-view.left { transform: translateX(-100%); opacity: 0; }
 
-        /* --- Chat List inside Phone --- */
-        .phone-screen .chat-list-item {
-            display: flex; gap: 12px; padding: 12px 18px;
-            background: transparent; cursor: pointer; transition: background 0.2s;
-            border-bottom: 1px solid var(--p-border);
-        }
+        .phone-screen .chat-list-item { display: flex; gap: 12px; padding: 12px 18px; background: transparent; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid var(--p-border); }
         .phone-screen .chat-list-item:hover { background: var(--p-hover); }
         .phone-screen .avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px; position: relative; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.3);}
         .phone-screen .avatar-online::after { content: ''; position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: var(--hc-neon); border: 2px solid var(--p-bg); border-radius: 50%; box-shadow: 0 0 5px var(--hc-neon);}
-        
+
         .phone-screen .chat-list-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
         .phone-screen .chat-list-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
         .phone-screen .chat-name { font-weight: 700; font-size: 15px; color: var(--p-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 2px rgba(0,0,0,0.8);}
@@ -372,24 +265,13 @@
         .phone-screen .chat-preview { font-size: 13px; color: var(--p-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500;}
         .phone-screen .unread-badge { background: var(--hc-green); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.5);}
 
-        /* --- Active Chat Room (Dark Glossy) --- */
-        .phone-screen .chat-room {
-            position: absolute; inset: 0; z-index: 100;
-            background: rgba(8, 12, 16, 0.85); /* Solid dark for readibility */
-            display: flex; flex-direction: column;
-            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .phone-screen .chat-room { position: absolute; inset: 0; z-index: 100; background: rgba(8, 12, 16, 0.85); display: flex; flex-direction: column; backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .phone-screen .chat-room.active { transform: translateX(0); }
         .phone-screen .chat-room-header { background: var(--p-header); padding: 40px 12px 10px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--p-border); z-index: 10; backdrop-filter: blur(15px);}
         .phone-screen .back-btn { font-size: 18px; color: var(--p-text-muted); cursor: pointer; padding: 5px; }
-        
+
         .phone-screen .chat-room-body { flex: 1; padding: 15px 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth;}
-        .phone-screen .bubble {
-            max-width: 82%; padding: 8px 12px; border-radius: 16px; font-size: 14px; line-height: 1.4; position: relative;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); backdrop-filter: blur(5px);
-            animation: pop-msg 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; transform-origin: bottom; opacity: 0; transform: scale(0.9);
-        }
+        .phone-screen .bubble { max-width: 82%; padding: 8px 12px; border-radius: 16px; font-size: 14px; line-height: 1.4; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.2); backdrop-filter: blur(5px); animation: pop-msg 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; transform-origin: bottom; opacity: 0; transform: scale(0.9); }
         @keyframes pop-msg { to { opacity: 1; transform: scale(1); } }
         .phone-screen .bubble.in { align-self: flex-start; background: var(--p-msg-in); color: var(--p-text); border-top-left-radius: 4px; border: 1px solid var(--p-border);}
         .phone-screen .bubble.out { align-self: flex-end; background: var(--p-msg-out); color: #FFF; border-top-right-radius: 4px; }
@@ -397,28 +279,18 @@
         .phone-screen .read-tick { color: #53bdeb; }
 
         .phone-screen .typing-indicator { display: none; gap: 4px; padding: 10px 14px; background: var(--p-msg-in); border-radius: 16px; border-top-left-radius: 4px; align-self: flex-start; width: max-content; backdrop-filter: blur(5px); border: 1px solid var(--p-border);}
-        
-        /* Interactive Input & Emojis */
+
         .phone-screen .chat-room-input { background: transparent; padding: 8px 12px 20px; display: flex; align-items: center; gap: 8px; position: relative; border-top: 1px solid var(--p-border);}
         .phone-screen .emoji-btn { font-size: 22px; color: var(--p-text-muted); cursor: pointer; transition: transform 0.2s; text-shadow: 0 1px 2px rgba(0,0,0,0.5);}
         .phone-screen .emoji-btn:hover { color: var(--hc-green); transform: scale(1.1); }
-        .phone-screen .input-bar {
-            flex: 1; background: var(--p-msg-in); height: 40px; border-radius: 20px; padding: 0 12px; display: flex; align-items: center;
-            color: var(--p-text); border: 1px solid var(--p-border); font-size: 14px; backdrop-filter: blur(5px);
-        }
+        .phone-screen .input-bar { flex: 1; background: var(--p-msg-in); height: 40px; border-radius: 20px; padding: 0 12px; display: flex; align-items: center; color: var(--p-text); border: 1px solid var(--p-border); font-size: 14px; backdrop-filter: blur(5px); }
         .phone-screen .mic-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--hc-green); color: white; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer;}
-        
-        .phone-screen .emoji-popup {
-            position: absolute; bottom: 70px; left: 10px; background: rgba(20, 28, 35, 0.9); backdrop-filter: blur(15px);
-            border-radius: 15px; padding: 10px; display: flex; gap: 10px; font-size: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6); border: 1px solid var(--p-border);
-            transform: scale(0); opacity: 0; transform-origin: bottom left; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+
+        .phone-screen .emoji-popup { position: absolute; bottom: 70px; left: 10px; background: rgba(20, 28, 35, 0.9); backdrop-filter: blur(15px); border-radius: 15px; padding: 10px; display: flex; gap: 10px; font-size: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); border: 1px solid var(--p-border); transform: scale(0); opacity: 0; transform-origin: bottom left; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .phone-screen .emoji-popup.active { transform: scale(1); opacity: 1; }
         .phone-screen .emoji-item { cursor: pointer; transition: 0.2s; }
         .phone-screen .emoji-item:hover { transform: translateY(-3px) scale(1.2); }
 
-        /* --- Status Tab --- */
         .phone-screen .status-section { padding: 12px 18px; border-bottom: 1px solid var(--p-border); }
         .phone-screen .status-title { font-size: 13px; font-weight: 600; color: var(--p-text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
         .phone-screen .status-row { display: flex; gap: 14px; overflow-x: auto; scrollbar-width: none; padding-bottom: 5px; }
@@ -429,81 +301,84 @@
         .phone-screen .s-name { font-size: 12px; font-weight: 600; color: var(--p-text); text-shadow: 0 1px 2px rgba(0,0,0,0.8);}
 
         /* ==========================================================================
-           8. WEBSITE NAVIGATION & SECTIONS
+           8. WEBSITE NAVIGATION & MOBILE MENU SETUP
            ========================================================================== */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: 75px; z-index: 1000;
             display: flex; align-items: center; transition: all 0.3s;
         }
         header.scrolled { background: var(--bg-glass-heavy); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-glass-subtle); box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        
         .nav-content { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 5%; }
-        
-        .nav-links { display: none; gap: 25px; font-weight: 600; font-size: 14px; color: var(--text-secondary); }
-        @media (min-width: 968px) { .nav-links { display: flex; } }
+
+        /* PC Navigation Links */
+        .nav-links { display: flex; gap: 25px; font-weight: 600; font-size: 14px; color: var(--text-secondary); align-items: center; }
         .nav-links a { transition: color 0.2s; cursor: pointer; }
         .nav-links a:hover, .nav-links a.active { color: var(--hc-green); }
+
+        .mobile-menu-btn { display: none; font-size: 22px; color: var(--text-primary); background: transparent; border: none; cursor: pointer; padding: 5px; margin-left: 10px;}
+
+        /* MOBILE MENU OVERRIDE */
+        @media (max-width: 968px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links {
+                position: absolute; top: 75px; left: 0; width: 100%;
+                background: var(--bg-glass-heavy); backdrop-filter: blur(25px);
+                flex-direction: column; padding: 30px 0; gap: 25px;
+                border-bottom: 1px solid var(--border-glass-subtle);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+                /* Premium slide-down effect using clip-path */
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .nav-links.mobile-active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
 
         .theme-switch {
             width: 60px; height: 32px; border-radius: 30px; background: var(--bg-surface); border: 1px solid var(--border-glass);
             display: flex; align-items: center; padding: 4px; cursor: pointer; box-shadow: inset 0 2px 5px var(--border-glass-subtle);
         }
-        .theme-thumb {
-            width: 24px; height: 24px; border-radius: 50%; background: var(--hc-green); color: white;
-            display: flex; align-items: center; justify-content: center; font-size: 12px;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .theme-thumb { width: 24px; height: 24px; border-radius: 50%; background: var(--hc-green); color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         [data-theme="dark"] .theme-thumb { transform: translateX(28px); background: #202C33; color: var(--hc-neon); box-shadow: 0 0 10px var(--hc-neon); }
 
-        /* Section 1: Hero */
         #home { padding-top: 100px; padding-bottom: 50px; }
         .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
-        @media (max-width: 968px) { 
-            .hero-grid { grid-template-columns: 1fr; text-align: center; } 
-            .hero-text-content { display: flex; flex-direction: column; align-items: center; }
-        }
+        @media (max-width: 968px) { .hero-grid { grid-template-columns: 1fr; text-align: center; } .hero-text-content { display: flex; flex-direction: column; align-items: center; } }
         .hero-title { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 20px; }
         .text-gradient { background: linear-gradient(135deg, var(--hc-green), #00d2ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* Section 2: Features */
+
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; margin-top: 50px; }
         .feat-card { padding: 30px; display: flex; flex-direction: column; gap: 15px; position: relative; overflow: hidden; }
         .feat-card::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background: radial-gradient(circle, var(--particle-color) 0%, transparent 70%); opacity: 0; transition: opacity 0.4s; pointer-events: none;}
         .feat-card:hover::before { opacity: 1; }
         .feat-icon { width: 60px; height: 60px; border-radius: 16px; background: rgba(0,168,89,0.1); color: var(--hc-green); display: flex; align-items: center; justify-content: center; font-size: 24px; position: relative; z-index: 1;}
-        
-        /* Upcoming Features Badges */
+
         .coming-soon-badge { position: absolute; top: 20px; right: 20px; background: rgba(0,168,89,0.1); color: var(--hc-green); padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 800; border: 1px solid rgba(0,168,89,0.2); display: flex; align-items: center; gap: 5px; }
         .pulse-dot { width: 6px; height: 6px; background: var(--hc-neon); border-radius: 50%; box-shadow: 0 0 8px var(--hc-neon); animation: pulse-glow 1.5s infinite alternate; }
         @keyframes pulse-glow { 0% { transform: scale(0.8); opacity: 0.5;} 100% { transform: scale(1.2); opacity: 1;} }
 
-        /* Content Formatting */
         .section-tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 30px; font-size: 12px; font-weight: 700; color: var(--hc-green); background: rgba(0,168,89,0.1); border: 1px solid rgba(0,168,89,0.2); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;}
         h2.section-heading { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 20px; }
     </style>
 </head>
 <body data-theme="light">
 
-    <!-- Glowing Background Orbs for Glossy Effect -->
+    <!-- Glowing Background Orbs -->
     <canvas id="particleCanvas"></canvas>
     <div class="ambient-mesh mesh-1"></div>
     <div class="ambient-mesh mesh-2"></div>
     <div class="ambient-mesh mesh-3"></div>
 
-    <!-- Splash Screen (Original Logo Perfectly Contained) -->
+    <!-- Splash Screen -->
     <div id="splashScreen">
         <div class="splash-pulse-bg"></div>
-        <div class="splash-rings">
-            <div class="s-ring s-ring-1"></div>
-            <div class="s-ring s-ring-2"></div>
-        </div>
+        <div class="splash-rings"><div class="s-ring s-ring-1"></div><div class="s-ring s-ring-2"></div></div>
         <div class="splash-content">
             <div class="splash-logo-card">
-                <img src="icon.png" alt="Haal Chaal Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <!-- Fallback if icon.png fails to load -->
-                <div class="w-full h-full bg-hc-green flex items-center justify-center relative z-10 hidden" style="display:none;">
-                    <span class="text-white font-black text-4xl">HC</span>
-                </div>
+                <!-- Eager Loading Added Here -->
+                <img src="icon.png" width="120" height="120" loading="eager" alt="Haal Chaal Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="w-full h-full bg-hc-green flex items-center justify-center relative z-10 hidden" style="display:none;"><span class="text-white font-black text-4xl">HC</span></div>
             </div>
             <div class="splash-text-container">
                 <h1 class="text-2xl font-extrabold tracking-tight text-hc-green mb-1">Haal Chaal</h1>
@@ -517,18 +392,19 @@
     <header id="mainHeader">
         <div class="nav-content">
             <a href="#home" class="flex items-center gap-3">
-                <!-- Top Left Icon - Perfect Fit Fix applied here -->
                 <div class="w-11 h-11 relative rounded-[14px] flex items-center justify-center shadow-lg border border-[var(--border-glass-subtle)] overflow-hidden bg-[var(--bg-surface)]">
-                    <img src="icon.png" class="w-full h-full object-cover scale-110" alt="HC Logo">
+                    <!-- Eager Loading Added Here -->
+                    <img src="icon.png" width="44" height="44" loading="eager" class="w-full h-full object-cover scale-110" alt="HC Logo">
                 </div>
                 <span class="font-bold text-xl tracking-tight">Haal Chaal</span>
             </a>
-            
-            <nav class="nav-links">
+
+            <!-- Navigation Links -->
+            <nav class="nav-links" id="navLinks">
                 <a href="#home" class="active">Home</a>
                 <a href="#features">Features</a>
                 <a href="#upcoming">Upcoming</a>
-                <a href="tools.html" class="font-bold text-[#00A859] hover:opacity-80 transition-all ml-4">Tools Hub 🚀</a>
+                <a href="tools.html" class="font-bold text-[#00A859] hover:opacity-80 transition-all md:ml-4">Tools Hub 🚀</a>
             </nav>
 
             <div class="flex items-center gap-4">
@@ -536,301 +412,96 @@
                 <div class="theme-switch" id="themeBtn">
                     <div class="theme-thumb"><i class="fas fa-sun" id="themeIcon"></i></div>
                 </div>
+                
+                <!-- NEW: Hamburger Menu Button for Mobile -->
+                <button id="mobileMenuBtn" class="mobile-menu-btn focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- SECTION 1: HOME (Hero & Live 3D Dark Transparent Phone) -->
+    <!-- SECTION 1: HOME -->
     <section id="home" class="section-padding">
         <div class="main-container hero-grid">
-            
             <!-- Left: Hero Content -->
             <div class="hero-text-content">
-                <div class="section-tag">
-                    <span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-hc-green opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-hc-green"></span></span>
-                    V 1.0 Deployed Live
-                </div>
-                
-                <h1 class="hero-title">
-                    Ab <span class="text-gradient">Glossy</span> andaaz me pucho,<br>Kya Haal Chaal?
-                </h1>
-                
-                <p class="text-lg text-text-secondary line-height-1.6 mb-8 max-w-md">
-                    India's own premium, secure, and highly animated messaging experience. Seamless End-to-end encrypted chats with a fully glassmorphic UI.
-                </p>
-                
+                <div class="section-tag"><span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-hc-green opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-hc-green"></span></span>V 1.0 Deployed Live</div>
+                <h1 class="hero-title">Ab <span class="text-gradient">Glossy</span> andaaz me pucho,<br>Kya Haal Chaal?</h1>
+                <p class="text-lg text-text-secondary line-height-1.6 mb-8 max-w-md">India's own premium, secure, and highly animated messaging experience. Seamless End-to-end encrypted chats with a fully glassmorphic UI.</p>
                 <div class="flex flex-col sm:flex-row gap-5 items-center">
-                    <a href="#download" class="btn-premium w-full sm:w-auto text-lg">
-                        Get Started <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <div class="text-sm font-medium text-text-secondary flex items-center gap-2">
-                        <i class="fab fa-android text-hc-green text-xl"></i> Android Only
-                    </div>
+                    <a href="#download" class="btn-premium w-full sm:w-auto text-lg">Get Started <i class="fas fa-arrow-right"></i></a>
+                    <div class="text-sm font-medium text-text-secondary flex items-center gap-2"><i class="fab fa-android text-hc-green text-xl"></i> Android Only</div>
                 </div>
             </div>
 
-            <!-- Right: 3D Live Transparent Phone Mockup -->
+            <!-- Right: 3D Live Phone Mockup -->
             <div class="perspective-container" id="scene3D">
                 <div class="phone-mockup" id="phoneMockup">
                     <div class="power-btn"></div>
-                    
-                    <!-- Inside Phone: Dark Tinted Transparent UI -->
                     <div class="phone-screen">
-                        
-                        <!-- Header -->
                         <div class="app-header">
-                            <div class="app-top-bar">
-                                <span class="app-title">Haal Chaal</span>
-                                <div class="app-icons">
-                                    <i class="fas fa-camera"></i>
-                                    <i class="fas fa-search"></i>
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </div>
-                            </div>
-                            <!-- Tabs -->
-                            <div class="app-tabs">
-                                <div class="app-tab active" onclick="switchTab(0)">Chats</div>
-                                <div class="app-tab" onclick="switchTab(1)">Status</div>
-                                <div class="app-tab" onclick="switchTab(2)">Calls</div>
-                                <div class="tab-indicator" id="tabIndicator"></div>
-                            </div>
+                            <div class="app-top-bar"><span class="app-title">Haal Chaal</span><div class="app-icons"><i class="fas fa-camera"></i><i class="fas fa-search"></i><i class="fas fa-ellipsis-v"></i></div></div>
+                            <div class="app-tabs"><div class="app-tab active" onclick="switchTab(0)">Chats</div><div class="app-tab" onclick="switchTab(1)">Status</div><div class="app-tab" onclick="switchTab(2)">Calls</div><div class="tab-indicator" id="tabIndicator"></div></div>
                         </div>
-
-                        <!-- Main Views -->
                         <div class="views-container">
-                            
-                            <!-- TAB 0: CHATS -->
                             <div class="app-view active" id="view-0">
-                                <!-- Chat Item 1 (Interactive) -->
-                                <div class="chat-list-item" onclick="openChat()">
-                                    <div class="avatar avatar-online bg-pink-500">P</div>
-                                    <div class="chat-list-info">
-                                        <div class="chat-list-top">
-                                            <span class="chat-name">Priya Chaudhary</span>
-                                            <span class="chat-time-list text-hc-green">12:30 PM</span>
-                                        </div>
-                                        <div class="flex justify-between items-center">
-                                            <span class="chat-preview" style="color:var(--p-text);" id="previewText">Typing...</span>
-                                            <span class="unread-badge" id="unreadBadge" style="display:none;">1</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Chat Item 2 -->
-                                <div class="chat-list-item">
-                                    <div class="avatar bg-indigo-500">V</div>
-                                    <div class="chat-list-info">
-                                        <div class="chat-list-top"><span class="chat-name">Vikram Malhotra</span><span class="chat-time-list">Yesterday</span></div>
-                                        <span class="chat-preview"><i class="fas fa-check-double text-blue-400"></i> Seamless design bhaisahab!</span>
-                                    </div>
-                                </div>
-                                <!-- Chat Item 3 -->
-                                <div class="chat-list-item">
-                                    <div class="avatar bg-orange-400">A</div>
-                                    <div class="chat-list-info">
-                                        <div class="chat-list-top"><span class="chat-name">Ananya Iyer</span><span class="chat-time-list">Monday</span></div>
-                                        <span class="chat-preview"><i class="fas fa-image"></i> Glossy_UI.png</span>
-                                    </div>
-                                </div>
-                                <!-- Chat Item 4 -->
-                                <div class="chat-list-item">
-                                    <div class="avatar bg-green-500">R</div>
-                                    <div class="chat-list-info">
-                                        <div class="chat-list-top"><span class="chat-name">Rohan Bhandari</span><span class="chat-time-list">Tuesday</span></div>
-                                        <span class="chat-preview"><i class="fas fa-check-double text-blue-400"></i> Kal milte hain bhai.</span>
-                                    </div>
-                                </div>
-                                <!-- Chat Item 5 -->
-                                <div class="chat-list-item">
-                                    <div class="avatar bg-blue-500">S</div>
-                                    <div class="chat-list-info">
-                                        <div class="chat-list-top"><span class="chat-name">Siddharth Joshi</span><span class="chat-time-list">11/08</span></div>
-                                        <span class="chat-preview"><i class="fas fa-video"></i> Video message</span>
-                                    </div>
-                                </div>
+                                <div class="chat-list-item" onclick="openChat()"><div class="avatar avatar-online bg-pink-500">P</div><div class="chat-list-info"><div class="chat-list-top"><span class="chat-name">Priya Chaudhary</span><span class="chat-time-list text-hc-green">12:30 PM</span></div><div class="flex justify-between items-center"><span class="chat-preview" style="color:var(--p-text);" id="previewText">Typing...</span><span class="unread-badge" id="unreadBadge" style="display:none;">1</span></div></div></div>
+                                <div class="chat-list-item"><div class="avatar bg-indigo-500">V</div><div class="chat-list-info"><div class="chat-list-top"><span class="chat-name">Vikram Malhotra</span><span class="chat-time-list">Yesterday</span></div><span class="chat-preview"><i class="fas fa-check-double text-blue-400"></i> Seamless design bhaisahab!</span></div></div>
+                                <div class="chat-list-item"><div class="avatar bg-orange-400">A</div><div class="chat-list-info"><div class="chat-list-top"><span class="chat-name">Ananya Iyer</span><span class="chat-time-list">Monday</span></div><span class="chat-preview"><i class="fas fa-image"></i> Glossy_UI.png</span></div></div>
+                                <div class="chat-list-item"><div class="avatar bg-green-500">R</div><div class="chat-list-info"><div class="chat-list-top"><span class="chat-name">Rohan Bhandari</span><span class="chat-time-list">Tuesday</span></div><span class="chat-preview"><i class="fas fa-check-double text-blue-400"></i> Kal milte hain bhai.</span></div></div>
+                                <div class="chat-list-item"><div class="avatar bg-blue-500">S</div><div class="chat-list-info"><div class="chat-list-top"><span class="chat-name">Siddharth Joshi</span><span class="chat-time-list">11/08</span></div><span class="chat-preview"><i class="fas fa-video"></i> Video message</span></div></div>
                             </div>
-
-                            <!-- TAB 1: STATUS -->
                             <div class="app-view left" id="view-1">
-                                <div class="status-section">
-                                    <div class="status-title">Recent Updates</div>
-                                    <div class="status-row">
-                                        <div class="status-item">
-                                            <div class="s-ring-wrap" style="background:transparent; border: 2px dashed var(--hc-green);">
-                                                <div class="s-inner-img bg-[rgba(255,255,255,0.1)] text-hc-green backdrop-blur-md"><i class="fas fa-plus"></i></div>
-                                            </div>
-                                            <span class="s-name">My Status</span>
-                                        </div>
-                                        <div class="status-item">
-                                            <div class="s-ring-wrap"><div class="s-inner-img bg-indigo-500">V</div></div>
-                                            <span class="s-name">Vikram</span>
-                                        </div>
-                                        <div class="status-item">
-                                            <div class="s-ring-wrap"><div class="s-inner-img bg-orange-400">A</div></div>
-                                            <span class="s-name">Ananya</span>
-                                        </div>
-                                        <div class="status-item">
-                                            <div class="s-ring-wrap"><div class="s-inner-img bg-green-500">R</div></div>
-                                            <span class="s-name">Rohan</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="status-section">
-                                    <div class="status-title">Viewed Updates</div>
-                                    <div class="status-row">
-                                        <div class="status-item">
-                                            <div class="s-ring-wrap viewed"><div class="s-inner-img bg-gray-500">M</div></div>
-                                            <span class="s-name text-[rgba(255,255,255,0.5)]">Manish</span>
-                                        </div>
-                                        <div class="status-item">
-                                            <div class="s-ring-wrap viewed"><div class="s-inner-img bg-teal-500">I</div></div>
-                                            <span class="s-name text-[rgba(255,255,255,0.5)]">Ishita</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="status-section"><div class="status-title">Recent Updates</div><div class="status-row"><div class="status-item"><div class="s-ring-wrap" style="background:transparent; border: 2px dashed var(--hc-green);"><div class="s-inner-img bg-[rgba(255,255,255,0.1)] text-hc-green backdrop-blur-md"><i class="fas fa-plus"></i></div></div><span class="s-name">My Status</span></div><div class="status-item"><div class="s-ring-wrap"><div class="s-inner-img bg-indigo-500">V</div></div><span class="s-name">Vikram</span></div><div class="status-item"><div class="s-ring-wrap"><div class="s-inner-img bg-orange-400">A</div></div><span class="s-name">Ananya</span></div><div class="status-item"><div class="s-ring-wrap"><div class="s-inner-img bg-green-500">R</div></div><span class="s-name">Rohan</span></div></div></div>
+                                <div class="status-section"><div class="status-title">Viewed Updates</div><div class="status-row"><div class="status-item"><div class="s-ring-wrap viewed"><div class="s-inner-img bg-gray-500">M</div></div><span class="s-name text-[rgba(255,255,255,0.5)]">Manish</span></div><div class="status-item"><div class="s-ring-wrap viewed"><div class="s-inner-img bg-teal-500">I</div></div><span class="s-name text-[rgba(255,255,255,0.5)]">Ishita</span></div></div></div>
                             </div>
-
-                            <!-- TAB 2: CALLS -->
                             <div class="app-view left" id="view-2">
-                                <div class="chat-list-item">
-                                    <div class="avatar bg-teal-500">M</div>
-                                    <div class="chat-list-info">
-                                        <div class="chat-list-top"><span class="chat-name text-red-400">Meera Nair</span><span class="chat-time-list">10:45 AM</span></div>
-                                        <span class="chat-preview flex items-center gap-1"><i class="fas fa-arrow-down text-red-400"></i> Missed video call</span>
-                                    </div>
-                                    <i class="fas fa-video text-hc-green flex items-center text-lg"></i>
-                                </div>
-                                <div class="chat-list-item">
-                                    <div class="avatar bg-red-400">A</div>
-                                    <div class="chat-list-info">
-                                        <div class="chat-list-top"><span class="chat-name">Aditya Rao</span><span class="chat-time-list">Yesterday</span></div>
-                                        <span class="chat-preview flex items-center gap-1"><i class="fas fa-arrow-up text-hc-green"></i> Outgoing call</span>
-                                    </div>
-                                    <i class="fas fa-phone text-hc-green flex items-center text-lg"></i>
-                                </div>
-                                <div class="chat-list-item">
-                                    <div class="avatar bg-purple-500">K</div>
-                                    <div class="chat-list-info">
-                                        <div class="chat-list-top"><span class="chat-name">Kavya Reddy</span><span class="chat-time-list">Sunday</span></div>
-                                        <span class="chat-preview flex items-center gap-1"><i class="fas fa-arrow-down text-blue-400"></i> Incoming call</span>
-                                    </div>
-                                    <i class="fas fa-phone text-hc-green flex items-center text-lg"></i>
-                                </div>
+                                <div class="chat-list-item"><div class="avatar bg-teal-500">M</div><div class="chat-list-info"><div class="chat-list-top"><span class="chat-name text-red-400">Meera Nair</span><span class="chat-time-list">10:45 AM</span></div><span class="chat-preview flex items-center gap-1"><i class="fas fa-arrow-down text-red-400"></i> Missed video call</span></div><i class="fas fa-video text-hc-green flex items-center text-lg"></i></div>
+                                <div class="chat-list-item"><div class="avatar bg-red-400">A</div><div class="chat-list-info"><div class="chat-list-top"><span class="chat-name">Aditya Rao</span><span class="chat-time-list">Yesterday</span></div><span class="chat-preview flex items-center gap-1"><i class="fas fa-arrow-up text-hc-green"></i> Outgoing call</span></div><i class="fas fa-phone text-hc-green flex items-center text-lg"></i></div>
+                                <div class="chat-list-item"><div class="avatar bg-purple-500">K</div><div class="chat-list-info"><div class="chat-list-top"><span class="chat-name">Kavya Reddy</span><span class="chat-time-list">Sunday</span></div><span class="chat-preview flex items-center gap-1"><i class="fas fa-arrow-down text-blue-400"></i> Incoming call</span></div><i class="fas fa-phone text-hc-green flex items-center text-lg"></i></div>
                             </div>
                         </div>
 
-                        <!-- ACTIVE CHAT OVERLAY -->
                         <div class="chat-room" id="chatRoom">
-                            <div class="chat-room-header">
-                                <i class="fas fa-arrow-left back-btn" onclick="closeChat()"></i>
-                                <div class="avatar avatar-online bg-pink-500" style="width:34px; height:34px; font-size:14px;">P</div>
-                                <div class="flex-1">
-                                    <div class="font-bold text-sm text-[var(--p-text)] leading-tight">Priya Chaudhary</div>
-                                    <div class="text-[11px] text-hc-green font-medium" id="chatStatusText">Online</div>
-                                </div>
-                                <i class="fas fa-video text-[var(--p-text-muted)] text-base"></i>
-                                <i class="fas fa-phone text-[var(--p-text-muted)] text-base ml-2"></i>
-                            </div>
-                            
+                            <div class="chat-room-header"><i class="fas fa-arrow-left back-btn" onclick="closeChat()"></i><div class="avatar avatar-online bg-pink-500" style="width:34px; height:34px; font-size:14px;">P</div><div class="flex-1"><div class="font-bold text-sm text-[var(--p-text)] leading-tight">Priya Chaudhary</div><div class="text-[11px] text-hc-green font-medium" id="chatStatusText">Online</div></div><i class="fas fa-video text-[var(--p-text-muted)] text-base"></i><i class="fas fa-phone text-[var(--p-text-muted)] text-base ml-2"></i></div>
                             <div class="chat-room-body" id="chatRoomBody">
-                                <div class="text-center w-full my-1">
-                                    <span class="bg-[rgba(255,255,255,0.1)] px-2 py-1 rounded-md text-[9px] text-[rgba(255,255,255,0.7)] shadow-sm border border-[var(--p-border)] uppercase backdrop-blur-md">Today</span>
-                                </div>
-                                <div class="text-center w-full mb-2">
-                                    <span class="bg-[rgba(255,223,107,0.15)] text-[#FFD54F] px-3 py-1.5 rounded-lg text-[10px] shadow-sm inline-flex items-center gap-2 max-w-[95%] leading-tight text-left border border-[rgba(255,223,107,0.2)] backdrop-blur-md">
-                                        <i class="fas fa-lock"></i> Messages are Secure & Safe. Fully end-to-end encrypted.
-                                    </span>
-                                </div>
-                                
-                                <div class="typing-indicator" id="typingIndicator">
-                                    <div class="loader-dots" style="margin:0; gap:3px;"><span></span><span></span><span></span></div>
-                                </div>
+                                <div class="text-center w-full my-1"><span class="bg-[rgba(255,255,255,0.1)] px-2 py-1 rounded-md text-[9px] text-[rgba(255,255,255,0.7)] shadow-sm border border-[var(--p-border)] uppercase backdrop-blur-md">Today</span></div>
+                                <div class="text-center w-full mb-2"><span class="bg-[rgba(255,223,107,0.15)] text-[#FFD54F] px-3 py-1.5 rounded-lg text-[10px] shadow-sm inline-flex items-center gap-2 max-w-[95%] leading-tight text-left border border-[rgba(255,223,107,0.2)] backdrop-blur-md"><i class="fas fa-lock"></i> Messages are Secure & Safe. Fully end-to-end encrypted.</span></div>
+                                <div class="typing-indicator" id="typingIndicator"><div class="loader-dots" style="margin:0; gap:3px;"><span></span><span></span><span></span></div></div>
                             </div>
-                            
                             <div class="chat-room-input">
-                                <div class="emoji-popup" id="emojiPopup">
-                                    <span class="emoji-item" onclick="insertEmoji('😂')">😂</span>
-                                    <span class="emoji-item" onclick="insertEmoji('🔥')">🔥</span>
-                                    <span class="emoji-item" onclick="insertEmoji('😍')">😍</span>
-                                    <span class="emoji-item" onclick="insertEmoji('👍')">👍</span>
-                                </div>
-                                <i class="far fa-smile emoji-btn" onclick="toggleEmoji()"></i>
-                                <div class="input-bar" id="chatInput">Message</div>
-                                <div class="mic-btn"><i class="fas fa-microphone"></i></div>
+                                <div class="emoji-popup" id="emojiPopup"><span class="emoji-item" onclick="insertEmoji('😂')">😂</span><span class="emoji-item" onclick="insertEmoji('🔥')">🔥</span><span class="emoji-item" onclick="insertEmoji('😍')">😍</span><span class="emoji-item" onclick="insertEmoji('👍')">👍</span></div>
+                                <i class="far fa-smile emoji-btn" onclick="toggleEmoji()"></i><div class="input-bar" id="chatInput">Message</div><div class="mic-btn"><i class="fas fa-microphone"></i></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
     <!-- SECTION 2: FEATURES -->
     <section id="features" class="section-padding relative">
         <div class="main-container">
-            <div class="text-center mb-10">
-                <div class="section-tag">Core Capabilities</div>
-                <h2 class="section-heading">Designed for <br><span class="text-hc-green">Perfection.</span></h2>
-                <p class="text-text-secondary max-w-xl mx-auto">Experience a fully glassmorphic UI integrated with lightning-fast cloud delivery.</p>
-            </div>
-            
+            <div class="text-center mb-10"><div class="section-tag">Core Capabilities</div><h2 class="section-heading">Designed for <br><span class="text-hc-green">Perfection.</span></h2><p class="text-text-secondary max-w-xl mx-auto">Experience a fully glassmorphic UI integrated with lightning-fast cloud delivery.</p></div>
             <div class="feature-grid">
-                <div class="glass-panel feat-card">
-                    <div class="feat-icon"><i class="fas fa-bolt"></i></div>
-                    <h3 class="font-bold text-xl relative z-10">Seamless Messaging</h3>
-                    <p class="text-sm text-text-secondary relative z-10">Real-time socket connections se messages instant deliver hote hain. Zero lag, buttery smooth performance.</p>
-                </div>
-                <div class="glass-panel feat-card">
-                    <div class="feat-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3 class="font-bold text-xl relative z-10">Fully End-to-End Encrypted</h3>
-                    <p class="text-sm text-text-secondary relative z-10">Military-grade encryption algorithms. Tumhari baatein, sirf tumhare device tak limited hain.</p>
-                </div>
-                <div class="glass-panel feat-card">
-                    <div class="feat-icon"><i class="fas fa-circle-notch"></i></div>
-                    <h3 class="font-bold text-xl relative z-10">Seamless Status</h3>
-                    <p class="text-sm text-text-secondary relative z-10">Share moments flawlessly with high quality photo & video status that load in milliseconds.</p>
-                </div>
-                <div class="glass-panel feat-card">
-                    <div class="feat-icon"><i class="fas fa-lock"></i></div>
-                    <h3 class="font-bold text-xl relative z-10">Secure and Safe</h3>
-                    <p class="text-sm text-text-secondary relative z-10">No third party trackers. Tumhara data humara business nahi hai. Privacy is an absolute priority.</p>
-                </div>
+                <div class="glass-panel feat-card"><div class="feat-icon"><i class="fas fa-bolt"></i></div><h3 class="font-bold text-xl relative z-10">Seamless Messaging</h3><p class="text-sm text-text-secondary relative z-10">Real-time socket connections se messages instant deliver hote hain. Zero lag, buttery smooth performance.</p></div>
+                <div class="glass-panel feat-card"><div class="feat-icon"><i class="fas fa-shield-alt"></i></div><h3 class="font-bold text-xl relative z-10">Fully End-to-End Encrypted</h3><p class="text-sm text-text-secondary relative z-10">Military-grade encryption algorithms. Tumhari baatein, sirf tumhare device tak limited hain.</p></div>
+                <div class="glass-panel feat-card"><div class="feat-icon"><i class="fas fa-circle-notch"></i></div><h3 class="font-bold text-xl relative z-10">Seamless Status</h3><p class="text-sm text-text-secondary relative z-10">Share moments flawlessly with high quality photo & video status that load in milliseconds.</p></div>
+                <div class="glass-panel feat-card"><div class="feat-icon"><i class="fas fa-lock"></i></div><h3 class="font-bold text-xl relative z-10">Secure and Safe</h3><p class="text-sm text-text-secondary relative z-10">No third party trackers. Tumhara data humara business nahi hai. Privacy is an absolute priority.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 3: UPCOMING FEATURES -->
+    <!-- SECTION 3: UPCOMING -->
     <section id="upcoming" class="section-padding relative bg-hc-green/5 border-t border-border-glass-subtle">
         <div class="main-container text-center">
-            <div class="section-tag">What's Next</div>
-            <h2 class="section-heading">Upcoming <span class="text-hc-green">Innovations</span></h2>
-            <p class="text-text-secondary max-w-2xl mx-auto mb-12">
-                We are constantly evolving. Here's a sneak peek at the exciting new features coming soon to the Haal Chaal ecosystem.
-            </p>
-            
+            <div class="section-tag">What's Next</div><h2 class="section-heading">Upcoming <span class="text-hc-green">Innovations</span></h2><p class="text-text-secondary max-w-2xl mx-auto mb-12">We are constantly evolving. Here's a sneak peek at the exciting new features coming soon.</p>
             <div class="feature-grid">
-                <!-- Upcoming 1 -->
-                <div class="glass-panel feat-card bg-surface/40">
-                    <div class="coming-soon-badge"><div class="pulse-dot"></div> Coming Soon</div>
-                    <div class="feat-icon bg-indigo-500/10 text-indigo-500"><i class="fas fa-users"></i></div>
-                    <h3 class="font-bold text-xl relative z-10 mt-2">Community Post</h3>
-                    <p class="text-sm text-text-secondary relative z-10">Build your audience. Share public updates, polls, and announcements with thousands locally.</p>
-                </div>
-                <!-- Upcoming 2 -->
-                <div class="glass-panel feat-card bg-surface/40">
-                    <div class="coming-soon-badge"><div class="pulse-dot"></div> Coming Soon</div>
-                    <div class="feat-icon bg-orange-500/10 text-orange-500"><i class="fas fa-bullhorn"></i></div>
-                    <h3 class="font-bold text-xl relative z-10 mt-2">Ads and Promotion</h3>
-                    <p class="text-sm text-text-secondary relative z-10">Grow your business with highly targeted, non-intrusive promotional tools within your network.</p>
-                </div>
-                <!-- Upcoming 3 -->
-                <div class="glass-panel feat-card bg-surface/40">
-                    <div class="coming-soon-badge"><div class="pulse-dot"></div> Coming Soon</div>
-                    <div class="feat-icon bg-pink-500/10 text-pink-500"><i class="fas fa-video"></i></div>
-                    <h3 class="font-bold text-xl relative z-10 mt-2">High Quality Calls</h3>
-                    <p class="text-sm text-text-secondary relative z-10">Crystal clear HD voice and 4K video calling. Connect face-to-face with zero interruptions.</p>
-                </div>
+                <div class="glass-panel feat-card bg-surface/40"><div class="coming-soon-badge"><div class="pulse-dot"></div> Coming Soon</div><div class="feat-icon bg-indigo-500/10 text-indigo-500"><i class="fas fa-users"></i></div><h3 class="font-bold text-xl relative z-10 mt-2">Community Post</h3><p class="text-sm text-text-secondary relative z-10">Build your audience. Share public updates, polls, and announcements with thousands locally.</p></div>
+                <div class="glass-panel feat-card bg-surface/40"><div class="coming-soon-badge"><div class="pulse-dot"></div> Coming Soon</div><div class="feat-icon bg-orange-500/10 text-orange-500"><i class="fas fa-bullhorn"></i></div><h3 class="font-bold text-xl relative z-10 mt-2">Ads and Promotion</h3><p class="text-sm text-text-secondary relative z-10">Grow your business with highly targeted, non-intrusive promotional tools within your network.</p></div>
+                <div class="glass-panel feat-card bg-surface/40"><div class="coming-soon-badge"><div class="pulse-dot"></div> Coming Soon</div><div class="feat-icon bg-pink-500/10 text-pink-500"><i class="fas fa-video"></i></div><h3 class="font-bold text-xl relative z-10 mt-2">High Quality Calls</h3><p class="text-sm text-text-secondary relative z-10">Crystal clear HD voice and 4K video calling. Connect face-to-face with zero interruptions.</p></div>
             </div>
         </div>
     </section>
@@ -840,35 +511,43 @@
         <div class="main-container text-center">
             <h2 class="section-heading mb-6">Experience <br>Haal Chaal Today</h2>
             <p class="text-lg text-text-secondary mb-10 max-w-xl mx-auto">Join the premium, secure network today. Download the APK and start chatting instantly.</p>
-            
-            <a href="https://github.com/ankitucr/haalchaal-apk/releases/latest/download/haalchaal.v1.apk" class="btn-premium transform scale-110 shadow-2xl">
-                <i class="fab fa-android text-3xl"></i>
-                <div class="text-left leading-tight">
-                    <div class="text-lg">Download APK</div>
-                    <div class="text-[11px] opacity-90 font-normal tracking-wide">VERSION 1.0 • ~105 MB</div>
-                </div>
-            </a>
-            
-            <div class="mt-16 text-sm text-text-secondary font-medium">
-                <p>&copy; 2026 Haal Chaal Inc. Designed with ❤️ in India.</p>
-            </div>
+            <a href="https://github.com/ankitucr/haalchaal-apk/releases/latest/download/haalchaal.v1.apk" class="btn-premium transform scale-110 shadow-2xl"><i class="fab fa-android text-3xl"></i><div class="text-left leading-tight"><div class="text-lg">Download APK</div><div class="text-[11px] opacity-90 font-normal tracking-wide">VERSION 1.0 • ~105 MB</div></div></a>
+            <div class="mt-16 text-sm text-text-secondary font-medium"><p>&copy; 2026 Haal Chaal Inc. Designed with ❤️ in India.</p></div>
         </div>
     </section>
 
-    <!-- ==========================================================================
-         JAVASCRIPT LOGIC ENGINE
-         ========================================================================== -->
     <script>
+        // --- MOBILE MENU LOGIC ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinksContainer = document.getElementById('navLinks');
+        const allNavLinks = document.querySelectorAll('.nav-links a');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('mobile-active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if(navLinksContainer.classList.contains('mobile-active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when any link is clicked
+        allNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('mobile-active');
+                mobileMenuBtn.querySelector('i').classList.replace('fa-times', 'fa-bars');
+            });
+        });
+
         // --- 1. SPLASH SCREEN LOGIC ---
         document.addEventListener("DOMContentLoaded", () => {
             const splash = document.getElementById('splashScreen');
-            
             setTimeout(() => {
                 splash.style.opacity = '0';
-                setTimeout(() => {
-                    splash.style.display = 'none';
-                    startChatSimulation(); // Start chat only after splash disappears
-                }, 600);
+                setTimeout(() => { splash.style.display = 'none'; startChatSimulation(); }, 600);
             }, 2500); 
         });
 
@@ -877,43 +556,28 @@
         const themeBtn = document.getElementById('themeBtn');
         const themeIcon = document.getElementById('themeIcon');
         const themeLabel = document.getElementById('themeLabel');
-        
+
         let isDark = localStorage.getItem('hc_theme') === 'dark';
-        if(isDark) { 
-            html.setAttribute('data-theme', 'dark'); 
-            themeIcon.className = 'fas fa-moon';
-            themeLabel.innerText = "Dark Mode";
-        }
+        if(isDark) { html.setAttribute('data-theme', 'dark'); themeIcon.className = 'fas fa-moon'; themeLabel.innerText = "Dark Mode"; }
 
         themeBtn.addEventListener('click', () => {
             isDark = !isDark;
             if(isDark) {
-                html.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'fas fa-moon';
-                themeLabel.innerText = "Dark Mode";
-                localStorage.setItem('hc_theme', 'dark');
+                html.setAttribute('data-theme', 'dark'); themeIcon.className = 'fas fa-moon'; themeLabel.innerText = "Dark Mode"; localStorage.setItem('hc_theme', 'dark');
             } else {
-                html.setAttribute('data-theme', 'light');
-                themeIcon.className = 'fas fa-sun';
-                themeLabel.innerText = "HaalChaal Mode";
-                localStorage.setItem('hc_theme', 'light');
+                html.setAttribute('data-theme', 'light'); themeIcon.className = 'fas fa-sun'; themeLabel.innerText = "HaalChaal Mode"; localStorage.setItem('hc_theme', 'light');
             }
         });
 
         // --- 3. SCROLL SPY & HEADER GLASS EFFECT ---
         const header = document.getElementById('mainHeader');
         const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-links a');
 
         window.addEventListener('scroll', () => {
-            if(window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-
+            if(window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled');
             let current = '';
-            sections.forEach(sec => {
-                if(scrollY >= sec.offsetTop - 150) current = sec.getAttribute('id');
-            });
-            navLinks.forEach(link => {
+            sections.forEach(sec => { if(scrollY >= sec.offsetTop - 150) current = sec.getAttribute('id'); });
+            allNavLinks.forEach(link => {
                 link.classList.remove('active');
                 if(link.getAttribute('href') === `#${current}`) link.classList.add('active');
             });
@@ -925,16 +589,11 @@
         const indicator = document.getElementById('tabIndicator');
 
         function switchTab(index) {
-            tabs.forEach((t, i) => {
-                if(i === index) t.classList.add('active');
-                else t.classList.remove('active');
-            });
+            tabs.forEach((t, i) => { if(i === index) t.classList.add('active'); else t.classList.remove('active'); });
             indicator.style.transform = `translateX(${index * 100}%)`;
-            
             views.forEach((v, i) => {
                 v.classList.remove('active', 'left');
-                if(i < index) v.classList.add('left');
-                else if (i === index) v.classList.add('active');
+                if(i < index) v.classList.add('left'); else if (i === index) v.classList.add('active');
             });
         }
 
@@ -945,24 +604,11 @@
         const chatStatusText = document.getElementById('chatStatusText');
         const previewText = document.getElementById('previewText');
         const unreadBadge = document.getElementById('unreadBadge');
-        
         let chatOpen = false;
-        
-        function openChat() {
-            chatRoom.classList.add('active');
-            chatOpen = true;
-            unreadBadge.style.display = 'none';
-            previewText.style.fontWeight = '500';
-            previewText.style.color = 'var(--p-text-muted)';
-            chatRoomBody.scrollTop = chatRoomBody.scrollHeight;
-        }
-        function closeChat() {
-            chatRoom.classList.remove('active');
-            chatOpen = false;
-            document.getElementById('emojiPopup').classList.remove('active');
-        }
 
-        // Causal Script (Priya and User chatting)
+        function openChat() { chatRoom.classList.add('active'); chatOpen = true; unreadBadge.style.display = 'none'; previewText.style.fontWeight = '500'; previewText.style.color = 'var(--p-text-muted)'; chatRoomBody.scrollTop = chatRoomBody.scrollHeight; }
+        function closeChat() { chatRoom.classList.remove('active'); chatOpen = false; document.getElementById('emojiPopup').classList.remove('active'); }
+
         const chatScript = [
             { text: "Kaisi hai Priya? Kya haal chaal hai? 🔥", type: "in", delay: 1500 },
             { text: "Main theek hu! Tune ye naya Haal Chaal app try kiya?", type: "out", delay: 3000 },
@@ -973,134 +619,53 @@
         let sIdx = 0;
 
         function startChatSimulation() {
-            if(sIdx >= chatScript.length) {
-                // Loop simulation after a break
-                setTimeout(() => {
-                    document.querySelectorAll('.sim-msg').forEach(e => e.remove());
-                    sIdx = 0; startChatSimulation();
-                }, 10000);
-                return;
-            }
-
+            if(sIdx >= chatScript.length) { setTimeout(() => { document.querySelectorAll('.sim-msg').forEach(e => e.remove()); sIdx = 0; startChatSimulation(); }, 10000); return; }
             const msg = chatScript[sIdx];
             if(msg.type === 'in') {
-                chatStatusText.innerText = 'typing...';
-                previewText.innerText = 'typing...';
-                previewText.style.color = 'var(--hc-green)';
-                typingInd.style.display = 'flex';
-                chatRoomBody.appendChild(typingInd); 
-                chatRoomBody.scrollTop = chatRoomBody.scrollHeight;
-
-                setTimeout(() => {
-                    typingInd.style.display = 'none';
-                    chatStatusText.innerText = 'Online';
-                    appendMsg(msg.text, 'in');
-                    if(!chatOpen) {
-                        unreadBadge.style.display = 'inline-block';
-                        previewText.style.fontWeight = '700';
-                        previewText.style.color = 'var(--p-text)';
-                    }
-                    sIdx++; startChatSimulation();
-                }, msg.delay);
-            } else {
-                setTimeout(() => {
-                    appendMsg(msg.text, 'out');
-                    sIdx++; startChatSimulation();
-                }, msg.delay);
-            }
+                chatStatusText.innerText = 'typing...'; previewText.innerText = 'typing...'; previewText.style.color = 'var(--hc-green)'; typingInd.style.display = 'flex'; chatRoomBody.appendChild(typingInd); chatRoomBody.scrollTop = chatRoomBody.scrollHeight;
+                setTimeout(() => { typingInd.style.display = 'none'; chatStatusText.innerText = 'Online'; appendMsg(msg.text, 'in'); if(!chatOpen) { unreadBadge.style.display = 'inline-block'; previewText.style.fontWeight = '700'; previewText.style.color = 'var(--p-text)'; } sIdx++; startChatSimulation(); }, msg.delay);
+            } else { setTimeout(() => { appendMsg(msg.text, 'out'); sIdx++; startChatSimulation(); }, msg.delay); }
         }
 
         function appendMsg(text, type) {
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             const ticks = type === 'out' ? '<i class="fas fa-check-double read-tick"></i>' : '';
-            
-            const div = document.createElement('div');
-            div.className = `bubble ${type} sim-msg`;
-            div.innerHTML = `${text} <div class="msg-time">${time} ${ticks}</div>`;
-            
-            chatRoomBody.insertBefore(div, typingInd);
-            chatRoomBody.scrollTop = chatRoomBody.scrollHeight;
-            previewText.innerText = text;
+            const div = document.createElement('div'); div.className = `bubble ${type} sim-msg`; div.innerHTML = `${text} <div class="msg-time">${time} ${ticks}</div>`;
+            chatRoomBody.insertBefore(div, typingInd); chatRoomBody.scrollTop = chatRoomBody.scrollHeight; previewText.innerText = text;
             if(type==='in') previewText.style.color = 'var(--p-text-muted)';
         }
 
-        // Emoji Feature
-        function toggleEmoji() {
-            document.getElementById('emojiPopup').classList.toggle('active');
-        }
-        function insertEmoji(emoji) {
-            const input = document.getElementById('chatInput');
-            if(input.innerText === 'Message') input.innerText = '';
-            input.innerText += emoji;
-            toggleEmoji();
-        }
+        function toggleEmoji() { document.getElementById('emojiPopup').classList.toggle('active'); }
+        function insertEmoji(emoji) { const input = document.getElementById('chatInput'); if(input.innerText === 'Message') input.innerText = ''; input.innerText += emoji; toggleEmoji(); }
 
         // --- 6. 3D PARALLAX EFFECT FOR PHONE ---
-        const scene = document.getElementById('scene3D');
+        const scene3D = document.getElementById('scene3D');
         const phone = document.getElementById('phoneMockup');
-        
         if (window.innerWidth > 968) {
-            scene.addEventListener('mousemove', (e) => {
-                const rect = scene.getBoundingClientRect();
-                const x = (e.clientX - rect.left - rect.width / 2) / 30;
-                const y = -(e.clientY - rect.top - rect.height / 2) / 30;
-                phone.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-            });
-            scene.addEventListener('mouseleave', () => {
-                phone.style.transform = `rotateY(0deg) rotateX(0deg)`;
-            });
+            scene3D.addEventListener('mousemove', (e) => { const rect = scene3D.getBoundingClientRect(); const x = (e.clientX - rect.left - rect.width / 2) / 30; const y = -(e.clientY - rect.top - rect.height / 2) / 30; phone.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`; });
+            scene3D.addEventListener('mouseleave', () => { phone.style.transform = `rotateY(0deg) rotateX(0deg)`; });
         }
 
         // --- 7. CANVAS PARTICLE ENGINE ---
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
+        const particleCanvas = document.getElementById('particleCanvas');
+        const ctx = particleCanvas.getContext('2d');
         let particles = [];
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+
+        function resizeCanvas() { particleCanvas.width = window.innerWidth; particleCanvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
         class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 0.8 - 0.4;
-                this.speedY = Math.random() * 0.8 - 0.4;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if(this.x > canvas.width) this.x = 0; else if(this.x < 0) this.x = canvas.width;
-                if(this.y > canvas.height) this.y = 0; else if(this.y < 0) this.y = canvas.height;
-            }
-            draw() {
-                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--hc-green');
-                ctx.globalAlpha = 0.4;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+            constructor() { this.x = Math.random() * particleCanvas.width; this.y = Math.random() * particleCanvas.height; this.size = Math.random() * 2 + 0.5; this.speedX = Math.random() * 0.8 - 0.4; this.speedY = Math.random() * 0.8 - 0.4; }
+            update() { this.x += this.speedX; this.y += this.speedY; if(this.x > particleCanvas.width) this.x = 0; else if(this.x < 0) this.x = particleCanvas.width; if(this.y > particleCanvas.height) this.y = 0; else if(this.y < 0) this.y = particleCanvas.height; }
+            draw() { ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--hc-green'); ctx.globalAlpha = 0.4; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
         }
 
-        function initParticles() {
-            particles = [];
-            let count = window.innerWidth < 768 ? 20 : 60;
-            for(let i=0; i<count; i++) particles.push(new Particle());
-        }
+        function initParticles() { particles = []; let count = window.innerWidth < 768 ? 20 : 60; for(let i=0; i<count; i++) particles.push(new Particle()); }
+        function animateParticles() { ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animateParticles); }
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animateParticles);
-        }
-
-        initParticles();
-        animateParticles();
-
+        initParticles(); animateParticles();
     </script>
 </body>
 </html>
+
+
