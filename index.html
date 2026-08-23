@@ -412,7 +412,7 @@
                 <div class="theme-switch" id="themeBtn">
                     <div class="theme-thumb"><i class="fas fa-sun" id="themeIcon"></i></div>
                 </div>
-                
+
                 <!-- NEW: Hamburger Menu Button for Mobile -->
                 <button id="mobileMenuBtn" class="mobile-menu-btn focus:outline-none">
                     <i class="fas fa-bars"></i>
@@ -512,9 +512,52 @@
             <h2 class="section-heading mb-6">Experience <br>Haal Chaal Today</h2>
             <p class="text-lg text-text-secondary mb-10 max-w-xl mx-auto">Join the premium, secure network today. Download the APK and start chatting instantly.</p>
             <a href="https://github.com/ankitucr/haalchaal-apk/releases/latest/download/haalchaal.v1.apk" class="btn-premium transform scale-110 shadow-2xl"><i class="fab fa-android text-3xl"></i><div class="text-left leading-tight"><div class="text-lg">Download APK</div><div class="text-[11px] opacity-90 font-normal tracking-wide">VERSION 1.0 • Free</div></div></a>
-            <div class="mt-16 text-sm text-text-secondary font-medium"><p>&copy; 2026 Haal Chaal Inc. Designed with ❤️ in India.</p></div>
+            
+            <!-- NEW ADDITION: Detailed App Description for AdSense Text Density -->
+            <div class="mt-16 max-w-3xl mx-auto text-left bg-white/50 dark:bg-[#0E161C]/50 p-8 rounded-2xl border border-border-glass-subtle backdrop-blur-md shadow-lg prose prose-sm md:prose-base prose-green dark:prose-invert">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Why Choose Haal Chaal?</h3>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                    <strong>Haal Chaal</strong> is a next-generation messaging application designed to provide a premium, seamless, and secure communication experience. Built with a stunning <em>glassmorphic user interface</em>, it offers a visually immersive environment that makes chatting not just functional, but delightful.
+                </p>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                    Your privacy is our utmost priority. Every message, call, and status update shared on Haal Chaal is protected by state-of-the-art <strong>End-to-End Encryption</strong>. This means only you and the person you're communicating with can read or listen to what is sent—nobody in between, not even us.
+                </p>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Powered by high-speed real-time socket connections, Haal Chaal ensures zero-lag message delivery. Whether you are sharing high-quality media, hopping on crystal-clear calls, or updating your daily moments, it performs flawlessly. Step into the future of digital communication with India's own secure messaging ecosystem.
+                </p>
+            </div>
+            
         </div>
     </section>
+
+    <!-- ==========================================================================
+         FOOTER SECTION (Legal & Contact)
+         ========================================================================== -->
+    <footer class="relative z-50 border-t border-border-glass-subtle bg-white/40 dark:bg-[#060A0D]/60 backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <!-- Left: Copyright & Founder -->
+            <div class="text-center md:text-left text-sm text-text-secondary">
+                <p class="font-semibold text-text-primary mb-1 text-lg">
+                    &copy; 2026 Velqur. All rights reserved.
+                </p>
+                <p class="mt-1">
+                    Built with <i class="fa-solid fa-heart text-red-500"></i> by 
+                    <span class="font-bold text-hc-green dark:text-hc-neon">Ankit Shrivastav</span> 
+                    <span class="text-xs ml-1 opacity-80">(Founder & Developer)</span>
+                </p>
+            </div>
+
+            <!-- Right: Legal Links & Contact -->
+            <div class="flex flex-wrap justify-center gap-6 text-sm font-semibold text-text-secondary">
+                <a href="about.html" class="hover:text-hc-green transition-colors duration-300">About Us</a>
+                <a href="privacy.html" class="hover:text-hc-green transition-colors duration-300">Privacy Policy</a>
+                <a href="mailto:customerservice@velqur.in" class="hover:text-hc-green transition-colors duration-300">
+                    <i class="fa-solid fa-envelope mr-1"></i> customerservice@velqur.in
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         // --- MOBILE MENU LOGIC ---
@@ -667,5 +710,3 @@
     </script>
 </body>
 </html>
-
-
