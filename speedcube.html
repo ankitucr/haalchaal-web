@@ -406,7 +406,7 @@
         </div>
     </section>
 
-    <!-- ================= LEARN / HOW TO (SEO) ================= -->
+    <!-- ================= LEARN / HOW TO ================= -->
     <section id="learn" class="glossy-card p-8 mt-10" aria-label="How to use the 3D cube solver">
         <h2 class="text-2xl md:text-3xl font-black text-white mb-6" style="transform: translateZ(20px);"><i class="fas fa-graduation-cap text-cyan-400 mr-2"></i>Solve Your Cube in 3 Easy Steps</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm leading-relaxed text-gray-300" style="transform: translateZ(20px);">
@@ -425,7 +425,7 @@
         </div>
     </section>
 
-    <!-- ================= ALGORITHMS LIBRARY (SEO) ================= -->
+    <!-- ================= ALGORITHMS LIBRARY ================= -->
     <div id="algorithms" class="text-center mt-16 mb-10 scroll-mt-24">
         <h2 class="text-3xl md:text-5xl font-extrabold font-display text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-3 drop-shadow-lg">Advanced Cubing</h2>
         <p class="text-gray-400 max-w-2xl mx-auto">Optimized layer-by-layer formulas and high-end execution strategies to drastically drop your solve time.</p>
@@ -494,8 +494,22 @@
         </article>
     </div>
 
+    <!-- ================= ABOUT THIS TOOL (SEO) ================= -->
+    <section class="mt-16 max-w-5xl mx-auto text-left bg-black/30 p-8 rounded-2xl border border-white/5 backdrop-blur-md shadow-lg" aria-label="About the Rubik's Cube Solver">
+        <h2 class="text-2xl md:text-3xl font-black text-white mb-4 font-display">Ultimate 3D Rubik's Cube Solver Online</h2>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            Welcome to the most advanced and intuitive <strong>3D Rubik's Cube Solver</strong> on the web. Designed by <span class="text-cyan-400 font-semibold">Velqur</span>, this tool allows you to visually paint your scrambled cube on an interactive 3D model. Once your colors are set, our integrated <em>Kociemba two-phase algorithm</em> calculates the absolute shortest path to solve your cube—typically in 20 moves or less. 
+        </p>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            Unlike standard text-based solvers, our platform features a <strong>step-by-step animated playback</strong>. You can pause, rewind, or adjust the speed of the 3D rotation, making it incredibly easy to follow along with your physical cube. No downloads or installations are required; everything runs instantly and securely within your browser.
+        </p>
+        <p class="text-gray-400 text-sm leading-relaxed">
+            Whether you are a beginner looking for a quick fix, or an advanced speedcuber studying optimal <strong>F2L, OLL, and PLL algorithms</strong>, this solver serves as your perfect practice companion. Enhance your solve times, understand complex permutations, and master the cube today.
+        </p>
+    </section>
+
     <!-- ================= FAQ (SEO long-tail) ================= -->
-    <section class="glossy-card p-8 mt-16" aria-label="Frequently asked questions">
+    <section class="glossy-card p-8 mt-10" aria-label="Frequently asked questions">
         <h2 class="text-2xl md:text-3xl font-black text-white mb-6" style="transform: translateZ(20px);"><i class="fas fa-comments text-purple-400 mr-2"></i>Rubik's Cube Solver — FAQ</h2>
         <div class="space-y-4 text-sm" style="transform: translateZ(20px);">
             <details class="bg-black/30 rounded-xl border border-white/5 p-4">
@@ -531,14 +545,36 @@
         </script>
     </div>
 
-    <footer id="about" class="mt-14 pb-8 scroll-mt-24">
-        <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600">
-            <span>© 2026 Velqur Cube Solver. All rights reserved.</span>
-            <span>Master the cube. Solve with passion. <i class="fas fa-fire text-orange-500"></i></span>
-        </div>
-    </footer>
-
 </main>
+
+<!-- ==========================================================================
+     FOOTER SECTION (Legal & Contact - Dark Theme Version)
+     ========================================================================== -->
+<footer class="relative z-50 mt-14 border-t border-white/10 bg-[#050A14]/80 backdrop-blur-lg pb-4">
+    <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <!-- Left: Copyright & Founder -->
+        <div class="text-center md:text-left text-sm text-gray-400">
+            <p class="font-bold text-gray-200 mb-1 text-lg font-display">
+                &copy; 2026 Velqur. All rights reserved.
+            </p>
+            <p class="mt-1">
+                Built with <i class="fa-solid fa-heart text-red-500"></i> by 
+                <span class="font-bold text-cyan-400">Ankit Shrivastav</span> 
+                <span class="text-xs ml-1 opacity-80">(Founder & Developer)</span>
+            </p>
+        </div>
+
+        <!-- Right: Legal Links & Contact -->
+        <div class="flex flex-wrap justify-center gap-6 text-sm font-semibold text-gray-400">
+            <a href="about.html" class="hover:text-cyan-400 transition-colors duration-300">About Us</a>
+            <a href="privacy.html" class="hover:text-cyan-400 transition-colors duration-300">Privacy Policy</a>
+            <a href="mailto:customerservice@velqur.in" class="hover:text-cyan-400 transition-colors duration-300">
+                <i class="fa-solid fa-envelope mr-1"></i> customerservice@velqur.in
+            </a>
+        </div>
+    </div>
+</footer>
 
 <!-- 🚀 Three.js via CDN (GitHub Pages friendly — no build step) -->
 <script type="importmap">
