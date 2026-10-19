@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="/icon.png">
     <link rel="apple-touch-icon" href="/icon.png">
-    <link rel="canonical" href="https://velqur.in/ssh-tools.html">
+    <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- 🚀 SEO Meta Tags -->
@@ -19,7 +19,7 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="230+ Terminal & SSH Commands Cheat Sheet | Velqur">
     <meta property="og:description" content="Every terminal command a developer actually needs — Linux, SSH, Git, Docker, Kubernetes, databases and more. Searchable & copy-paste ready.">
-    <meta property="og:url" content="https://www.velqur.in/terminal-ssh-cheatsheet.html">
+    <meta property="og:url" content="https://velqur.in/ssh-tools.html">
     <meta property="og:site_name" content="Velqur">
 
     <!-- Twitter Card -->
@@ -585,11 +585,33 @@
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('.copy-btn');
             if (!btn) return;
-            navigator.clipboard.writeText(btn.dataset.clip).then(() => {
+            const showCopied = () => {
                 const original = btn.innerHTML;
                 btn.innerHTML = '<span class="text-xs font-bold text-white bg-green-600 px-2 py-1 rounded">COPIED</span>';
                 setTimeout(() => { btn.innerHTML = original; }, 1500);
-            });
+            };
+            const fallbackCopy = () => {
+                const field = document.createElement('textarea');
+                field.value = btn.dataset.clip;
+                field.setAttribute('readonly', '');
+                field.style.position = 'fixed';
+                field.style.opacity = '0';
+                document.body.appendChild(field);
+                field.select();
+                try {
+                    if (document.execCommand('copy')) showCopied();
+                    else alert('Copy failed. Please select and copy the command manually.');
+                } catch (_) {
+                    alert('Copy failed. Please select and copy the command manually.');
+                } finally {
+                    field.remove();
+                }
+            };
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(btn.dataset.clip).then(showCopied).catch(fallbackCopy);
+            } else {
+                fallbackCopy();
+            }
         });
 
         // Live search / filter
