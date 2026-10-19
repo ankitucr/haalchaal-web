@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="/icon.png">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="manifest" href="/manifest.json">
     <link rel="canonical" href="https://velqur.in/ai-prompts.html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -414,13 +415,25 @@
             history = history.slice(0, 5);
             const list = document.getElementById('history-list');
             if (history.length === 0) { list.innerHTML = '<p class="text-xs text-gray-700 px-1">Nothing generated yet this session.</p>'; return; }
-            list.innerHTML = history.map((h, i) => `
-                <button data-idx="${i}" class="history-item w-full text-left bg-[#14171F] border border-[#262B38] rounded-lg px-3 py-2 transition">
-                    <div class="flex justify-between text-[10px] text-gray-600 font-mono-custom mb-1"><span>${h.engine}</span><span>${h.time}</span></div>
-                    <div class="text-xs text-gray-400 truncate">${h.text}</div>
-                </button>`).join('');
-            list.querySelectorAll('.history-item').forEach(btn => {
-                btn.addEventListener('click', () => renderOutput(history[btn.dataset.idx].text));
+            list.replaceChildren();
+            history.forEach((h, i) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.dataset.idx = String(i);
+                button.className = 'history-item w-full text-left bg-[#14171F] border border-[#262B38] rounded-lg px-3 py-2 transition';
+                const meta = document.createElement('div');
+                meta.className = 'flex justify-between text-[10px] text-gray-600 font-mono-custom mb-1';
+                const engine = document.createElement('span');
+                engine.textContent = h.engine;
+                const time = document.createElement('span');
+                time.textContent = h.time;
+                meta.append(engine, time);
+                const preview = document.createElement('div');
+                preview.className = 'text-xs text-gray-400 truncate';
+                preview.textContent = h.text;
+                button.append(meta, preview);
+                button.addEventListener('click', () => renderOutput(history[i].text));
+                list.appendChild(button);
             });
         }
 
@@ -461,11 +474,34 @@
             const text = document.getElementById('output-box').textContent;
             const btn = document.getElementById('copy-btn');
             if (!text || text.includes("Set your parameters")) { alert("Generate a prompt first!"); return; }
-            navigator.clipboard.writeText(text).then(() => {
+            const showCopied = () => {
                 const original = btn.innerHTML;
                 btn.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
                 setTimeout(() => { btn.innerHTML = original; }, 1500);
-            });
+            };
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(showCopied).catch(() => fallbackCopy(text, showCopied));
+            } else {
+                fallbackCopy(text, showCopied);
+            }
+        }
+
+        function fallbackCopy(text, onSuccess) {
+            const field = document.createElement('textarea');
+            field.value = text;
+            field.setAttribute('readonly', '');
+            field.style.position = 'fixed';
+            field.style.opacity = '0';
+            document.body.appendChild(field);
+            field.select();
+            try {
+                if (document.execCommand('copy')) onSuccess();
+                else alert('Copy failed. Please select and copy the prompt manually.');
+            } catch (_) {
+                alert('Copy failed. Please select and copy the prompt manually.');
+            } finally {
+                field.remove();
+            }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
