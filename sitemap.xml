@@ -8,31 +8,31 @@
   </url>
   <!-- Tools Hub -->
   <url>
-    <loc>https://velqur.in/tools</loc>
+    <loc>https://velqur.in/tools.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <!-- Finance & Crypto Tool -->
   <url>
-    <loc>https://velqur.in/crypto-calculator</loc>
+    <loc>https://velqur.in/crypto-calculator.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- AI Prompts Tool -->
   <url>
-    <loc>https://velqur.in/ai-prompts</loc>
+    <loc>https://velqur.in/ai-prompts.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- 3D Speedcube Tool -->
   <url>
-    <loc>https://velqur.in/speedcube</loc>
+    <loc>https://velqur.in/speedcube.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- SSH & Terminal Guide -->
   <url>
-    <loc>https://velqur.in/ssh-tools</loc>
+    <loc>https://velqur.in/ssh-tools.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
