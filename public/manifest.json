@@ -1,0 +1,14 @@
+{
+  "name": "Velqur Tools",
+  "short_name": "Velqur",
+  "description": "Useful developer tools, calculators, AI prompt builders, SSH references, and a 3D speedcube.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0B141A",
+  "theme_color": "#00A859",
+  "icons": [
+    { "src": "/icon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
+    { "src": "/icon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "maskable" }
+  ]
+}
