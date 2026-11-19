@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="canonical" href="https://velqur.in/crypto-calculator.html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- 🚀 High-CPC SEO Meta Tags -->
-    <title>Real-Time Crypto Futures & SIP ROI Calculator | Velqur</title>
-    <meta name="description" content="Live Binance crypto price tracker, perpetual futures profit/loss calculator, liquidation risk estimator, and Indian stock market SIP compounding calculator.">
+    <title>Crypto Position & SIP Calculator | Velqur</title>
+    <meta name="description" content="Live Binance spot price tracker, illustrative leveraged-position PnL estimator, and SIP compounding calculator. Includes clear limits on liquidation estimates.">
     <meta name="keywords" content="Live crypto price calculator, Binance futures PnL, ZebPay crypto trading, Groww SIP returns, Angel One margin checker, Crypto liquidation price calculator">
     <meta name="robots" content="index, follow">
 
@@ -24,7 +28,7 @@
             <a href="tools.html" class="text-xl font-bold text-green-500 hover:text-green-400 transition"><i class="fas fa-arrow-left mr-2"></i> Back to Tools</a>
             <div class="flex items-center gap-2">
                 <span class="inline-block w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
-                <span class="text-xs font-mono text-gray-400">BINANCE FEED LIVE</span>
+                <span class="text-xs font-mono text-gray-400">BINANCE SPOT PRICE</span>
             </div>
         </div>
     </nav>
@@ -34,7 +38,7 @@
 
         <div class="text-center mb-10">
             <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-3">Crypto & Stock <span class="text-green-500">Live ROI</span></h1>
-            <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">Real-time spot/futures market data with automated liquidation and equity compounding models.</p>
+            <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">Live Binance spot prices with an illustrative leveraged-position calculator and SIP compounding estimate.</p>
         </div>
 
         <!-- Live Price Ticker Strip -->
@@ -108,12 +112,13 @@
                 </div>
 
                 <!-- Result Box -->
-                <div id="crypto-output" class="mt-6 p-5 bg-[#0B141A] rounded-xl border border-gray-800 space-y-3 font-mono">
+                <div id="crypto-output" aria-live="polite" class="mt-6 p-5 bg-[#0B141A] rounded-xl border border-gray-800 space-y-3 font-mono">
                     <div class="flex justify-between text-sm"><span class="text-gray-400">Required Margin:</span><span id="out-margin" class="text-white font-bold">$0.00</span></div>
-                    <div class="flex justify-between text-sm"><span class="text-gray-400">Est. Liquidation Price:</span><span id="out-liq" class="text-yellow-400 font-bold">$0.00</span></div>
+                    <div class="flex justify-between text-sm"><span class="text-gray-400">Theoretical Liquidation Estimate:</span><span id="out-liq" class="text-yellow-400 font-bold">$0.00</span></div>
                     <div class="flex justify-between text-sm"><span class="text-gray-400">Net Profit / Loss (PnL):</span><span id="out-pnl" class="text-gray-200 font-bold text-lg">$0.00</span></div>
                     <div class="flex justify-between text-sm border-t border-gray-800 pt-2"><span class="text-gray-400">ROE (Return on Equity):</span><span id="out-roe" class="font-bold text-lg">0.00%</span></div>
                 </div>
+                <p class="mt-3 text-xs leading-relaxed text-amber-300/90">Estimate only: this uses a basic leverage formula and excludes maintenance margin, fees, funding, and exchange-specific liquidation rules. The live Binance feed is spot pricing, not a futures mark price.</p>
             </div>
 
             <!-- 2. Stock / SIP Compounding Engine -->
@@ -157,13 +162,13 @@
         <section class="mt-12 bg-[#111B21] p-8 rounded-2xl border border-gray-800 shadow-xl" aria-label="About the Crypto & SIP Calculator">
             <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Ultimate Crypto Futures & SIP ROI Calculator</h2>
             <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                Welcome to the most precise and user-friendly <strong>Crypto Futures & SIP Wealth Calculator</strong>. Designed by <span class="text-green-500 font-semibold">Velqur</span>, this tool caters to both aggressive crypto day-traders and long-term stock market investors. By integrating a live <em>Binance API feed</em>, you get real-time price updates for accurate calculations.
+                Welcome to the <strong>Crypto Position & SIP Wealth Calculator</strong>. Designed by <span class="text-green-500 font-semibold">Velqur</span>, this browser-based tool combines Binance spot-price data with illustrative position and long-term investment calculations. Spot prices can differ from futures mark prices.
             </p>
             <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                Our <strong>Crypto Futures Engine</strong> helps you manage risk by instantly calculating exact Profit/Loss (PnL), required margin, Return on Equity (ROE), and the crucial <strong>liquidation price</strong> for leveraged positions up to 125x. Whether you are going Long (Buy) or Short (Sell), you'll know your exact financial exposure before placing a trade.
+                The <strong>leveraged-position calculator</strong> estimates gross Profit/Loss (PnL), initial margin, Return on Equity (ROE), and a theoretical liquidation level. It is not an exchange-accurate futures calculator: the simplified liquidation estimate excludes maintenance margin, fees, funding, and exchange-specific rules. Do not use it as the sole basis for a trade.
             </p>
             <p class="text-gray-400 text-sm leading-relaxed">
-                For traditional wealth building, the <strong>SIP Compounding Engine</strong> projects your mutual fund or stock portfolio's future value. Input your monthly SIP amount, expected CAGR, and investment tenure to see the magic of compounding in action. Best of all, no personal financial data is stored—everything calculates safely and locally on your browser.
+                For traditional wealth building, the <strong>SIP Compounding Engine</strong> projects your mutual fund or stock portfolio's future value. Input your monthly SIP amount, expected annual return, and investment tenure to estimate compounding. Results are illustrative, not guaranteed returns or financial advice. Calculations run locally in your browser.
             </p>
         </section>
 
@@ -249,8 +254,13 @@
             const exit = parseFloat(document.getElementById('exit-price').value);
             const qty = parseFloat(document.getElementById('coin-qty').value);
 
-            if(!entry || !exit || !qty) {
-                alert("Please provide Entry Price, Exit Price, and Quantity.");
+            if(!Number.isFinite(entry) || !Number.isFinite(exit) || !Number.isFinite(qty) ||
+               entry <= 0 || exit <= 0 || qty <= 0) {
+                alert("Enter positive, valid Entry Price, Exit Price, and Quantity values.");
+                return;
+            }
+            if (!Number.isFinite(lev) || lev < 1 || lev > 125) {
+                alert("Leverage must be between 1x and 125x.");
                 return;
             }
 
@@ -287,14 +297,16 @@
             const rate = parseFloat(document.getElementById('sip-cagr').value);
             const yr = parseFloat(document.getElementById('sip-dur').value);
 
-            if(!p || !rate || !yr) {
-                alert("Please fill all SIP investment fields.");
+            if(!Number.isFinite(p) || !Number.isFinite(rate) || !Number.isFinite(yr) ||
+               p <= 0 || rate < 0 || rate > 100 || yr <= 0 || yr > 100) {
+                alert("Enter a monthly investment above ₹0, an annual return from 0% to 100%, and a tenure above 0 and up to 100 years.");
                 return;
             }
 
             const i = (rate / 12) / 100;
-            const n = yr * 12;
-            const maturity = p * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+            const n = Math.round(yr * 12);
+            // Handle a 0% return separately to avoid division by zero.
+            const maturity = i === 0 ? p * n : p * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
             const totalInvested = p * n;
             const totalGains = maturity - totalInvested;
 
